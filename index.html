@@ -313,7 +313,6 @@ function renderQuestion(){
     btn.className='scale-btn'+(answers[current]===i?' sel':'');
     btn.innerHTML='<div class="snum">'+(i+1)+'</div><span class="slbl">'+lbl+'</span>';
     (function(idx){
-      btn.addEventListener('touchstart',function(e){e.preventDefault();selectAnswer(idx)},{passive:false});
       btn.addEventListener('click',function(){selectAnswer(idx)});
     })(i);
     wrap.appendChild(btn);
@@ -412,7 +411,7 @@ document.getElementById('submitBtn').addEventListener('touchstart',function(e){e
 document.getElementById('submitBtn').addEventListener('click',handleSubmit);
 
 document.getElementById('retakeBtn').addEventListener('touchstart',function(e){e.preventDefault();handleRetake()},{passive:false});
-document.getElementById('retakeBtn').addEventListener('click',handleRetake);
+document.getElementById('retakeBtn').addEventListener('click',handleRetake); document.getElementById('ctaBtn').addEventListener('click',function(){window.location.href='mailto:contato@lagoinhatampa.com';});
 
 document.getElementById('inputName').addEventListener('input',checkForm);
 document.getElementById('inputEmail').addEventListener('input',checkForm);
