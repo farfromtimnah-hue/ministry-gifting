@@ -10,169 +10,73 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background-color:#0A0A0A;color:#FFFFFF;font-family:'Barlow',sans-serif;min-height:100%;-webkit-text-size-adjust:100%}
-body{overflow-x:hidden;background-color:#0A0A0A}
+html,body{background-color:#0A0A0A;color:#FFFFFF;font-family:'Barlow',sans-serif;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
 .app{min-height:100vh;background-color:#0A0A0A}
 .screen{display:none}
 .screen.active{display:block}
-
-/* iOS Safari fix: cursor:pointer makes elements tappable */
-button{
--webkit-appearance:none;
-appearance:none;
-font-family:‘Barlow’,sans-serif;
--webkit-tap-highlight-color:transparent;
-cursor:pointer;
-}
-input{
--webkit-appearance:none;
-appearance:none;
-font-family:‘Barlow’,sans-serif;
-}
-
-/* NAV */
+button{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;-webkit-tap-highlight-color:transparent;cursor:pointer;touch-action:manipulation}
+input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;border-radius:0}
 .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background-color:#0A0A0A;border-bottom:1px solid #252525;position:sticky;top:0;z-index:100}
 .logo{display:flex;align-items:center;gap:9px}
 .logo-dot{width:7px;height:7px;background-color:#2ABFBF;border-radius:50%;flex-shrink:0}
-.logo-text{font-family:‘Barlow Condensed’,sans-serif;font-weight:700;font-size:1rem;letter-spacing:.07em;text-transform:uppercase;color:#FFFFFF}
+.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.07em;text-transform:uppercase;color:#FFFFFF}
 .logo-text span{color:#2ABFBF}
-.lang-btn{
-background-color:#0A0A0A;
-border:1.5px solid #2ABFBF;
-color:#2ABFBF;
-padding:8px 16px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.8rem;
-font-weight:700;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:44px;
-cursor:pointer;
-}
-
-/* WELCOME */
+.lang-btn{background-color:#0A0A0A;border:1.5px solid #2ABFBF;color:#2ABFBF;padding:8px 16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;touch-action:manipulation}
 .welcome{max-width:660px;margin:0 auto;padding:48px 24px 72px}
-.eyebrow{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.eyebrow::before{content:’’;display:block;width:28px;height:2px;background-color:#2ABFBF;flex-shrink:0}
-.welcome h1{font-family:‘Barlow Condensed’,sans-serif;font-weight:800;font-size:clamp(2.8rem,12vw,5.8rem);line-height:.92;text-transform:uppercase;color:#FFFFFF;margin-bottom:4px}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:28px;height:2px;background-color:#2ABFBF;flex-shrink:0}
+.welcome h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(2.8rem,12vw,5.8rem);line-height:.92;text-transform:uppercase;color:#FFFFFF;margin-bottom:4px}
 .welcome h1 .ac{color:#2ABFBF;display:block}
 .sub{font-size:1rem;color:#999999;line-height:1.68;margin:24px 0 36px;max-width:500px}
-.start-btn{
-display:inline-flex;
-align-items:center;
-gap:10px;
-background-color:#2ABFBF;
-color:#000000;
-border:none;
-padding:16px 34px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.95rem;
-font-weight:800;
-letter-spacing:.1em;
-text-transform:uppercase;
-border-radius:3px;
-min-height:52px;
-cursor:pointer;
-}
+.start-btn{display:inline-flex;align-items:center;gap:10px;background-color:#2ABFBF;color:#000000;border:none;padding:16px 34px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;min-height:52px;cursor:pointer;touch-action:manipulation}
 .meta{margin-top:18px;font-size:.8rem;color:#505050;letter-spacing:.04em}
-
-/* ASSESSMENT */
 .assessment{max-width:680px;margin:0 auto;padding:28px 20px 80px}
 .prog-wrap{margin-bottom:28px}
 .prog-row{display:flex;justify-content:space-between;margin-bottom:8px}
-.prog-lbl{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#505050}
-.prog-pct{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;color:#2ABFBF}
+.prog-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#505050}
+.prog-pct{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;color:#2ABFBF}
 .prog-track{height:2px;background-color:#252525;border-radius:2px;overflow:hidden}
 .prog-fill{height:100%;background-color:#2ABFBF;transition:width .4s ease}
 .q-card{background-color:#1C1C1C;border:1px solid #333333;border-top:2px solid #2ABFBF;border-radius:5px;padding:28px 20px}
 .q-text{font-size:1rem;line-height:1.72;color:#F0F0F0;font-weight:400;margin-bottom:28px}
 .scale-wrap{display:flex;flex-direction:column;gap:8px}
-.scale-btn{
-display:flex;
-align-items:center;
-gap:14px;
-padding:14px 16px;
-border:1px solid #444444;
-border-radius:3px;
-background-color:#2A2A2A;
-color:#CCCCCC;
-text-align:left;
-width:100%;
-min-height:52px;
-font-family:‘Barlow’,sans-serif;
-cursor:pointer;
-}
-.scale-btn.sel{
-border-color:#2ABFBF;
-background-color:#0d2e2e;
-color:#FFFFFF;
-}
-.snum{
-width:30px;height:30px;border-radius:3px;
-border:1.5px solid #666666;
-display:flex;align-items:center;justify-content:center;
-flex-shrink:0;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.82rem;font-weight:700;
-color:#AAAAAA;background-color:#1C1C1C;
-}
+.scale-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid #444444;border-radius:3px;background-color:#2A2A2A;color:#CCCCCC;text-align:left;width:100%;min-height:52px;font-family:'Barlow',sans-serif;cursor:pointer;touch-action:manipulation}
+.scale-btn.sel{border-color:#2ABFBF;background-color:#0d2e2e;color:#FFFFFF}
+.snum{width:30px;height:30px;border-radius:3px;border:1.5px solid #666666;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;color:#AAAAAA;background-color:#1C1C1C}
 .scale-btn.sel .snum{border-color:#2ABFBF;background-color:#2ABFBF;color:#000000}
 .slbl{font-size:.88rem;color:#CCCCCC;line-height:1.4;text-align:left}
 .scale-btn.sel .slbl{color:#FFFFFF}
 .nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px}
-.btn-bk{
-background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;
-padding:12px 20px;border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;font-weight:700;
-letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;
-}
-.btn-nx{
-background-color:#2ABFBF;border:none;color:#000000;
-padding:12px 20px;border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:800;
-letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;
-}
-.btn-nx:disabled{opacity:.35;cursor:not-allowed}
-
-/* FORM */
+.btn-bk{background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;padding:12px 20px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;touch-action:manipulation}
+.btn-nx{background-color:#2ABFBF;border:none;color:#000000;padding:12px 20px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;touch-action:manipulation}
+.btn-nx:disabled{opacity:.35}
 .form-screen{max-width:500px;margin:0 auto;padding:40px 20px 80px}
 .form-card{background-color:#1C1C1C;border:1px solid #333333;border-top:2px solid #2ABFBF;border-radius:5px;padding:32px 24px}
-.form-card h2{font-family:‘Barlow Condensed’,sans-serif;font-size:1.9rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:8px}
+.form-card h2{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:8px}
 .form-card p{font-size:.9rem;color:#999999;margin-bottom:24px;line-height:1.6}
 .field{margin-bottom:16px}
-.field label{display:block;font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#999999;margin-bottom:7px}
-.field input{
-width:100%;padding:14px;
-background-color:#242424;border:1px solid #444444;border-radius:3px;
-font-size:16px;color:#FFFFFF;outline:none;
-}
+.field label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#999999;margin-bottom:7px}
+.field input{width:100%;padding:14px;background-color:#242424;border:1px solid #444444;border-radius:3px;font-size:16px;color:#FFFFFF;outline:none}
 .field input::placeholder{color:#666666}
 .field input:focus{border-color:#2ABFBF}
-.sub-btn{
-width:100%;margin-top:20px;
-background-color:#2ABFBF;border:none;color:#000000;
-padding:16px;border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.95rem;font-weight:800;
-letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;display:block;
-}
-.sub-btn:disabled{opacity:.35;cursor:not-allowed}
-
-/* RESULTS */
+.sub-btn{width:100%;margin-top:20px;background-color:#2ABFBF;border:none;color:#000000;padding:16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;touch-action:manipulation;display:block}
+.sub-btn:disabled{opacity:.35}
 .results{max-width:720px;margin:0 auto;padding:36px 20px 80px}
 .r-hdr{margin-bottom:36px}
-.r-name{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.r-name::before{content:’’;display:block;width:22px;height:2px;background-color:#2ABFBF;flex-shrink:0}
-.r-hdr h2{font-family:‘Barlow Condensed’,sans-serif;font-weight:800;font-size:clamp(1.8rem,6vw,3rem);text-transform:uppercase;color:#FFFFFF;margin-bottom:10px;line-height:1}
+.r-name{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.r-name::before{content:'';display:block;width:22px;height:2px;background-color:#2ABFBF;flex-shrink:0}
+.r-hdr h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(1.8rem,6vw,3rem);text-transform:uppercase;color:#FFFFFF;margin-bottom:10px;line-height:1}
 .r-hdr p{color:#999999;font-size:.95rem;line-height:1.65}
-.sec-lbl{font-family:‘Barlow Condensed’,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.sec-lbl::after{content:’’;flex:1;height:1px;background-color:#252525}
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;background-color:#252525}
 .top3{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
 .tc{background-color:#1C1C1C;border:1px solid #333333;border-left:3px solid #2ABFBF;border-radius:4px;padding:20px 18px;display:flex;gap:14px;align-items:flex-start}
 .tc.r1{border-color:#2ABFBF;border-left-width:4px}
-.tc-rank{font-family:‘Barlow Condensed’,sans-serif;font-weight:800;font-size:2.4rem;color:rgba(42,191,191,.16);line-height:1;min-width:30px}
+.tc-rank{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:2.4rem;color:rgba(42,191,191,.16);line-height:1;min-width:30px}
 .tc-icon{font-size:1.5rem;margin-top:2px;flex-shrink:0}
 .tc-body{flex:1;min-width:0}
-.tc-name{font-family:‘Barlow Condensed’,sans-serif;font-size:1.15rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:6px}
+.tc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:6px}
 .tc.r1 .tc-name{color:#4DD4D4}
 .tc-desc{font-size:.85rem;color:#AAAAAA;line-height:1.65}
 .divider{height:1px;background-color:#252525;margin:32px 0}
@@ -180,29 +84,17 @@ letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;disp
 .bar-lbl{font-size:.78rem;color:#999999;min-width:130px;flex-shrink:0}
 .bar-track{flex:1;height:3px;background-color:#252525;border-radius:2px;overflow:hidden}
 .bar-fill{height:100%;background-color:#2ABFBF;transition:width 1s ease}
-.bar-pct{font-family:‘Barlow Condensed’,sans-serif;font-size:.75rem;color:#2ABFBF;font-weight:700;min-width:32px;text-align:right}
+.bar-pct{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;color:#2ABFBF;font-weight:700;min-width:32px;text-align:right}
 .min-group{margin-bottom:14px;padding:14px 16px;background-color:rgba(255,255,255,0.02);border:1px solid rgba(42,191,191,0.1);border-radius:4px}
-.min-gift{font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#777777;margin-bottom:10px}
+.min-gift{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#777777;margin-bottom:10px}
 .min-tags{display:flex;flex-wrap:wrap;gap:7px}
-.min-tag{background-color:rgba(42,191,191,0.06);border:1px solid rgba(42,191,191,0.2);color:#2ABFBF;padding:5px 12px;border-radius:2px;font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.min-tag{background-color:rgba(42,191,191,0.06);border:1px solid rgba(42,191,191,0.2);color:#2ABFBF;padding:5px 12px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .cta{background-color:#1C1C1C;border:1px solid rgba(42,191,191,0.3);border-top:3px solid #2ABFBF;border-radius:4px;padding:28px 24px;text-align:center;margin-bottom:16px}
-.cta h3{font-family:‘Barlow Condensed’,sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px}
+.cta h3{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px}
 .cta p{font-size:.9rem;color:#999999;margin-bottom:22px;line-height:1.6}
-.cta-btn{
-display:inline-block;background-color:#2ABFBF;border:none;color:#000000;
-padding:14px 32px;border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.9rem;font-weight:800;
-letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;
-}
-.rtk{
-display:block;margin:0 auto;background-color:#1C1C1C;
-border:1px solid #444444;color:#888888;
-padding:10px 26px;border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;font-size:.78rem;font-weight:700;
-letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;
-}
+.cta-btn{display:inline-block;background-color:#2ABFBF;border:none;color:#000000;padding:14px 32px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation}
+.rtk{display:block;margin:0 auto;background-color:#1C1C1C;border:1px solid #444444;color:#888888;padding:10px 26px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;touch-action:manipulation}
 </style>
-
 </head>
 <body>
 <div class="app">
@@ -306,12 +198,15 @@ letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;
   </div>
 
 </div>
+
 <script>
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="";
+
 var T={
   pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde você se encaixa naturalmente e como foi feito para servir.",startBtn:"Começar Avaliação",minutesCount:"45",minutes:"perguntas · ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso não tem nada a ver comigo","Talvez um pouco","Me identifico às vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Próximo →",seeResults:"Ver Resultados →",formTitle:"Quase lá!",formSub:"Insira suas informações para que um líder possa entrar em contato com você.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Número do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas são as áreas onde você é naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Onde Você Pode Servir",ctaTitle:"Pronto para o próximo passo?",ctaText:"Conecte-se com um líder ministerial para explorar onde você se encaixa melhor.",ctaBtn:"Conectar com um Líder",retakeBtn:"Refazer Avaliação"},
   en:{langBtn:"Português",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions · ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next →",seeResults:"See Results →",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Where You Could Serve",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment"}
 };
+
 var GIFTINGS=[
   {id:"worship",icon:"🎵",en:{name:"Worship & Music",desc:"There is a language in you that goes beyond words — music, poetry, and creative expression are the channels through which you connect with God.",ministries:["Worship Team","Choir","Instrumental Ministry"]},pt:{name:"Louvor & Música",desc:"Há em você uma linguagem que vai além das palavras — a música, a poesia e a expressão criativa são os canais pelos quais você se conecta com Deus.",ministries:["Equipe de Louvor","Coral","Ministério Instrumental"]}},
   {id:"helps",icon:"🔧",en:{name:"Gift of Helps",desc:"You naturally notice practical needs and feel drawn to support what others are building.",ministries:["Setup & Teardown","Parking Ministry","Facilities Support"]},pt:{name:"Dom de Ajudar",desc:"Você naturalmente percebe necessidades práticas e se sente atraído a sustentar o que outros estão construindo.",ministries:["Montagem e Desmontagem","Ministério de Estacionamento","Suporte às Instalações"]}},
@@ -329,13 +224,14 @@ var GIFTINGS=[
   {id:"creativity",icon:"🎨",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Graphics Team","Creative Arts","Set Design"]},pt:{name:"Criatividade",desc:"Você se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Equipe de Design","Artes Criativas","Cenografia"]}},
   {id:"prophetic",icon:"🔮",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Prayer Team","Intercession Ministry"]},pt:{name:"Discernimento & Profético",desc:"Você tende a perceber impressões, discernimento ou peso espiritual que outros talvez não percebam.",ministries:["Equipe de Oração","Ministério de Intercessão"]}}
 ];
+
 var QUESTIONS=[
   {g:"worship",en:"When I'm going through something — joy, pain, confusion — I find myself turning to a song, a poem, or even written words to express to God what I can't put into words on my own.",pt:"Quando estou passando por algo — uma alegria, uma dor, uma confusão — percebo que recorro a uma música, um poema ou até palavras escritas para expressar a Deus o que não consigo colocar em palavras sozinho."},
   {g:"helps",en:"When I'm in a space, I naturally notice what needs to be done — something that needs to be set up, carried, organized — and I feel an impulse to just take care of it.",pt:"Quando estou em um ambiente, naturalmente percebo o que precisa ser feito — algo que precisa ser arrumado, carregado, organizado — e sinto um impulso de simplesmente cuidar disso."},
   {g:"visual",en:"In gatherings, events, or everyday moments, I'm almost always the one capturing — taking photos, recording — because I feel like these moments need to be preserved.",pt:"Em reuniões, eventos ou momentos do dia a dia, quase sempre sou eu quem está registrando — tirando fotos, gravando vídeos — porque sinto que esses momentos precisam ser preservados."},
   {g:"evangelism",en:"When I see someone who is lost, my heart breaks — and there's a deep longing in me for that person to experience the joy and freedom of salvation.",pt:"Quando vejo alguém perdido, meu coração parte — e há em mim um anseio profundo de que essa pessoa experimente a alegria e a liberdade da salvação."},
   {g:"leadership",en:"Even when it's not my area of expertise, I notice the people around me naturally start looking to me when they need direction or someone to make a call.",pt:"Mesmo quando não é minha área de especialidade, percebo que as pessoas ao meu redor naturalmente começam a me buscar quando precisam de direção ou de alguém que tome uma decisão."},
-  {g:"helps",en:"There's something in me that wants to do the small things that allow someone else to shine in what they do — I don't need to be up front, I just want the whole thing to work well.",pt:"Há algo em mim que quer fazer as pequenas coisas que permitem que outra pessoa brilhe no que ela faz — não preciso estar na frente, só quero que o todo funcione bem."},
+  {g:"helps",en:"There's something in me that wants to do the small things that allow someone else to shine — I don't need to be up front, I just want the whole thing to work well.",pt:"Há algo em mim que quer fazer as pequenas coisas que permitem que outra pessoa brilhe — não preciso estar na frente, só quero que o todo funcione bem."},
   {g:"worship",en:"When I commit to something important, I feel a genuine desire to be the person who shows up — consistently and prepared — because I care about the people who are counting on me.",pt:"Quando me comprometo com algo importante, sinto um desejo genuíno de ser a pessoa que aparece — com constância e preparo — porque me importo com as pessoas que dependem de mim."},
   {g:"administration",en:"When I'm in a group or project, I naturally start seeing how the pieces could fit together better — who does what, what order makes sense, how to avoid chaos.",pt:"Quando estou em um grupo ou projeto, naturalmente começo a enxergar como as peças poderiam se encaixar melhor — quem faz o quê, qual é a ordem, como evitar o caos."},
   {g:"visual",en:"Even without equipment in hand, I often see in my head how something could be told — the scenes, the sequence, what would capture the essence of that moment.",pt:"Mesmo sem ter o equipamento na mão, frequentemente consigo ver na minha cabeça como algo poderia ser contado — as cenas, a sequência, o que capturaria a essência daquele momento."},
@@ -378,152 +274,148 @@ var QUESTIONS=[
   {g:"hospitality",en:"People have told me they felt at ease with me almost immediately — and I notice there's something in me that genuinely wants people to feel that way.",pt:"Já ouvi de pessoas que se sentiram à vontade comigo quase que imediatamente — e percebo que há algo em mim que genuinamente quer que as pessoas se sintam assim."}
 ];
 
-/* ── HELPERS ── */
-function tap(el,fn){
-el.addEventListener(‘touchend’,function(e){e.preventDefault();fn()},false);
-el.addEventListener(‘click’,fn,false);
-}
 function showScreen(id){
-document.querySelectorAll(’.screen’).forEach(function(s){s.classList.remove(‘active’)});
-document.getElementById(‘screen-’+id).classList.add(‘active’);
-window.scrollTo(0,0);
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo(0,0);
 }
-
-/* ── LANG ── */
 function applyLang(){
-var t=T[lang];
-document.getElementById(‘langBtn’).textContent=t.langBtn;
-document.getElementById(‘welcomeTitle’).innerHTML=t.welcomeTitle;
-document.getElementById(‘welcomeSub’).textContent=t.welcomeSub;
-document.getElementById(‘startBtnText’).textContent=t.startBtn;
-document.getElementById(‘minutesMeta’).textContent=t.minutesCount;
-document.getElementById(‘minutesText’).textContent=t.minutes;
-document.getElementById(‘formTitle’).textContent=t.formTitle;
-document.getElementById(‘formSub’).textContent=t.formSub;
-document.getElementById(‘nameLabel’).textContent=t.nameLabel;
-document.getElementById(‘emailLabel’).textContent=t.emailLabel;
-document.getElementById(‘whatsappLabel’).textContent=t.whatsappLabel;
-document.getElementById(‘inputName’).placeholder=t.namePh;
-document.getElementById(‘inputEmail’).placeholder=t.emailPh;
-document.getElementById(‘submitText’).textContent=t.submitBtn;
-if(document.getElementById(‘screen-assessment’).classList.contains(‘active’))renderQuestion();
-if(document.getElementById(‘screen-results’).classList.contains(‘active’)&&lastScores)renderResults(lastScores,lastSubmittedName);
+  var t=T[lang];
+  document.getElementById('langBtn').textContent=t.langBtn;
+  document.getElementById('welcomeTitle').innerHTML=t.welcomeTitle;
+  document.getElementById('welcomeSub').textContent=t.welcomeSub;
+  document.getElementById('startBtnText').textContent=t.startBtn;
+  document.getElementById('minutesMeta').textContent=t.minutesCount;
+  document.getElementById('minutesText').textContent=t.minutes;
+  document.getElementById('formTitle').textContent=t.formTitle;
+  document.getElementById('formSub').textContent=t.formSub;
+  document.getElementById('nameLabel').textContent=t.nameLabel;
+  document.getElementById('emailLabel').textContent=t.emailLabel;
+  document.getElementById('whatsappLabel').textContent=t.whatsappLabel;
+  document.getElementById('inputName').placeholder=t.namePh;
+  document.getElementById('inputEmail').placeholder=t.emailPh;
+  document.getElementById('submitText').textContent=t.submitBtn;
+  if(document.getElementById('screen-assessment').classList.contains('active'))renderQuestion();
+  if(document.getElementById('screen-results').classList.contains('active')&&lastScores)renderResults(lastScores,lastSubmittedName);
 }
-function toggleLang(){lang=lang===“pt”?“en”:“pt”;applyLang()}
-
-/* ── ASSESSMENT ── */
-function startAssessment(){current=0;answers={};lastScores=null;lastSubmittedName=””;showScreen(‘assessment’);renderQuestion()}
+function toggleLang(){lang=lang==="pt"?"en":"pt";applyLang()}
+function startAssessment(){current=0;answers={};lastScores=null;lastSubmittedName="";showScreen('assessment');renderQuestion()}
 function renderQuestion(){
-var q=QUESTIONS[current],t=T[lang],total=QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
-document.getElementById(‘progLabel’).textContent=t.progress(current+1,total);
-document.getElementById(‘progPct’).textContent=pct+’%’;
-document.getElementById(‘progFill’).style.width=pct+’%’;
-document.getElementById(‘qText’).textContent=q[lang];
-var wrap=document.getElementById(‘scaleWrap’);wrap.innerHTML=’’;
-t.scale.forEach(function(lbl,i){
-var btn=document.createElement(‘button’);
-btn.type=‘button’;
-btn.className=‘scale-btn’+(answers[current]===i?’ sel’:’’);
-btn.innerHTML=’<div class="snum">’+(i+1)+’</div><span class="slbl">’+lbl+’</span>’;
-tap(btn,function(idx){return function(){selectAnswer(idx)}}(i));
-wrap.appendChild(btn);
-});
-var nb=document.getElementById(‘nextBtn’),has=answers[current]!==undefined;
-nb.disabled=!has;nb.style.opacity=has?‘1’:‘0.35’;
-document.getElementById(‘nextText’).textContent=current<QUESTIONS.length-1?T[lang].next:T[lang].seeResults;
-document.getElementById(‘backText’).textContent=T[lang].back;
+  var q=QUESTIONS[current],t=T[lang],total=QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
+  document.getElementById('progLabel').textContent=t.progress(current+1,total);
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('qText').textContent=q[lang];
+  var wrap=document.getElementById('scaleWrap');wrap.innerHTML='';
+  t.scale.forEach(function(lbl,i){
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='scale-btn'+(answers[current]===i?' sel':'');
+    btn.innerHTML='<div class="snum">'+(i+1)+'</div><span class="slbl">'+lbl+'</span>';
+    (function(idx){
+      btn.addEventListener('touchstart',function(e){e.preventDefault();selectAnswer(idx)},{passive:false});
+      btn.addEventListener('click',function(){selectAnswer(idx)});
+    })(i);
+    wrap.appendChild(btn);
+  });
+  var nb=document.getElementById('nextBtn'),has=answers[current]!==undefined;
+  nb.disabled=!has;nb.style.opacity=has?'1':'0.35';
+  document.getElementById('nextText').textContent=current<QUESTIONS.length-1?T[lang].next:T[lang].seeResults;
+  document.getElementById('backText').textContent=T[lang].back;
 }
 function selectAnswer(i){
-answers[current]=i;
-document.querySelectorAll(’.scale-btn’).forEach(function(btn,idx){btn.className=‘scale-btn’+(idx===i?’ sel’:’’)});
-var nb=document.getElementById(‘nextBtn’);nb.disabled=false;nb.style.opacity=‘1’;
+  answers[current]=i;
+  document.querySelectorAll('.scale-btn').forEach(function(btn,idx){btn.className='scale-btn'+(idx===i?' sel':'')});
+  var nb=document.getElementById('nextBtn');nb.disabled=false;nb.style.opacity='1';
 }
 function handleNext(){
-if(answers[current]===undefined)return;
-if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}
-else showScreen(‘form’);
+  if(answers[current]===undefined)return;
+  if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}
+  else showScreen('form');
 }
-function handleBack(){if(current>0){current–;renderQuestion()}else showScreen(‘welcome’)}
-
-/* ── FORM ── */
+function handleBack(){if(current>0){current--;renderQuestion()}else showScreen('welcome')}
 function checkForm(){
-var n=document.getElementById(‘inputName’).value.trim(),e=document.getElementById(‘inputEmail’).value.trim();
-document.getElementById(‘submitBtn’).disabled=!(n&&e);
+  var n=document.getElementById('inputName').value.trim(),e=document.getElementById('inputEmail').value.trim();
+  document.getElementById('submitBtn').disabled=!(n&&e);
 }
 function calcScores(){
-var by={};
-QUESTIONS.forEach(function(q,i){if(answers[i]!==undefined){if(!by[q.g])by[q.g]=[];by[q.g].push(answers[i])}});
-var sc=GIFTINGS.map(function(g){
-var s=by[g.id]||[],sorted=s.slice().sort(function(a,b){return b-a}),top2=sorted.slice(0,2),avg=top2.length?top2.reduce(function(a,b){return a+b},0)/top2.length:0;
-return{id:g.id,icon:g.icon,en:g.en,pt:g.pt,score:avg,pct:Math.round((avg/4)*100)};
-});
-sc.sort(function(a,b){return b.score-a.score});return sc;
+  var by={};
+  QUESTIONS.forEach(function(q,i){if(answers[i]!==undefined){if(!by[q.g])by[q.g]=[];by[q.g].push(answers[i])}});
+  var sc=GIFTINGS.map(function(g){
+    var s=by[g.id]||[],sorted=s.slice().sort(function(a,b){return b-a}),top2=sorted.slice(0,2),avg=top2.length?top2.reduce(function(a,b){return a+b},0)/top2.length:0;
+    return{id:g.id,icon:g.icon,en:g.en,pt:g.pt,score:avg,pct:Math.round((avg/4)*100)};
+  });
+  sc.sort(function(a,b){return b.score-a.score});return sc;
 }
 function handleSubmit(){
-var n=document.getElementById(‘inputName’).value.trim(),e=document.getElementById(‘inputEmail’).value.trim();
-if(!n||!e)return;
-lastScores=calcScores();lastSubmittedName=n;
-renderResults(lastScores,lastSubmittedName);showScreen(‘results’);
+  var n=document.getElementById('inputName').value.trim(),e=document.getElementById('inputEmail').value.trim();
+  if(!n||!e)return;
+  lastScores=calcScores();lastSubmittedName=n;
+  renderResults(lastScores,lastSubmittedName);showScreen('results');
 }
-
-/* ── RESULTS ── */
 function renderResults(scores,name){
-var t=T[lang],rn=document.getElementById(‘rName’);
-if(name){rn.textContent=name;rn.style.display=‘flex’}else{rn.textContent=’’;rn.style.display=‘none’}
-document.getElementById(‘rTitle’).textContent=t.rTitle;
-document.getElementById(‘rSubtitle’).textContent=t.rSubtitle;
-document.getElementById(‘topLabel’).textContent=t.topLabel;
-document.getElementById(‘allLabel’).textContent=t.allLabel;
-document.getElementById(‘minLabel’).textContent=t.minLabel;
-document.getElementById(‘ctaTitle’).textContent=t.ctaTitle;
-document.getElementById(‘ctaText’).textContent=t.ctaText;
-document.getElementById(‘ctaBtn’).textContent=t.ctaBtn;
-document.getElementById(‘retakeBtn’).textContent=t.retakeBtn;
-var top3El=document.getElementById(‘top3’);top3El.innerHTML=’’;
-scores.slice(0,3).forEach(function(g,i){
-var d=document.createElement(‘div’);d.className=‘tc r’+(i+1);
-d.innerHTML=’<div class="tc-rank">’+(i+1)+’</div><div class="tc-icon">’+g.icon+’</div><div class="tc-body"><div class="tc-name">’+g[lang].name+’</div><div class="tc-desc">’+g[lang].desc+’</div></div>’;
-top3El.appendChild(d);
-});
-var barsEl=document.getElementById(‘allBars’);barsEl.innerHTML=’’;
-scores.forEach(function(g){
-var r=document.createElement(‘div’);r.className=‘bar-row’;
-r.innerHTML=’<div class="bar-lbl">’+g.icon+’ ‘+g[lang].name+’</div><div class="bar-track"><div class="bar-fill" style="width:0%" data-pct="'+g.pct+'%"></div></div><div class="bar-pct">’+g.pct+’%</div>’;
-barsEl.appendChild(r);
-});
-setTimeout(function(){document.querySelectorAll(’.bar-fill’).forEach(function(el){el.style.width=el.getAttribute(‘data-pct’)})},100);
-var minEl=document.getElementById(‘ministriesOut’);minEl.innerHTML=’’;
-scores.slice(0,5).forEach(function(g){
-var grp=document.createElement(‘div’);grp.className=‘min-group’;
-var tags=g[lang].ministries.map(function(m){return’<span class="min-tag">’+m+’</span>’}).join(’’);
-grp.innerHTML=’<div class="min-gift">’+g.icon+’ ‘+g[lang].name+’</div><div class="min-tags">’+tags+’</div>’;
-minEl.appendChild(grp);
-});
+  var t=T[lang],rn=document.getElementById('rName');
+  if(name){rn.textContent=name;rn.style.display='flex'}else{rn.textContent='';rn.style.display='none'}
+  document.getElementById('rTitle').textContent=t.rTitle;
+  document.getElementById('rSubtitle').textContent=t.rSubtitle;
+  document.getElementById('topLabel').textContent=t.topLabel;
+  document.getElementById('allLabel').textContent=t.allLabel;
+  document.getElementById('minLabel').textContent=t.minLabel;
+  document.getElementById('ctaTitle').textContent=t.ctaTitle;
+  document.getElementById('ctaText').textContent=t.ctaText;
+  document.getElementById('ctaBtn').textContent=t.ctaBtn;
+  document.getElementById('retakeBtn').textContent=t.retakeBtn;
+  var top3El=document.getElementById('top3');top3El.innerHTML='';
+  scores.slice(0,3).forEach(function(g,i){
+    var d=document.createElement('div');d.className='tc r'+(i+1);
+    d.innerHTML='<div class="tc-rank">'+(i+1)+'</div><div class="tc-icon">'+g.icon+'</div><div class="tc-body"><div class="tc-name">'+g[lang].name+'</div><div class="tc-desc">'+g[lang].desc+'</div></div>';
+    top3El.appendChild(d);
+  });
+  var barsEl=document.getElementById('allBars');barsEl.innerHTML='';
+  scores.forEach(function(g){
+    var r=document.createElement('div');r.className='bar-row';
+    r.innerHTML='<div class="bar-lbl">'+g.icon+' '+g[lang].name+'</div><div class="bar-track"><div class="bar-fill" style="width:0%" data-pct="'+g.pct+'%"></div></div><div class="bar-pct">'+g.pct+'%</div>';
+    barsEl.appendChild(r);
+  });
+  setTimeout(function(){document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.getAttribute('data-pct')})},100);
+  var minEl=document.getElementById('ministriesOut');minEl.innerHTML='';
+  scores.slice(0,5).forEach(function(g){
+    var grp=document.createElement('div');grp.className='min-group';
+    var tags=g[lang].ministries.map(function(m){return'<span class="min-tag">'+m+'</span>'}).join('');
+    grp.innerHTML='<div class="min-gift">'+g.icon+' '+g[lang].name+'</div><div class="min-tags">'+tags+'</div>';
+    minEl.appendChild(grp);
+  });
 }
 function handleRetake(){
-answers={};current=0;lastScores=null;lastSubmittedName=””;
-document.getElementById(‘inputName’).value=’’;
-document.getElementById(‘inputEmail’).value=’’;
-document.getElementById(‘inputWhatsapp’).value=’’;
-document.getElementById(‘submitBtn’).disabled=true;
-showScreen(‘welcome’);
+  answers={};current=0;lastScores=null;lastSubmittedName="";
+  document.getElementById('inputName').value='';
+  document.getElementById('inputEmail').value='';
+  document.getElementById('inputWhatsapp').value='';
+  document.getElementById('submitBtn').disabled=true;
+  showScreen('welcome');
 }
 
-/* ── WIRE UP ALL BUTTONS — no onclick in HTML ── */
-document.addEventListener(‘DOMContentLoaded’,function(){
-tap(document.getElementById(‘langBtn’),toggleLang);
-tap(document.getElementById(‘startBtn’),startAssessment);
-tap(document.getElementById(‘backBtn’),handleBack);
-tap(document.getElementById(‘nextBtn’),handleNext);
-tap(document.getElementById(‘retakeBtn’),handleRetake);
+/* Wire buttons — at bottom of body so DOM is already ready, no DOMContentLoaded needed */
+document.getElementById('langBtn').addEventListener('touchstart',function(e){e.preventDefault();toggleLang()},{passive:false});
+document.getElementById('langBtn').addEventListener('click',toggleLang);
 
-/* form inputs — use regular input event (not touch) */
-document.getElementById(‘inputName’).addEventListener(‘input’,checkForm);
-document.getElementById(‘inputEmail’).addEventListener(‘input’,checkForm);
+document.getElementById('startBtn').addEventListener('touchstart',function(e){e.preventDefault();startAssessment()},{passive:false});
+document.getElementById('startBtn').addEventListener('click',startAssessment);
 
-/* submit button — also needs tap */
-tap(document.getElementById(‘submitBtn’),handleSubmit);
-});
+document.getElementById('backBtn').addEventListener('touchstart',function(e){e.preventDefault();handleBack()},{passive:false});
+document.getElementById('backBtn').addEventListener('click',handleBack);
+
+document.getElementById('nextBtn').addEventListener('touchstart',function(e){e.preventDefault();handleNext()},{passive:false});
+document.getElementById('nextBtn').addEventListener('click',handleNext);
+
+document.getElementById('submitBtn').addEventListener('touchstart',function(e){e.preventDefault();handleSubmit()},{passive:false});
+document.getElementById('submitBtn').addEventListener('click',handleSubmit);
+
+document.getElementById('retakeBtn').addEventListener('touchstart',function(e){e.preventDefault();handleRetake()},{passive:false});
+document.getElementById('retakeBtn').addEventListener('click',handleRetake);
+
+document.getElementById('inputName').addEventListener('input',checkForm);
+document.getElementById('inputEmail').addEventListener('input',checkForm);
 </script>
 
 </body>
