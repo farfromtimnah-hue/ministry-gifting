@@ -16,25 +16,18 @@ body{overflow-x:hidden;background-color:#0A0A0A}
 .screen{display:none}
 .screen.active{display:block}
 
-/* AGGRESSIVE iOS RESET — must come before everything */
-button,a[role=“button”]{
--webkit-appearance:none !important;
--moz-appearance:none !important;
-appearance:none !important;
+/* iOS Safari fix: cursor:pointer makes elements tappable */
+button{
+-webkit-appearance:none;
+appearance:none;
 font-family:‘Barlow’,sans-serif;
-touch-action:manipulation;
 -webkit-tap-highlight-color:transparent;
 cursor:pointer;
-border-radius:3px;
-display:inline-flex;
-align-items:center;
-justify-content:center;
 }
-input,textarea,select{
--webkit-appearance:none !important;
-appearance:none !important;
+input{
+-webkit-appearance:none;
+appearance:none;
 font-family:‘Barlow’,sans-serif;
-border-radius:3px;
 }
 
 /* NAV */
@@ -44,11 +37,9 @@ border-radius:3px;
 .logo-text{font-family:‘Barlow Condensed’,sans-serif;font-weight:700;font-size:1rem;letter-spacing:.07em;text-transform:uppercase;color:#FFFFFF}
 .logo-text span{color:#2ABFBF}
 .lang-btn{
--webkit-appearance:none !important;
-appearance:none !important;
-background-color:#0A0A0A !important;
-border:1.5px solid #2ABFBF !important;
-color:#2ABFBF !important;
+background-color:#0A0A0A;
+border:1.5px solid #2ABFBF;
+color:#2ABFBF;
 padding:8px 16px;
 border-radius:3px;
 font-family:‘Barlow Condensed’,sans-serif;
@@ -68,14 +59,12 @@ cursor:pointer;
 .welcome h1 .ac{color:#2ABFBF;display:block}
 .sub{font-size:1rem;color:#999999;line-height:1.68;margin:24px 0 36px;max-width:500px}
 .start-btn{
--webkit-appearance:none !important;
-appearance:none !important;
-display:inline-flex !important;
+display:inline-flex;
 align-items:center;
 gap:10px;
-background-color:#2ABFBF !important;
-color:#000000 !important;
-border:none !important;
+background-color:#2ABFBF;
+color:#000000;
+border:none;
 padding:16px 34px;
 font-family:‘Barlow Condensed’,sans-serif;
 font-size:.95rem;
@@ -100,16 +89,14 @@ cursor:pointer;
 .q-text{font-size:1rem;line-height:1.72;color:#F0F0F0;font-weight:400;margin-bottom:28px}
 .scale-wrap{display:flex;flex-direction:column;gap:8px}
 .scale-btn{
--webkit-appearance:none !important;
-appearance:none !important;
-display:flex !important;
+display:flex;
 align-items:center;
 gap:14px;
 padding:14px 16px;
-border:1px solid #444444 !important;
+border:1px solid #444444;
 border-radius:3px;
-background-color:#2A2A2A !important;
-color:#CCCCCC !important;
+background-color:#2A2A2A;
+color:#CCCCCC;
 text-align:left;
 width:100%;
 min-height:52px;
@@ -117,62 +104,33 @@ font-family:‘Barlow’,sans-serif;
 cursor:pointer;
 }
 .scale-btn.sel{
-border-color:#2ABFBF !important;
-background-color:#0d2e2e !important;
-color:#FFFFFF !important;
+border-color:#2ABFBF;
+background-color:#0d2e2e;
+color:#FFFFFF;
 }
 .snum{
-width:30px;
-height:30px;
-border-radius:3px;
+width:30px;height:30px;border-radius:3px;
 border:1.5px solid #666666;
-display:flex;
-align-items:center;
-justify-content:center;
+display:flex;align-items:center;justify-content:center;
 flex-shrink:0;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.82rem;
-font-weight:700;
-color:#AAAAAA;
-background-color:#1C1C1C;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.82rem;font-weight:700;
+color:#AAAAAA;background-color:#1C1C1C;
 }
 .scale-btn.sel .snum{border-color:#2ABFBF;background-color:#2ABFBF;color:#000000}
 .slbl{font-size:.88rem;color:#CCCCCC;line-height:1.4;text-align:left}
 .scale-btn.sel .slbl{color:#FFFFFF}
 .nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px}
 .btn-bk{
--webkit-appearance:none !important;
-appearance:none !important;
-background-color:#1C1C1C !important;
-border:1px solid #444444 !important;
-color:#AAAAAA !important;
-padding:12px 20px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.8rem;
-font-weight:700;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:48px;
-flex:1;
-cursor:pointer;
+background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;
+padding:12px 20px;border-radius:3px;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;
 }
 .btn-nx{
--webkit-appearance:none !important;
-appearance:none !important;
-background-color:#2ABFBF !important;
-border:none !important;
-color:#000000 !important;
-padding:12px 20px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.85rem;
-font-weight:800;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:48px;
-flex:1;
-cursor:pointer;
+background-color:#2ABFBF;border:none;color:#000000;
+padding:12px 20px;border-radius:3px;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:800;
+letter-spacing:.1em;text-transform:uppercase;min-height:48px;flex:1;cursor:pointer;
 }
 .btn-nx:disabled{opacity:.35;cursor:not-allowed}
 
@@ -184,37 +142,18 @@ cursor:pointer;
 .field{margin-bottom:16px}
 .field label{display:block;font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#999999;margin-bottom:7px}
 .field input{
--webkit-appearance:none !important;
-appearance:none !important;
-width:100%;
-padding:14px;
-background-color:#242424 !important;
-border:1px solid #444444;
-border-radius:3px;
-font-size:16px;
-color:#FFFFFF !important;
-outline:none;
+width:100%;padding:14px;
+background-color:#242424;border:1px solid #444444;border-radius:3px;
+font-size:16px;color:#FFFFFF;outline:none;
 }
 .field input::placeholder{color:#666666}
 .field input:focus{border-color:#2ABFBF}
 .sub-btn{
--webkit-appearance:none !important;
-appearance:none !important;
-width:100%;
-margin-top:20px;
-background-color:#2ABFBF !important;
-border:none !important;
-color:#000000 !important;
-padding:16px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.95rem;
-font-weight:800;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:52px;
-cursor:pointer;
-display:block;
+width:100%;margin-top:20px;
+background-color:#2ABFBF;border:none;color:#000000;
+padding:16px;border-radius:3px;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.95rem;font-weight:800;
+letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;display:block;
 }
 .sub-btn:disabled{opacity:.35;cursor:not-allowed}
 
@@ -250,39 +189,17 @@ display:block;
 .cta h3{font-family:‘Barlow Condensed’,sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px}
 .cta p{font-size:.9rem;color:#999999;margin-bottom:22px;line-height:1.6}
 .cta-btn{
--webkit-appearance:none !important;
-appearance:none !important;
-display:inline-block !important;
-background-color:#2ABFBF !important;
-border:none !important;
-color:#000000 !important;
-padding:14px 32px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.9rem;
-font-weight:800;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:48px;
-cursor:pointer;
+display:inline-block;background-color:#2ABFBF;border:none;color:#000000;
+padding:14px 32px;border-radius:3px;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.9rem;font-weight:800;
+letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;
 }
 .rtk{
--webkit-appearance:none !important;
-appearance:none !important;
-display:block !important;
-margin:0 auto;
-background-color:#1C1C1C !important;
-border:1px solid #444444 !important;
-color:#888888 !important;
-padding:10px 26px;
-border-radius:3px;
-font-family:‘Barlow Condensed’,sans-serif;
-font-size:.78rem;
-font-weight:700;
-letter-spacing:.1em;
-text-transform:uppercase;
-min-height:44px;
-cursor:pointer;
+display:block;margin:0 auto;background-color:#1C1C1C;
+border:1px solid #444444;color:#888888;
+padding:10px 26px;border-radius:3px;
+font-family:‘Barlow Condensed’,sans-serif;font-size:.78rem;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;
 }
 </style>
 
@@ -295,7 +212,7 @@ cursor:pointer;
       <div class="logo-dot"></div>
       <div class="logo-text">Lagoinha <span>Tampa</span></div>
     </div>
-    <button type="button" class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+    <button type="button" class="lang-btn" id="langBtn">English</button>
   </nav>
 
   <div class="screen active" id="screen-welcome">
@@ -303,7 +220,7 @@ cursor:pointer;
       <div class="eyebrow">Lagoinha Tampa</div>
       <h1 id="welcomeTitle">Descubra<span class="ac">Seus Dons</span></h1>
       <p class="sub" id="welcomeSub">Encontre onde você se encaixa naturalmente e como foi feito para servir.</p>
-      <button type="button" class="start-btn" onclick="startAssessment()">
+      <button type="button" class="start-btn" id="startBtn">
         <span id="startBtnText">Começar Avaliação</span> →
       </button>
       <p class="meta"><span id="minutesMeta">45</span> <span id="minutesText">perguntas · ~15 minutos</span></p>
@@ -325,8 +242,8 @@ cursor:pointer;
         <p class="q-text" id="qText"></p>
         <div class="scale-wrap" id="scaleWrap"></div>
         <div class="nav-btns">
-          <button type="button" class="btn-bk" id="backBtn" onclick="handleBack()">← <span id="backText">Voltar</span></button>
-          <button type="button" class="btn-nx" id="nextBtn" onclick="handleNext()" disabled>
+          <button type="button" class="btn-bk" id="backBtn">← <span id="backText">Voltar</span></button>
+          <button type="button" class="btn-nx" id="nextBtn" disabled>
             <span id="nextText">Próximo →</span>
           </button>
         </div>
@@ -342,17 +259,17 @@ cursor:pointer;
         <p id="formSub">Insira suas informações para que um líder possa entrar em contato com você.</p>
         <div class="field">
           <label id="nameLabel">Seu Nome</label>
-          <input type="text" id="inputName" placeholder="Seu nome completo" oninput="checkForm()">
+          <input type="text" id="inputName" placeholder="Seu nome completo">
         </div>
         <div class="field">
           <label id="emailLabel">Email</label>
-          <input type="email" id="inputEmail" placeholder="email@exemplo.com" oninput="checkForm()">
+          <input type="email" id="inputEmail" placeholder="email@exemplo.com">
         </div>
         <div class="field">
           <label id="whatsappLabel">Número do WhatsApp</label>
           <input type="tel" id="inputWhatsapp" placeholder="+1 (813) 000-0000">
         </div>
-        <button type="button" class="sub-btn" id="submitBtn" onclick="handleSubmit()" disabled>
+        <button type="button" class="sub-btn" id="submitBtn" disabled>
           <span id="submitText">Ver Meus Resultados</span>
         </button>
       </div>
@@ -384,7 +301,7 @@ cursor:pointer;
         <p id="ctaText">Conecte-se com um líder ministerial para explorar onde você se encaixa melhor.</p>
         <button type="button" class="cta-btn" id="ctaBtn">Conectar com um Líder</button>
       </div>
-      <button type="button" class="rtk" onclick="handleRetake()" id="retakeBtn">Refazer Avaliação</button>
+      <button type="button" class="rtk" id="retakeBtn">Refazer Avaliação</button>
     </div>
   </div>
 
@@ -461,9 +378,20 @@ var QUESTIONS=[
   {g:"hospitality",en:"People have told me they felt at ease with me almost immediately — and I notice there's something in me that genuinely wants people to feel that way.",pt:"Já ouvi de pessoas que se sentiram à vontade comigo quase que imediatamente — e percebo que há algo em mim que genuinamente quer que as pessoas se sintam assim."}
 ];
 
-function showScreen(id){document.querySelectorAll(’.screen’).forEach(function(s){s.classList.remove(‘active’)});document.getElementById(‘screen-’+id).classList.add(‘active’);window.scrollTo({top:0,behavior:‘smooth’})}
-function toggleLang(){
-lang=lang===“pt”?“en”:“pt”;var t=T[lang];
+/* ── HELPERS ── */
+function tap(el,fn){
+el.addEventListener(‘touchend’,function(e){e.preventDefault();fn()},false);
+el.addEventListener(‘click’,fn,false);
+}
+function showScreen(id){
+document.querySelectorAll(’.screen’).forEach(function(s){s.classList.remove(‘active’)});
+document.getElementById(‘screen-’+id).classList.add(‘active’);
+window.scrollTo(0,0);
+}
+
+/* ── LANG ── */
+function applyLang(){
+var t=T[lang];
 document.getElementById(‘langBtn’).textContent=t.langBtn;
 document.getElementById(‘welcomeTitle’).innerHTML=t.welcomeTitle;
 document.getElementById(‘welcomeSub’).textContent=t.welcomeSub;
@@ -481,6 +409,9 @@ document.getElementById(‘submitText’).textContent=t.submitBtn;
 if(document.getElementById(‘screen-assessment’).classList.contains(‘active’))renderQuestion();
 if(document.getElementById(‘screen-results’).classList.contains(‘active’)&&lastScores)renderResults(lastScores,lastSubmittedName);
 }
+function toggleLang(){lang=lang===“pt”?“en”:“pt”;applyLang()}
+
+/* ── ASSESSMENT ── */
 function startAssessment(){current=0;answers={};lastScores=null;lastSubmittedName=””;showScreen(‘assessment’);renderQuestion()}
 function renderQuestion(){
 var q=QUESTIONS[current],t=T[lang],total=QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
@@ -490,10 +421,11 @@ document.getElementById(‘progFill’).style.width=pct+’%’;
 document.getElementById(‘qText’).textContent=q[lang];
 var wrap=document.getElementById(‘scaleWrap’);wrap.innerHTML=’’;
 t.scale.forEach(function(lbl,i){
-var btn=document.createElement(‘button’);btn.type=‘button’;
+var btn=document.createElement(‘button’);
+btn.type=‘button’;
 btn.className=‘scale-btn’+(answers[current]===i?’ sel’:’’);
 btn.innerHTML=’<div class="snum">’+(i+1)+’</div><span class="slbl">’+lbl+’</span>’;
-btn.onclick=function(){selectAnswer(i)};
+tap(btn,function(idx){return function(){selectAnswer(idx)}}(i));
 wrap.appendChild(btn);
 });
 var nb=document.getElementById(‘nextBtn’),has=answers[current]!==undefined;
@@ -508,10 +440,12 @@ var nb=document.getElementById(‘nextBtn’);nb.disabled=false;nb.style.opacity
 }
 function handleNext(){
 if(answers[current]===undefined)return;
-if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo({top:0,behavior:‘smooth’})}
+if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}
 else showScreen(‘form’);
 }
 function handleBack(){if(current>0){current–;renderQuestion()}else showScreen(‘welcome’)}
+
+/* ── FORM ── */
 function checkForm(){
 var n=document.getElementById(‘inputName’).value.trim(),e=document.getElementById(‘inputEmail’).value.trim();
 document.getElementById(‘submitBtn’).disabled=!(n&&e);
@@ -531,6 +465,8 @@ if(!n||!e)return;
 lastScores=calcScores();lastSubmittedName=n;
 renderResults(lastScores,lastSubmittedName);showScreen(‘results’);
 }
+
+/* ── RESULTS ── */
 function renderResults(scores,name){
 var t=T[lang],rn=document.getElementById(‘rName’);
 if(name){rn.textContent=name;rn.style.display=‘flex’}else{rn.textContent=’’;rn.style.display=‘none’}
@@ -572,6 +508,22 @@ document.getElementById(‘inputWhatsapp’).value=’’;
 document.getElementById(‘submitBtn’).disabled=true;
 showScreen(‘welcome’);
 }
+
+/* ── WIRE UP ALL BUTTONS — no onclick in HTML ── */
+document.addEventListener(‘DOMContentLoaded’,function(){
+tap(document.getElementById(‘langBtn’),toggleLang);
+tap(document.getElementById(‘startBtn’),startAssessment);
+tap(document.getElementById(‘backBtn’),handleBack);
+tap(document.getElementById(‘nextBtn’),handleNext);
+tap(document.getElementById(‘retakeBtn’),handleRetake);
+
+/* form inputs — use regular input event (not touch) */
+document.getElementById(‘inputName’).addEventListener(‘input’,checkForm);
+document.getElementById(‘inputEmail’).addEventListener(‘input’,checkForm);
+
+/* submit button — also needs tap */
+tap(document.getElementById(‘submitBtn’),handleSubmit);
+});
 </script>
 
 </body>
