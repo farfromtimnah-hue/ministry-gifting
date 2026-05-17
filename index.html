@@ -407,9 +407,9 @@ function handleSubmit(){
     email:e,
     whatsapp:w,
     language:lang.toUpperCase(),
-    gifting_1:lastScores[0]?lastScores[0].en:'',
-    gifting_2:lastScores[1]?lastScores[1].en:'',
-    gifting_3:lastScores[2]?lastScores[2].en:'',
+    gifting_1:lastScores[0]?lastScores[0].en.name:'',
+    gifting_2:lastScores[1]?lastScores[1].en.name:'',
+    gifting_3:lastScores[2]?lastScores[2].en.name:'',
     scores:scores
   };
   fetch('https://ltc-api.farfromtimnah.workers.dev/submit',{
