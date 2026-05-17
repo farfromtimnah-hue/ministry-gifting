@@ -347,9 +347,21 @@ function calcScores(){
   sc.sort(function(a,b){return b.score-a.score});return sc;
 }
 function handleSubmit(){
-  var n=document.getElementById('inputName').value.trim(),e=document.getElementById('inputEmail').value.trim();
+  var n=document.getElementById('inputName').value.trim(),e=document.getElementById('inputEmail').value.trim(),w=document.getElementById('inputWhatsapp')?document.getElementById('inputWhatsapp').value.trim():'';
   if(!n||!e)return;
   lastScores=calcScores();lastSubmittedName=n;
+  var scores={};lastScores.forEach(function(g){scores[g.id]=g.pct;});
+  fetch('https://ltc-api.farfromtimnah.workers.dev/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name:n,email:e,whatsapp:w,language:lang.toUpperCase(),
+      gifting_1:lastScores[0]?lastScores[0].en:'',
+      gifting_2:lastScores[1]?lastScores[1].en:'',
+      gifting_3:lastScores[2]?lastScores[2].en:'',
+      scores:scores
+    })
+  }).catch(function(){});
   renderResults(lastScores,lastSubmittedName);showScreen('results');
 }
 function renderResults(scores,name){
