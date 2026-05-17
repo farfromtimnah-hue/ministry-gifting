@@ -347,23 +347,33 @@ function calcScores(){
   sc.sort(function(a,b){return b.score-a.score});return sc;
 }
 function handleSubmit(){
-  var n=document.getElementById('inputName').value.trim(),e=document.getElementById('inputEmail').value.trim(),w=document.getElementById('inputWhatsapp')?document.getElementById('inputWhatsapp').value.trim():'';
+  var n=document.getElementById('inputName').value.trim();
+  var e=document.getElementById('inputEmail').value.trim();
+  var w=document.getElementById('inputWhatsapp').value.trim();
   if(!n||!e)return;
-  lastScores=calcScores();lastSubmittedName=n;
-  var scores={};lastScores.forEach(function(g){scores[g.id]=g.pct;});
+  lastScores=calcScores();
+  lastSubmittedName=n;
+  var scores={};
+  lastScores.forEach(function(g){scores[g.id]=g.pct;});
+  var payload={
+    name:n,
+    email:e,
+    whatsapp:w,
+    language:lang.toUpperCase(),
+    gifting_1:lastScores[0]?lastScores[0].en:'',
+    gifting_2:lastScores[1]?lastScores[1].en:'',
+    gifting_3:lastScores[2]?lastScores[2].en:'',
+    scores:scores
+  };
   fetch('https://ltc-api.farfromtimnah.workers.dev/submit',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      name:n,email:e,whatsapp:w,language:lang.toUpperCase(),
-      gifting_1:lastScores[0]?lastScores[0].en:'',
-      gifting_2:lastScores[1]?lastScores[1].en:'',
-      gifting_3:lastScores[2]?lastScores[2].en:'',
-      scores:scores
-    })
+    body:JSON.stringify(payload)
   }).catch(function(){});
-  renderResults(lastScores,lastSubmittedName);showScreen('results');
+  renderResults(lastScores,lastSubmittedName);
+  showScreen('results');
 }
+
 function renderResults(scores,name){
   var t=T[lang],rn=document.getElementById('rName');
   if(name){rn.textContent=name;rn.style.display='flex'}else{rn.textContent='';rn.style.display='none'}
