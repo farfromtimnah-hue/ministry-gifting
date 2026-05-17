@@ -401,7 +401,7 @@ function handleSubmit(){
   lastScores=calcScores();
   lastSubmittedName=n;
   var scores={};
-  lastScores.forEach(function(g){scores[g.en]=g.pct;});
+  lastScores.forEach(function(g){scores[g.en.name]=g.pct;});
   var payload={
     name:n,
     email:e,
