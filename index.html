@@ -95,7 +95,6 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .cta p{font-size:.9rem;color:#999999;margin-bottom:22px;line-height:1.6}
 .cta-btn{display:inline-block;background-color:#2ABFBF;border:none;color:#000000;padding:14px 32px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation}
 .rtk{display:block;margin:0 auto;background-color:#1C1C1C;border:1px solid #444444;color:#888888;padding:10px 26px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;touch-action:manipulation}
-/* Share More styles */
 .share-more{background-color:#141414;border:1px solid #252525;border-top:2px solid rgba(42,191,191,0.4);border-radius:4px;padding:28px 24px;margin-bottom:32px}
 .share-more-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:8px}
 .share-more h3{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:8px}
@@ -218,11 +217,10 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
       </div>
       <div class="divider"></div>
 
-      <!-- SHARE MORE SECTION -->
       <div class="share-more" id="shareMoreSection">
         <div class="share-more-eyebrow" id="shareEyebrow">Para os Pastores</div>
         <h3 id="shareTitle">Ajude-nos a te conhecer melhor</h3>
-        <p class="share-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto — e e completamente opcional.</p>
+        <p class="share-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.</p>
         <div class="share-paths">
           <button type="button" class="share-path-btn" id="pathServing" onclick="selectPath('serving')">
             <span id="pathServingText">Ja sirvo em algum ministerio</span>
@@ -233,25 +231,20 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         </div>
 
         <div class="share-form" id="shareForm">
-          <!-- Ministry chips — only shown for "already serving" path -->
           <div id="ministrySection" style="display:none;margin-top:18px">
             <span class="share-field-label" id="ministryLabel">Em quais ministerios voce ja serve?</span>
             <div class="chip-wrap" id="ministryChips"></div>
+            <span class="share-field-label" id="carismaLabel" style="margin-top:4px">Voce completou o Carisma?</span>
+            <div class="chip-wrap" id="carismaChips"></div>
           </div>
-
-          <!-- Special group -->
           <div style="margin-top:4px">
             <span class="share-field-label" id="groupLabel">Qual grupo voce faz parte?</span>
             <div class="chip-wrap" id="groupChips"></div>
           </div>
-
-          <!-- Languages -->
           <div>
             <span class="share-field-label" id="langSpokenLabel">Quais idiomas voce fala?</span>
             <div class="chip-wrap" id="langChips"></div>
           </div>
-
-          <!-- Photo upload -->
           <div class="share-photo-wrap">
             <span class="share-field-label" id="photoLabel">Uma foto sua (opcional)</span>
             <label class="photo-label-box" for="photoInput">
@@ -264,7 +257,6 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             </label>
             <input type="file" id="photoInput" accept="image/*">
           </div>
-
           <button type="button" class="share-submit-btn" id="shareSubmitBtn" onclick="submitShareMore()">
             <span id="shareSubmitText">Compartilhar com os Pastores</span>
           </button>
@@ -288,37 +280,37 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 
 <script>
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubmissionId=null;
-var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null;
+var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
 
-var MINISTRY_LIST=["Worship Team","Media - ProPresenter","Media - Lights","Media - Sound","Media - Stream","Media - Camera","Photography","Social Media","Hospitality - Cafe","Hospitality - Welcome","Stage Operations","Intercession","Kids Ministry","Youth","Legacy","English Service","Parking","Setup & Teardown"];
-var GROUP_LIST_PT=["Jovens (Youth)","Link (Pre-teen)","Legacy","Servico em Ingles","Outro"];
-var GROUP_LIST_EN=["Youth","Link (Pre-teen)","Legacy","English Service","Other"];
-var GROUP_VALS=["Youth","Link","Legacy","English Service","Other"];
+var MINISTRY_LIST=["Worship Team","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Translation","Lagoinha Kids","Intercession","Volunteer Coffee","Hospitality - Welcome","Parking","Setup & Teardown","GC Leader","Legacy","English Service"];
+var GROUP_LIST_PT=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","Outro"];
+var GROUP_LIST_EN=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","Other"];
+var GROUP_VALS=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","Other"];
 var LANG_LIST_PT=["Portugues","Ingles","Ambos"];
 var LANG_LIST_EN=["Portugues","English","Both"];
 var LANG_VALS=["Portugues","English","Both"];
 
 var T={
-  pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",startBtn:"Comecar Avaliacao",minutesCount:"45",minutes:"perguntas . ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Proximo ->",seeResults:"Ver Resultados ->",formTitle:"Quase la!",formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Numero do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Onde Voce Pode Servir",ctaTitle:"Pronto para o proximo passo?",ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",ctaBtn:"Conectar com um Lider",retakeBtn:"Refazer Avaliacao",emailInvalid:"Digite um email valido.",whatsappInvalid:"Digite pelo menos 8 digitos validos.",whatsappIntl:"Parece um numero internacional — tudo certo!",shareEyebrow:"Para os Pastores",shareTitle:"Ajude-nos a te conhecer melhor",shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto — e e completamente opcional.",pathServing:"Ja sirvo em algum ministerio",pathNew:"Ainda nao sirvo",ministryLabel:"Em quais ministerios voce ja serve?",groupLabel:"Qual grupo voce faz parte?",langSpokenLabel:"Quais idiomas voce fala?",photoLabel:"Uma foto sua (opcional)",photoTitle:"Adicionar foto",photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",shareSubmit:"Compartilhar com os Pastores",shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve."},
-  en:{langBtn:"Portugues",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions . ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next ->",seeResults:"See Results ->",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Where You Could Serve",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment",emailInvalid:"Please enter a valid email address.",whatsappInvalid:"Please enter at least 8 valid digits.",whatsappIntl:"Looks like an international number — that's fine!",shareEyebrow:"For the Pastors",shareTitle:"Help us know you better",shareSub:"This helps our pastors connect you to the right place. Takes less than a minute — and it's completely optional.",pathServing:"I'm already serving somewhere",pathNew:"I'm not serving yet",ministryLabel:"Which ministries are you already part of?",groupLabel:"Which group do you belong to?",langSpokenLabel:"Which languages do you speak?",photoLabel:"A photo of you (optional)",photoTitle:"Add a photo",photoDesc:"So pastors can recognize you with a smile when it's time to connect.",shareSubmit:"Share with the Pastors",shareSuccess:"Thank you! The pastors will be in touch soon."}
+  pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",startBtn:"Comecar Avaliacao",minutesCount:"45",minutes:"perguntas . ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Proximo ->",seeResults:"Ver Resultados ->",formTitle:"Quase la!",formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Numero do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Onde Voce Pode Servir",ctaTitle:"Pronto para o proximo passo?",ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",ctaBtn:"Conectar com um Lider",retakeBtn:"Refazer Avaliacao",emailInvalid:"Digite um email valido.",whatsappInvalid:"Digite pelo menos 8 digitos validos.",whatsappIntl:"Parece um numero internacional tudo certo!",shareEyebrow:"Para os Pastores",shareTitle:"Ajude-nos a te conhecer melhor",shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",pathServing:"Ja sirvo em algum ministerio",pathNew:"Ainda nao sirvo",ministryLabel:"Em quais ministerios voce ja serve?",groupLabel:"Qual grupo voce faz parte?",langSpokenLabel:"Quais idiomas voce fala?",photoLabel:"Uma foto sua (opcional)",photoTitle:"Adicionar foto",photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",shareSubmit:"Compartilhar com os Pastores",shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve.",carismaLabel:"Voce completou o Carisma?",carisma1:"1 Ano",carismaMasters:"Masters"},
+  en:{langBtn:"Portugues",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions . ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next ->",seeResults:"See Results ->",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Where You Could Serve",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment",emailInvalid:"Please enter a valid email address.",whatsappInvalid:"Please enter at least 8 valid digits.",whatsappIntl:"Looks like an international number that's fine!",shareEyebrow:"For the Pastors",shareTitle:"Help us know you better",shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",pathServing:"I'm already serving somewhere",pathNew:"I'm not serving yet",ministryLabel:"Which ministries are you already part of?",groupLabel:"Which group do you belong to?",langSpokenLabel:"Which languages do you speak?",photoLabel:"A photo of you (optional)",photoTitle:"Add a photo",photoDesc:"So pastors can recognize you with a smile when it's time to connect.",shareSubmit:"Share with the Pastors",shareSuccess:"Thank you! The pastors will be in touch soon.",carismaLabel:"Have you completed Carisma?",carisma1:"1st Year",carismaMasters:"Masters"}
 };
 
 var GIFTINGS=[
-  {id:"worship",icon:"🎵",en:{name:"Worship & Music",desc:"There is a language in you that goes beyond words — music, poetry, and creative expression are the channels through which you connect with God.",ministries:["Worship Team","Choir","Instrumental Ministry"]},pt:{name:"Louvor & Musica",desc:"Ha em voce uma linguagem que vai alem das palavras — a musica, a poesia e a expressao criativa sao os canais pelos quais voce se conecta com Deus.",ministries:["Equipe de Louvor","Coral","Ministerio Instrumental"]}},
-  {id:"helps",icon:"🔧",en:{name:"Gift of Helps",desc:"You naturally notice practical needs and feel drawn to support what others are building.",ministries:["Setup & Teardown","Parking Ministry","Facilities Support"]},pt:{name:"Dom de Ajudar",desc:"Voce naturalmente percebe necessidades praticas e se sente atraido a sustentar o que outros estao construindo.",ministries:["Montagem e Desmontagem","Ministerio de Estacionamento","Suporte as Instalacoes"]}},
-  {id:"visual",icon:"🎬",en:{name:"Visual Storytelling",desc:"You see stories where others see moments and feel drawn to capture and preserve them.",ministries:["Video Editing","Photography","Graphics Team","Camera Operation"]},pt:{name:"Narrativa Visual",desc:"Voce ve historias onde outros veem apenas momentos e sente o impulso de capturar e preservar isso.",ministries:["Edicao de Video","Fotografia","Equipe de Design","Camera"]}},
-  {id:"digital",icon:"📱",en:{name:"Digital Communication",desc:"You think deeply about how messages reach people with clarity, timing, and authenticity.",ministries:["Social Media Team","Lyrics & Projection","Translation Ministry"]},pt:{name:"Comunicacao Digital",desc:"Voce pensa profundamente em como as mensagens chegam as pessoas com clareza, timing e autenticidade.",ministries:["Equipe de Redes Sociais","Letras & Projecao","Ministerio de Traducao"]}},
-  {id:"intercession",icon:"🙏",en:{name:"Intercession",desc:"Prayer feels natural to you, especially when people or situations come to mind.",ministries:["Intercession Ministry","Prayer Team"]},pt:{name:"Intercessao",desc:"A oracao parece natural para voce, especialmente quando pessoas ou situacoes vem a mente.",ministries:["Ministerio de Intercessao","Equipe de Oracao"]}},
-  {id:"hospitality",icon:"🤝",en:{name:"Hospitality",desc:"You instinctively move toward people and help them feel seen, safe, and welcomed.",ministries:["Welcome Team","Cafe Ministry","Ushers"]},pt:{name:"Hospitalidade",desc:"Voce se move instintivamente em direcao as pessoas e as ajuda a se sentirem vistas, seguras e bem-vindas.",ministries:["Equipe de Recepcao","Ministerio do Cafe","Recepcionistas"]}},
-  {id:"evangelism",icon:"🌍",en:{name:"Evangelism",desc:"You feel a deep desire to reach people with hope, freedom, and salvation.",ministries:["Evangelism Team","Outreach Ministry"]},pt:{name:"Evangelismo",desc:"Voce sente um desejo profundo de alcancar pessoas com esperanca, liberdade e salvacao.",ministries:["Equipe de Evangelismo","Ministerio de Alcance"]}},
-  {id:"encouragement",icon:"💛",en:{name:"Encouragement",desc:"You naturally want to strengthen others with timely words and presence.",ministries:["Care Team","Pastoral Support","Visitation Ministry"]},pt:{name:"Encorajamento",desc:"Voce naturalmente quer fortalecer outras pessoas com palavras e presenca no momento certo.",ministries:["Equipe de Cuidado","Apoio Pastoral","Ministerio de Visitacao"]}},
-  {id:"faith",icon:"✨",en:{name:"Faith",desc:"You often remain steady in uncertain moments and help others recover hope.",ministries:["Prayer Team","Intercession","Leadership Support"]},pt:{name:"Fe",desc:"Voce frequentemente permanece firme em momentos incertos e ajuda outras pessoas a recuperarem a esperanca.",ministries:["Equipe de Oracao","Intercessao","Suporte a Lideranca"]}},
-  {id:"teaching",icon:"📖",en:{name:"Teaching",desc:"You want truth to become understandable, clear, and useful for others.",ministries:["Kids Ministry","Discipleship Classes","Small Groups"]},pt:{name:"Ensino",desc:"Voce quer que a verdade se torne compreensivel, clara e util para outras pessoas.",ministries:["Ministerio Infantil","Aulas de Discipulado","Pequenos Grupos"]}},
-  {id:"administration",icon:"📋",en:{name:"Administration",desc:"You instinctively organize moving parts and create systems that help things flow.",ministries:["Ministry Coordination","Events Team","Admin Support"]},pt:{name:"Administracao",desc:"Voce organiza instintivamente as partes em movimento e cria sistemas que ajudam tudo a fluir.",ministries:["Coordenacao de Ministerio","Equipe de Eventos","Suporte Administrativo"]}},
-  {id:"technical",icon:"🎛️",en:{name:"Technical Arts",desc:"You notice what is off behind the scenes and enjoy making complex things work well.",ministries:["Sound Team","Lighting Design","Live Switching","Camera Operation"]},pt:{name:"Artes Tecnicas",desc:"Voce percebe o que esta fora do lugar nos bastidores e gosta de fazer coisas complexas funcionarem bem.",ministries:["Equipe de Som","Design de Iluminacao","Switcher ao Vivo","Camera"]}},
-  {id:"leadership",icon:"🧭",en:{name:"Influence & Servant Leadership",desc:"People often look to you for direction, and you care deeply about helping others grow.",ministries:["Team Leader","Ministry Coordinator","Small Group Leader"]},pt:{name:"Influencia & Lideranca Servidora",desc:"As pessoas frequentemente olham para voce em busca de direcao, e voce se importa profundamente em ajudar outros a crescer.",ministries:["Lider de Equipe","Coordenador de Ministerio","Lider de Pequeno Grupo"]}},
-  {id:"creativity",icon:"🎨",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Graphics Team","Creative Arts","Set Design"]},pt:{name:"Criatividade",desc:"Voce se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Equipe de Design","Artes Criativas","Cenografia"]}},
-  {id:"prophetic",icon:"🔮",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Prayer Team","Intercession Ministry"]},pt:{name:"Discernimento & Profetico",desc:"Voce tende a perceber impressoes, discernimento ou peso espiritual que outros talvez nao percebam.",ministries:["Equipe de Oracao","Ministerio de Intercessao"]}}
+  {id:"worship",icon:"🎵",en:{name:"Worship & Music",desc:"There is a language in you that goes beyond words — music, poetry, and creative expression are the channels through which you connect with God.",ministries:["Worship Team","GC Leader"]},pt:{name:"Louvor & Musica",desc:"Ha em voce uma linguagem que vai alem das palavras — a musica, a poesia e a expressao criativa sao os canais pelos quais voce se conecta com Deus.",ministries:["Worship Team","Lider de GC"]}},
+  {id:"helps",icon:"🔧",en:{name:"Gift of Helps",desc:"You naturally notice practical needs and feel drawn to support what others are building.",ministries:["Setup & Teardown","Parking","Volunteer Coffee"]},pt:{name:"Dom de Ajudar",desc:"Voce naturalmente percebe necessidades praticas e se sente atraido a sustentar o que outros estao construindo.",ministries:["Montagem","Estacionamento","Cafe dos Voluntarios"]}},
+  {id:"visual",icon:"🎬",en:{name:"Visual Storytelling",desc:"You see stories where others see moments and feel drawn to capture and preserve them.",ministries:["Photo & Video","Streaming","Social Media"]},pt:{name:"Narrativa Visual",desc:"Voce ve historias onde outros veem apenas momentos e sente o impulso de capturar e preservar isso.",ministries:["Foto & Video","Transmissao","Midias Sociais"]}},
+  {id:"digital",icon:"📱",en:{name:"Digital Communication",desc:"You think deeply about how messages reach people with clarity, timing, and authenticity.",ministries:["Social Media","Projection","Translation"]},pt:{name:"Comunicacao Digital",desc:"Voce pensa profundamente em como as mensagens chegam as pessoas com clareza, timing e autenticidade.",ministries:["Midias Sociais","Projecao","Traducao"]}},
+  {id:"intercession",icon:"🙏",en:{name:"Intercession",desc:"Prayer feels natural to you, especially when people or situations come to mind.",ministries:["Intercession"]},pt:{name:"Intercessao",desc:"A oracao parece natural para voce, especialmente quando pessoas ou situacoes vem a mente.",ministries:["Intercessao"]}},
+  {id:"hospitality",icon:"🤝",en:{name:"Hospitality",desc:"You instinctively move toward people and help them feel seen, safe, and welcomed.",ministries:["Hospitality - Welcome","Volunteer Coffee","Service Experience"]},pt:{name:"Hospitalidade",desc:"Voce se move instintivamente em direcao as pessoas e as ajuda a se sentirem vistas, seguras e bem-vindas.",ministries:["Recepcao","Cafe dos Voluntarios","Experiencia do Culto"]}},
+  {id:"evangelism",icon:"🌍",en:{name:"Evangelism",desc:"You feel a deep desire to reach people with hope, freedom, and salvation.",ministries:["Consolidation","GC Leader"]},pt:{name:"Evangelismo",desc:"Voce sente um desejo profundo de alcancar pessoas com esperanca, liberdade e salvacao.",ministries:["Consolidacao","Lider de GC"]}},
+  {id:"encouragement",icon:"💛",en:{name:"Encouragement",desc:"You naturally want to strengthen others with timely words and presence.",ministries:["Consolidation","Intercession","GC Leader"]},pt:{name:"Encorajamento",desc:"Voce naturalmente quer fortalecer outras pessoas com palavras e presenca no momento certo.",ministries:["Consolidacao","Intercessao","Lider de GC"]}},
+  {id:"faith",icon:"✨",en:{name:"Faith",desc:"You often remain steady in uncertain moments and help others recover hope.",ministries:["Intercession","GC Leader"]},pt:{name:"Fe",desc:"Voce frequentemente permanece firme em momentos incertos e ajuda outras pessoas a recuperarem a esperanca.",ministries:["Intercessao","Lider de GC"]}},
+  {id:"teaching",icon:"📖",en:{name:"Teaching",desc:"You want truth to become understandable, clear, and useful for others.",ministries:["Lagoinha Kids","GC Leader","Translation"]},pt:{name:"Ensino",desc:"Voce quer que a verdade se torne compreensivel, clara e util para outras pessoas.",ministries:["Lagoinha Kids","Lider de GC","Traducao"]}},
+  {id:"administration",icon:"📋",en:{name:"Administration",desc:"You instinctively organize moving parts and create systems that help things flow.",ministries:["Service Experience","Setup & Teardown","GC Leader"]},pt:{name:"Administracao",desc:"Voce organiza instintivamente as partes em movimento e cria sistemas que ajudam tudo a fluir.",ministries:["Experiencia do Culto","Montagem","Lider de GC"]}},
+  {id:"technical",icon:"🎛️",en:{name:"Technical Arts",desc:"You notice what is off behind the scenes and enjoy making complex things work well.",ministries:["Sound","Lighting","Projection","Streaming"]},pt:{name:"Artes Tecnicas",desc:"Voce percebe o que esta fora do lugar nos bastidores e gosta de fazer coisas complexas funcionarem bem.",ministries:["Som","Luz","Projecao","Transmissao"]}},
+  {id:"leadership",icon:"🧭",en:{name:"Influence & Servant Leadership",desc:"People often look to you for direction, and you care deeply about helping others grow.",ministries:["GC Leader","Service Experience","Consolidation"]},pt:{name:"Influencia & Lideranca Servidora",desc:"As pessoas frequentemente olham para voce em busca de direcao, e voce se importa profundamente em ajudar outros a crescer.",ministries:["Lider de GC","Experiencia do Culto","Consolidacao"]}},
+  {id:"creativity",icon:"🎨",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Social Media","Photo & Video","Service Experience"]},pt:{name:"Criatividade",desc:"Voce se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Midias Sociais","Foto & Video","Experiencia do Culto"]}},
+  {id:"prophetic",icon:"🔮",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Intercession","GC Leader"]},pt:{name:"Discernimento & Profetico",desc:"Voce tende a perceber impressoes, discernimento ou peso espiritual que outros talvez nao percebam.",ministries:["Intercessao","Lider de GC"]}}
 ];
 
 var QUESTIONS=[
@@ -400,6 +392,8 @@ function applyLang(){
   document.getElementById('photoDesc').textContent=t.photoDesc;
   document.getElementById('shareSubmitText').textContent=t.shareSubmit;
   document.getElementById('shareSuccessText').textContent=t.shareSuccess;
+  document.getElementById('carismaLabel').textContent=t.carismaLabel;
+  renderCarismaChips();
   if(document.getElementById('screen-assessment').classList.contains('active'))renderQuestion();
   if(document.getElementById('screen-results').classList.contains('active')&&lastScores)renderResults(lastScores,lastSubmittedName);
   renderShareChips();
@@ -512,7 +506,6 @@ function renderResults(scores,name){
   renderShareChips();
 }
 
-/* SHARE MORE */
 function resetShareMore(){
   shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;
   document.getElementById('pathServing').classList.remove('active');
@@ -522,6 +515,17 @@ function resetShareMore(){
   document.getElementById('shareSubmitBtn').disabled=false;
   var prev=document.getElementById('photoPreview');prev.style.display='none';prev.src='';
   document.getElementById('photoIcon').style.display='block';
+}
+function renderCarismaChips(){
+  var t=T[lang];
+  var cc=document.getElementById('carismaChips');if(!cc)return;cc.innerHTML='';
+  [{val:'1st Year',pt:t.carisma1,en:t.carisma1},{val:'Masters',pt:t.carismaMasters,en:t.carismaMasters}].forEach(function(item){
+    var c=document.createElement('button');c.type='button';
+    c.className='chip'+(shareCarisma.indexOf(item.val)>-1?' sel':'');
+    c.textContent=lang==='pt'?item.pt:item.en;
+    c.addEventListener('click',function(){toggleChip(shareCarisma,item.val,cc,c)});
+    cc.appendChild(c);
+  });
 }
 function renderShareChips(){
   var groupList=lang==='pt'?GROUP_LIST_PT:GROUP_LIST_EN;
@@ -543,6 +547,7 @@ function renderShareChips(){
     var c=document.createElement('button');c.type='button';c.className='chip'+(shareSelectedLangs.indexOf(val)>-1?' sel':'');c.textContent=l;
     c.addEventListener('click',function(){toggleChip(shareSelectedLangs,val,lc,c)});lc.appendChild(c);
   });
+  renderCarismaChips();
 }
 function toggleChip(arr,val,wrap,btn){
   var idx=arr.indexOf(val);
@@ -563,7 +568,8 @@ function submitShareMore(){
     current_ministries:shareSelectedMinistries,
     special_groups:shareSelectedGroups,
     languages_spoken:shareSelectedLangs,
-    photo:sharePhotoBase64||null
+    photo:sharePhotoBase64||null,
+    carisma_completed:shareCarisma.length>0?shareCarisma:null
   };
   fetch('https://ltc-api.farfromtimnah.workers.dev/person/'+lastSubmissionId+'/connection',{
     method:'PUT',
