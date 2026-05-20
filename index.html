@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaliação de Dons — Lagoinha Tampa</title>
+<title>Avaliacao de Dons — Lagoinha Tampa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{background-color:#0A0A0A;color:#FFFFFF;font-family:'Barlow',sans-serif;-webkit-text-size-adjust:100%}
@@ -63,6 +64,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .field-note{margin-top:6px;font-size:.82rem;line-height:1.4;color:#2ABFBF;display:none}
 .sub-btn{width:100%;margin-top:20px;background-color:#2ABFBF;border:none;color:#000000;padding:16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;touch-action:manipulation;display:block}
 .sub-btn:disabled{opacity:.35}
+/* ─── RESULTS ─────────────────────────────────────────── */
 .results{max-width:720px;margin:0 auto;padding:36px 20px 80px}
 .r-hdr{margin-bottom:36px}
 .r-name{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2ABFBF;margin-bottom:10px;display:flex;align-items:center;gap:8px}
@@ -86,6 +88,75 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .bar-track{flex:1;height:3px;background-color:#252525;border-radius:2px;overflow:hidden}
 .bar-fill{height:100%;background-color:#2ABFBF;transition:width 1s ease}
 .bar-pct{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;color:#2ABFBF;font-weight:700;min-width:32px;text-align:right}
+/* ─── SHARE ACTIONS (new) ─────────────────────────────── */
+.share-actions{background-color:#141414;border:1px solid #252525;border-radius:4px;padding:20px 22px;margin-bottom:32px}
+.share-actions-title{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#505050;margin-bottom:14px}
+.share-btns{display:flex;gap:10px;flex-wrap:wrap}
+.share-action-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#CCCCCC;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:44px}
+.share-action-btn.wa{border-color:rgba(37,211,102,0.4);color:#25D366;background-color:rgba(37,211,102,0.06)}
+.share-action-btn.copy-btn{border-color:#333333;color:#CCCCCC}
+.share-action-btn.copy-btn.copied{border-color:#2ABFBF;color:#2ABFBF}
+/* ─── SHARE CARD (off-screen render) ─────────────────── */
+.share-card-wrap{position:fixed;left:-9999px;top:0;pointer-events:none}
+.share-card{width:480px;background-color:#0A0A0A;padding:36px 32px;font-family:'Barlow',sans-serif}
+.sc-header{display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid #252525}
+.sc-dot{width:8px;height:8px;background-color:#2ABFBF;border-radius:50%;flex-shrink:0}
+.sc-brand{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF}
+.sc-brand span{color:#2ABFBF}
+.sc-name{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2ABFBF;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.sc-name::before{content:'';display:block;width:18px;height:2px;background-color:#2ABFBF;flex-shrink:0}
+.sc-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.7rem;text-transform:uppercase;color:#FFFFFF;margin-bottom:22px;line-height:1}
+.sc-top3{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.sc-tc{background-color:#1C1C1C;border:1px solid #252525;border-left:3px solid #2ABFBF;border-radius:3px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.sc-tc.sc-r1{border-left-width:4px}
+.sc-rank{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.8rem;color:rgba(42,191,191,.14);line-height:1;min-width:24px}
+.sc-icon{font-size:1.2rem;margin-top:1px;flex-shrink:0}
+.sc-tc-name{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:3px}
+.sc-tc.sc-r1 .sc-tc-name{color:#4DD4D4}
+.sc-tc-desc{font-size:.72rem;color:#888888;line-height:1.5}
+.sc-footer{padding-top:16px;border-top:1px solid #252525;display:flex;justify-content:space-between;align-items:center}
+.sc-footer-url{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:.1em;color:#505050;text-transform:uppercase}
+.sc-footer-tag{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:.1em;color:#2ABFBF;text-transform:uppercase}
+.sc-bars-title{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#505050;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sc-bars-title::after{content:'';flex:1;height:1px;background-color:#252525}
+.sc-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.sc-bar-lbl{font-size:.68rem;color:#888888;min-width:140px;flex-shrink:0}
+.sc-bar-track{flex:1;height:3px;background-color:#252525;border-radius:2px;overflow:hidden}
+.sc-bar-fill{height:100%;background-color:#2ABFBF;border-radius:2px}
+.sc-bar-pct{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;color:#2ABFBF;font-weight:700;min-width:28px;text-align:right}
+/* ─── ALREADY SERVING / SHARE MORE ───────────────────── */
+.already-section{background-color:#141414;border:1px solid #252525;border-top:2px solid rgba(42,191,191,0.5);border-radius:4px;padding:24px 22px;margin-bottom:32px}
+.already-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:6px}
+.already-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:6px}
+.already-sub{font-size:.88rem;color:#777777;line-height:1.65;margin-bottom:18px}
+.path-btns{display:flex;gap:10px;flex-wrap:wrap}
+.share-path-btn{flex:1;min-width:120px;padding:14px 12px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#CCCCCC;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;text-align:center}
+.share-path-btn.active{border-color:#2ABFBF;background-color:rgba(42,191,191,0.1);color:#2ABFBF}
+.share-form{margin-top:20px;display:none}
+.share-form.visible{display:block}
+.share-field-label{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#777777;margin-bottom:10px;display:block}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{padding:8px 14px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#888888;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;touch-action:manipulation}
+.chip.sel{border-color:#2ABFBF;background-color:rgba(42,191,191,0.12);color:#2ABFBF}
+/* ─── CARISMA BUTTONS ─────────────────────────────────── */
+.carisma-btns{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.carisma-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#888888;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:44px}
+.carisma-btn.sel{border-color:rgba(180,105,104,0.7);background-color:rgba(89,34,28,0.2);color:#b46968}
+.carisma-btn img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+/* ─── PHOTO UPLOAD ────────────────────────────────────── */
+.share-photo-wrap{margin-bottom:0}
+.photo-label-box{display:flex;align-items:center;gap:14px;padding:16px;background-color:#1C1C1C;border:1px dashed #333333;border-radius:3px;cursor:pointer}
+.photo-icon{font-size:1.4rem;flex-shrink:0}
+.photo-label-text{font-size:.85rem;color:#777777;line-height:1.5}
+.photo-label-text strong{color:#F0F0F0;display:block;margin-bottom:2px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;letter-spacing:.04em;text-transform:uppercase}
+#photoInput{display:none}
+.photo-preview{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #2ABFBF;flex-shrink:0;display:none}
+/* ─── CARISMA DIVIDER ─────────────────────────────────── */
+.carisma-section-wrap{margin-top:20px;padding-top:20px;border-top:1px solid #252525}
+.share-submit-btn{width:100%;padding:14px;background-color:#2ABFBF;border:none;color:#000000;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;cursor:pointer;touch-action:manipulation;min-height:48px;margin-top:20px}
+.share-submit-btn:disabled{opacity:.4;cursor:default}
+.share-success{margin-top:16px;padding:14px 16px;background-color:rgba(42,191,191,0.1);border:1px solid rgba(42,191,191,0.3);border-radius:3px;font-size:.85rem;color:#2ABFBF;text-align:center;display:none}
+/* ─── MINISTRY SUGGESTIONS ───────────────────────────── */
 .min-group{margin-bottom:14px;padding:14px 16px;background-color:rgba(255,255,255,0.02);border:1px solid rgba(42,191,191,0.1);border-radius:4px}
 .min-gift{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#777777;margin-bottom:10px}
 .min-tags{display:flex;flex-wrap:wrap;gap:7px}
@@ -95,29 +166,6 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .cta p{font-size:.9rem;color:#999999;margin-bottom:22px;line-height:1.6}
 .cta-btn{display:inline-block;background-color:#2ABFBF;border:none;color:#000000;padding:14px 32px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation}
 .rtk{display:block;margin:0 auto;background-color:#1C1C1C;border:1px solid #444444;color:#888888;padding:10px 26px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;touch-action:manipulation}
-.share-more{background-color:#141414;border:1px solid #252525;border-top:2px solid rgba(42,191,191,0.4);border-radius:4px;padding:28px 24px;margin-bottom:32px}
-.share-more-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:8px}
-.share-more h3{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:8px}
-.share-more .share-sub{font-size:.88rem;color:#777777;line-height:1.65;margin-bottom:20px}
-.share-paths{display:flex;gap:10px;margin-bottom:0}
-.share-path-btn{flex:1;padding:14px 12px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#CCCCCC;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;text-align:center;transition:all 0.2s}
-.share-path-btn.active{border-color:#2ABFBF;background-color:rgba(42,191,191,0.1);color:#2ABFBF}
-.share-form{margin-top:20px;display:none}
-.share-form.visible{display:block}
-.share-field-label{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#777777;margin-bottom:10px;display:block}
-.chip-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.chip{padding:8px 14px;border-radius:3px;border:1px solid #333333;background-color:#1C1C1C;color:#888888;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;transition:all 0.15s}
-.chip.sel{border-color:#2ABFBF;background-color:rgba(42,191,191,0.12);color:#2ABFBF}
-.share-photo-wrap{margin-bottom:18px}
-.photo-label-box{display:flex;align-items:center;gap:14px;padding:16px;background-color:#1C1C1C;border:1px dashed #333333;border-radius:3px;cursor:pointer}
-.photo-icon{font-size:1.4rem;flex-shrink:0}
-.photo-label-text{font-size:.85rem;color:#777777;line-height:1.5}
-.photo-label-text strong{color:#F0F0F0;display:block;margin-bottom:2px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;letter-spacing:.04em;text-transform:uppercase}
-#photoInput{display:none}
-.photo-preview{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #2ABFBF;flex-shrink:0;display:none}
-.share-submit-btn{width:100%;padding:14px;background-color:#2ABFBF;border:none;color:#000000;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;cursor:pointer;touch-action:manipulation;min-height:48px;margin-top:4px}
-.share-submit-btn:disabled{opacity:.4;cursor:default}
-.share-success{margin-top:16px;padding:14px 16px;background-color:rgba(42,191,191,0.1);border:1px solid rgba(42,191,191,0.3);border-radius:3px;font-size:.85rem;color:#2ABFBF;text-align:center;display:none}
 </style>
 </head>
 <body>
@@ -131,6 +179,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
     <button type="button" class="lang-btn" id="langBtn">English</button>
   </nav>
 
+  <!-- WELCOME -->
   <div class="screen active" id="screen-welcome">
     <div class="welcome">
       <div class="eyebrow">Lagoinha Tampa</div>
@@ -143,6 +192,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
     </div>
   </div>
 
+  <!-- ASSESSMENT -->
   <div class="screen" id="screen-assessment">
     <div class="assessment">
       <div class="prog-wrap">
@@ -167,6 +217,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
     </div>
   </div>
 
+  <!-- FORM -->
   <div class="screen" id="screen-form">
     <div class="form-screen">
       <div class="form-card">
@@ -196,46 +247,50 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
     </div>
   </div>
 
+  <!-- RESULTS -->
   <div class="screen" id="screen-results">
     <div class="results">
+
+      <!-- Header -->
       <div class="r-hdr">
         <div class="r-name" id="rName" style="display:none"></div>
         <h2 id="rTitle">Seu Perfil de Dons</h2>
         <p id="rSubtitle">Estas sao as areas onde voce e naturalmente mais forte para causar impacto.</p>
       </div>
+
+      <!-- 1. Top 3 -->
       <div class="sec-lbl" id="topLabel">Seus Principais Dons</div>
       <div class="top3" id="top3"></div>
+
       <div class="divider"></div>
-      <div style="margin-bottom:40px">
+
+      <!-- 2. Full breakdown -->
+      <div style="margin-bottom:32px">
         <div class="sec-lbl" id="allLabel">Perfil Completo</div>
         <div id="allBars"></div>
       </div>
-      <div class="divider"></div>
-      <div style="margin-bottom:40px">
-        <div class="sec-lbl" id="minLabel">Onde Voce Pode Servir</div>
-        <div id="ministriesOut"></div>
-      </div>
+
       <div class="divider"></div>
 
-      <div class="share-more" id="shareMoreSection">
-        <div class="share-more-eyebrow" id="shareEyebrow">Para os Pastores</div>
-        <h3 id="shareTitle">Ajude-nos a te conhecer melhor</h3>
-        <p class="share-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.</p>
-        <div class="share-paths">
-          <button type="button" class="share-path-btn" id="pathServing" onclick="selectPath('serving')">
+      <!-- 3. Already Serving — MOVED UP -->
+      <div class="already-section" id="shareMoreSection">
+        <div class="already-eyebrow" id="shareEyebrow">Para os Pastores</div>
+        <div class="already-title" id="shareTitle">Ajude-nos a te conhecer melhor</div>
+        <p class="already-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.</p>
+        <div class="path-btns">
+          <button type="button" class="share-path-btn" id="pathServing">
             <span id="pathServingText">Ja sirvo em algum ministerio</span>
           </button>
-          <button type="button" class="share-path-btn" id="pathNew" onclick="selectPath('new')">
+          <button type="button" class="share-path-btn" id="pathNew">
             <span id="pathNewText">Ainda nao sirvo</span>
           </button>
+
         </div>
 
         <div class="share-form" id="shareForm">
           <div id="ministrySection" style="display:none;margin-top:18px">
             <span class="share-field-label" id="ministryLabel">Em quais ministerios voce ja serve?</span>
             <div class="chip-wrap" id="ministryChips"></div>
-            <span class="share-field-label" id="carismaLabel" style="margin-top:4px">Voce completou o Carisma?</span>
-            <div class="chip-wrap" id="carismaChips"></div>
           </div>
           <div style="margin-top:4px">
             <span class="share-field-label" id="groupLabel">Qual grupo voce faz parte?</span>
@@ -245,11 +300,13 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             <span class="share-field-label" id="langSpokenLabel">Quais idiomas voce fala?</span>
             <div class="chip-wrap" id="langChips"></div>
           </div>
+
+          <!-- Photo upload -->
           <div class="share-photo-wrap">
             <span class="share-field-label" id="photoLabel">Uma foto sua (opcional)</span>
             <label class="photo-label-box" for="photoInput">
               <img id="photoPreview" class="photo-preview" src="" alt="preview">
-              <div class="photo-icon" id="photoIcon">📸</div>
+              <div class="photo-icon" id="photoIcon">&#128248;</div>
               <div class="photo-label-text">
                 <strong id="photoTitle">Adicionar foto</strong>
                 <span id="photoDesc">Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.</span>
@@ -257,13 +314,44 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             </label>
             <input type="file" id="photoInput" accept="image/*">
           </div>
-          <button type="button" class="share-submit-btn" id="shareSubmitBtn" onclick="submitShareMore()">
+
+          <!-- Carisma — between photo and submit, with logo buttons -->
+          <div class="carisma-section-wrap" id="carismaSection" style="display:none">
+            <span class="share-field-label" id="carismaLabel">Voce completou o Carisma?</span>
+            <div class="carisma-btns" id="carismaChips"></div>
+          </div>
+
+          <button type="button" class="share-submit-btn" id="shareSubmitBtn">
             <span id="shareSubmitText">Compartilhar com os Pastores</span>
           </button>
           <div class="share-success" id="shareSuccess">
             <span id="shareSuccessText">Obrigado! Os pastores vao entrar em contato em breve.</span>
           </div>
         </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 4. Save / Share results -->
+      <div style="margin-bottom:32px">
+        <div class="sec-lbl" id="saveLabel">Guardar Resultados</div>
+        <div class="share-actions">
+          <div class="share-actions-title" id="shareActionsTitle">Salvar ou compartilhar seu perfil</div>
+          <div class="share-btns">
+            <button type="button" class="share-action-btn" id="downloadCard1Btn">&#128247; <span id="downloadCard1Text">Baixar Card (Top 3)</span></button>
+            <button type="button" class="share-action-btn" id="downloadCard2Btn">&#128202; <span id="downloadCard2Text">Baixar Card (Completo)</span></button>
+            <button type="button" class="share-action-btn wa" id="waShareBtn">&#128172; <span id="waShareText">Compartilhar no WhatsApp</span></button>
+            <button type="button" class="share-action-btn copy-btn" id="copyTextBtn">&#128203; <span id="copyTextText">Copiar Texto</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 5. Curious Where Your Gifting Could Fit -->
+      <div style="margin-bottom:40px">
+        <div class="sec-lbl" id="minLabel">Onde Voce Pode Servir</div>
+        <div id="ministriesOut"></div>
       </div>
 
       <div class="divider"></div>
@@ -276,9 +364,44 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
     </div>
   </div>
 
+</div><!-- /app -->
+
+<!-- OFF-SCREEN SHARE CARDS (rendered by html2canvas) -->
+<div class="share-card-wrap">
+  <!-- Card 1: Top 3 -->
+  <div class="share-card" id="shareCard1">
+    <div class="sc-header">
+      <div class="sc-dot"></div>
+      <div class="sc-brand">Lagoinha <span>Tampa</span></div>
+    </div>
+    <div class="sc-name" id="sc1Name"></div>
+    <div class="sc-title" id="sc1Title">Seu Perfil de Dons</div>
+    <div class="sc-top3" id="sc1Top3"></div>
+    <div class="sc-footer">
+      <span class="sc-footer-url">lagoinhatampa.online</span>
+      <span class="sc-footer-tag">Avaliacao de Dons</span>
+    </div>
+  </div>
+  <!-- Card 2: Full breakdown -->
+  <div class="share-card" id="shareCard2">
+    <div class="sc-header">
+      <div class="sc-dot"></div>
+      <div class="sc-brand">Lagoinha <span>Tampa</span></div>
+    </div>
+    <div class="sc-name" id="sc2Name"></div>
+    <div class="sc-title" id="sc2Title">Perfil Completo</div>
+    <div class="sc-bars-title" id="sc2BarsLabel">Todos os Dons</div>
+    <div id="sc2Bars"></div>
+    <div class="sc-footer" style="margin-top:16px">
+      <span class="sc-footer-url">lagoinhatampa.online</span>
+      <span class="sc-footer-tag">Avaliacao de Dons</span>
+    </div>
+  </div>
 </div>
 
 <script>
+var CARISMA_LOGO = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzNTkgNTE3Ij4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMzAuNC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjQgQnVpbGQgMjI2KSAgLS0+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5zdDAgewogICAgICAgIGZpbGw6ICM1OTIyMWM7CiAgICAgIH0KCiAgICAgIC5zdDEgewogICAgICAgIGZpbGw6ICNiNDY5Njg7CiAgICAgIH0KCiAgICAgIC5zdDIgewogICAgICAgIGZpbGw6ICM0NDFjMTc7CiAgICAgIH0KCiAgICAgIC5zdDMgewogICAgICAgIGZpbGw6ICM2ODEyMTE7CiAgICAgIH0KCiAgICAgIC5zdDQgewogICAgICAgIGZpbGw6ICM0ZDFlMTk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJXVlU2elgiPgogICAgPGc+CiAgICAgIDxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yODUuNCwzMy41OWwtMzAuMzYsNTUuMTZjMTIuMSw4LjkuMTgsMTkuODUtNy40OCwyNi4zMy0yLjI4LDIuNC04LjMsMTIuOTctNC41MywxNi44OSwyNS4xMSwyLjYyLDUwLjE3LDEuNDEsNzUuNS0xLjk3LDI0LjQ1LDM2Ljc4LDI5LjYxLDc0Ljk2LDMwLjU4LDExNi45NywyLjU0LDExMC40Ni03My44LDIwMC4xNC0xNjkuOTMsMjU2LjItMzMuNDYtMTYuMTEtNTguOTItMzguNzItODQuNjYtNjUuOTgtMTkuNzgsMTcuMzYtMTguMTIsNDguOTQtNTQuMjgsNTUuNzEtMjYuNDctNDAuMjcsMzQuOTYtNzYuNzQsMTUuNzMtMTA2Ljg2LTIyLjMxLTM0Ljk1LTM4Ljk1LTc0LjI0LTM4LjgxLTExNC4xMi0zLjQ3LTE1Ljk0LTMuOTItMzIuMTMtMS4zNC00OC41Nyw1LjcyLTI5Ljg0LDEwLjAyLTY2Ljg2LDM0LjkxLTkxLjEsMzMuOTUtMTEuODgsODUuNDgsOS4yMiwxMzkuMDUtMS4xNywxNS43OS0zLjA2LDIzLjg2LTM1LjAxLDE0LjY0LTQ1LjQ4LTEuMzktMTEuMjMsMy42OC0xMi44MiwxMy43Ny05LjcxLDE3LTIuMzEsMTUuMDUtMjguMTksMjguOTctMzguMjMsNy4yOC0yNS43LDM1LjcyLTMxLjE0LDM4LjI0LTQuMDVaTTE4Mi43OCwzMzguNDljLTMyLjI2LTEuODYtNDguNzgtMjkuODktNTAuMzUtNTUuMzctMS42MS0yNi4xNiwxOS4wNC01My43Niw0Ny4wNy01Ni40OCwyMi4zOS0yLjE3LDM4LjQ4LDEyLjMxLDU0LjA3LDI1LjAxbDM0LjAzLTE2Ljc0Yy0xNC4wOC0yOS41Ni0zOC41LTQ2LjE0LTY1LjEyLTUxLjYxLTI2LjkzLTUuNTMtNTcuMTksNC41OS03Ni43OCwyMy44NC00MS45LDQxLjE4LTQ0LjU1LDEwNC43NC00LjEyLDE0Ny4zMiwyMS4wNCwyMi4xNiw1MS42MiwzMS44OSw4MS45NCwyNS41NywyNS42Ny01LjM1LDU0LjQ0LTIwLjYzLDY0LjQ1LTUwLTkuNTEtOS4yMi0xOS42Ni0xNS4zNi0zMi4wNS0yMC43MS0xMy41NywxMy43MS0yOS4yNywzMC41NC01My4xMywyOS4xNloiLz4KICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTI4NS40LDMzLjU5Yy00LjQxLTkuMjMtMTYuNDgtMTUuMS0yNS4xMi03LjI2LTUuMDgsNC42LTguOTgsOC4zMy0xMy4xMiwxMS4zMWw2LjgzLTI2LjYxYzIuMi04LjEzLDM0LjY4LDEuMjcsMzYuNDQsMTQuMTguNTEsMy43Mi0zLjcyLDYuMDEtNS4wMiw4LjM3WiIvPgogICAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMjQ3LjU2LDExNS4wN2MtMy44MS0xMC4zOCwzLjQxLTE4LjkyLDcuNDgtMjYuMzMsMTAuMzIsMTAuMTksMjQuODYsOC43MywzNS4zOSwyMy4zLTE4LjIxLDUuODYtMzMuNDQtOS41Ny00Mi44OCwzLjAzWiIvPgogICAgICA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjE4LjE5LDc1Ljg3Yy0yLjAzLDYuMDktNy43Niw5LjcyLTEzLjc3LDkuNzEtNi41Ny03LjQ2LTE0LjQ2LTEyLjc5LTE1LjE1LTI1LjEzLDEzLjQ3LDIuMzksMTkuMzQsMTEuNjgsMjguOTIsMTUuNDJaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNy4xNywyNzEuOWMtOS4xMS0xNC44NS00LjM0LTMyLjk0LTEuMzQtNDguNTdsMS4zNCw0OC41N1oiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==";
+
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubmissionId=null;
 var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
 
@@ -291,78 +414,80 @@ var LANG_LIST_EN=["Portugues","English","Both"];
 var LANG_VALS=["Portugues","English","Both"];
 
 var T={
-  pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",startBtn:"Comecar Avaliacao",minutesCount:"45",minutes:"perguntas . ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Proximo ->",seeResults:"Ver Resultados ->",formTitle:"Quase la!",formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Numero do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Onde Voce Pode Servir",ctaTitle:"Pronto para o proximo passo?",ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",ctaBtn:"Conectar com um Lider",retakeBtn:"Refazer Avaliacao",emailInvalid:"Digite um email valido.",whatsappInvalid:"Digite pelo menos 8 digitos validos.",whatsappIntl:"Parece um numero internacional tudo certo!",shareEyebrow:"Para os Pastores",shareTitle:"Ajude-nos a te conhecer melhor",shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",pathServing:"Ja sirvo em algum ministerio",pathNew:"Ainda nao sirvo",ministryLabel:"Em quais ministerios voce ja serve?",groupLabel:"Qual grupo voce faz parte?",langSpokenLabel:"Quais idiomas voce fala?",photoLabel:"Uma foto sua (opcional)",photoTitle:"Adicionar foto",photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",shareSubmit:"Compartilhar com os Pastores",shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve.",carismaLabel:"Voce completou o Carisma?",carisma1:"1 Ano",carismaMasters:"Masters"},
-  en:{langBtn:"Portugues",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions . ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next ->",seeResults:"See Results ->",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Where You Could Serve",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment",emailInvalid:"Please enter a valid email address.",whatsappInvalid:"Please enter at least 8 valid digits.",whatsappIntl:"Looks like an international number that's fine!",shareEyebrow:"For the Pastors",shareTitle:"Help us know you better",shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",pathServing:"I'm already serving somewhere",pathNew:"I'm not serving yet",ministryLabel:"Which ministries are you already part of?",groupLabel:"Which group do you belong to?",langSpokenLabel:"Which languages do you speak?",photoLabel:"A photo of you (optional)",photoTitle:"Add a photo",photoDesc:"So pastors can recognize you with a smile when it's time to connect.",shareSubmit:"Share with the Pastors",shareSuccess:"Thank you! The pastors will be in touch soon.",carismaLabel:"Have you completed Carisma?",carisma1:"1st Year",carismaMasters:"Masters"}
+  pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",startBtn:"Comecar Avaliacao",minutesCount:"45",minutes:"perguntas . ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Proximo ->",seeResults:"Ver Resultados ->",formTitle:"Quase la!",formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Numero do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Curioso onde seu dom pode florescer?",saveLabel:"Guardar Resultados",shareActionsTitle:"Salvar ou compartilhar seu perfil",downloadCard1:"Baixar Card (Top 3)",downloadCard2:"Baixar Card (Completo)",waShare:"Compartilhar no WhatsApp",copyText:"Copiar Texto",copiedText:"Copiado!",ctaTitle:"Pronto para o proximo passo?",ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",ctaBtn:"Conectar com um Lider",retakeBtn:"Refazer Avaliacao",emailInvalid:"Digite um email valido.",whatsappInvalid:"Digite pelo menos 8 digitos validos.",whatsappIntl:"Parece um numero internacional tudo certo!",shareEyebrow:"Para os Pastores",shareTitle:"Ajude-nos a te conhecer melhor",shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",pathServing:"Ja sirvo em algum ministerio",pathNew:"Ainda nao sirvo",ministryLabel:"Em quais ministerios voce ja serve?",groupLabel:"Qual grupo voce faz parte?",langSpokenLabel:"Quais idiomas voce fala?",photoLabel:"Uma foto sua (opcional)",photoTitle:"Adicionar foto",photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",shareSubmit:"Compartilhar com os Pastores",shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve.",carismaLabel:"Voce completou o Carisma?",carisma1:"1 Ano",carismaMasters:"Masters",carismaVals:["1st Year","Masters"],sc1Title:"Seu Perfil de Dons",sc2Title:"Perfil Completo de Dons",sc2BarsLabel:"Todos os Dons",waMsg:function(name,top3){return"Ola! Fiz a Avaliacao de Dons da Lagoinha Tampa e quero compartilhar com voce! Meu nome eh "+name+" e meus principais dons sao:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nFiz a avaliacao em: https://farfromtimnah-hue.github.io/ministry-gifting/"},ctaWaMsg:function(name){return"Ola, Pra Alice! Tudo bem? \uD83D\uDE0A Me chamo "+name+" e acabei de fazer a Avaliacao de Dons da Lagoinha Tampa. Fiquei muito animado com os resultados e adoraria conversar com voce sobre meus dons e como posso servir melhor aqui na Lagoinha. Quando seria um bom momento? Muito obrigado!"}},
+  en:{langBtn:"Portugues",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions . ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next ->",seeResults:"See Results ->",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Curious Where Your Gifting Could Fit?",saveLabel:"Save Your Results",shareActionsTitle:"Save or share your profile",downloadCard1:"Download Card (Top 3)",downloadCard2:"Download Card (Full Profile)",waShare:"Share on WhatsApp",copyText:"Copy Text",copiedText:"Copied!",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment",emailInvalid:"Please enter a valid email address.",whatsappInvalid:"Please enter at least 8 valid digits.",whatsappIntl:"Looks like an international number that's fine!",shareEyebrow:"For the Pastors",shareTitle:"Help us know you better",shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",pathServing:"I'm already serving somewhere",pathNew:"I'm not serving yet",ministryLabel:"Which ministries are you already part of?",groupLabel:"Which group do you belong to?",langSpokenLabel:"Which languages do you speak?",photoLabel:"A photo of you (optional)",photoTitle:"Add a photo",photoDesc:"So pastors can recognize you with a smile when it's time to connect.",shareSubmit:"Share with the Pastors",shareSuccess:"Thank you! The pastors will be in touch soon.",carismaLabel:"Have you completed Carisma?",carisma1:"1st Year",carismaMasters:"Masters",carismaVals:["1st Year","Masters"],sc1Title:"Your Gifting Profile",sc2Title:"Full Gifting Profile",sc2BarsLabel:"All Giftings",waMsg:function(name,top3){return"Hey! I just completed the Lagoinha Tampa Gifting Assessment and wanted to share with you! My name is "+name+" and my top giftings are:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nTake the assessment at: https://farfromtimnah-hue.github.io/ministry-gifting/"},ctaWaMsg:function(name){return"Hi Pra Alice! \uD83D\uDE0A My name is "+name+" and I just finished the Lagoinha Tampa Gifting Assessment. I was really excited about my results and would love to chat with you about my giftings and how I can serve better here at Lagoinha. When would be a good time? Thank you so much!"}}
 };
 
 var GIFTINGS=[
-  {id:"worship",icon:"🎵",en:{name:"Worship & Music",desc:"There is a language in you that goes beyond words — music, poetry, and creative expression are the channels through which you connect with God.",ministries:["Worship Team","GC Leader"]},pt:{name:"Louvor & Musica",desc:"Ha em voce uma linguagem que vai alem das palavras — a musica, a poesia e a expressao criativa sao os canais pelos quais voce se conecta com Deus.",ministries:["Worship Team","Lider de GC"]}},
-  {id:"helps",icon:"🔧",en:{name:"Gift of Helps",desc:"You naturally notice practical needs and feel drawn to support what others are building.",ministries:["Setup & Teardown","Parking","Volunteer Coffee"]},pt:{name:"Dom de Ajudar",desc:"Voce naturalmente percebe necessidades praticas e se sente atraido a sustentar o que outros estao construindo.",ministries:["Montagem","Estacionamento","Cafe dos Voluntarios"]}},
-  {id:"visual",icon:"🎬",en:{name:"Visual Storytelling",desc:"You see stories where others see moments and feel drawn to capture and preserve them.",ministries:["Photo & Video","Streaming","Social Media"]},pt:{name:"Narrativa Visual",desc:"Voce ve historias onde outros veem apenas momentos e sente o impulso de capturar e preservar isso.",ministries:["Foto & Video","Transmissao","Midias Sociais"]}},
-  {id:"digital",icon:"📱",en:{name:"Digital Communication",desc:"You think deeply about how messages reach people with clarity, timing, and authenticity.",ministries:["Social Media","Projection","Translation"]},pt:{name:"Comunicacao Digital",desc:"Voce pensa profundamente em como as mensagens chegam as pessoas com clareza, timing e autenticidade.",ministries:["Midias Sociais","Projecao","Traducao"]}},
-  {id:"intercession",icon:"🙏",en:{name:"Intercession",desc:"Prayer feels natural to you, especially when people or situations come to mind.",ministries:["Intercession"]},pt:{name:"Intercessao",desc:"A oracao parece natural para voce, especialmente quando pessoas ou situacoes vem a mente.",ministries:["Intercessao"]}},
-  {id:"hospitality",icon:"🤝",en:{name:"Hospitality",desc:"You instinctively move toward people and help them feel seen, safe, and welcomed.",ministries:["Hospitality - Welcome","Volunteer Coffee","Service Experience"]},pt:{name:"Hospitalidade",desc:"Voce se move instintivamente em direcao as pessoas e as ajuda a se sentirem vistas, seguras e bem-vindas.",ministries:["Recepcao","Cafe dos Voluntarios","Experiencia do Culto"]}},
-  {id:"evangelism",icon:"🌍",en:{name:"Evangelism",desc:"You feel a deep desire to reach people with hope, freedom, and salvation.",ministries:["Consolidation","GC Leader"]},pt:{name:"Evangelismo",desc:"Voce sente um desejo profundo de alcancar pessoas com esperanca, liberdade e salvacao.",ministries:["Consolidacao","Lider de GC"]}},
-  {id:"encouragement",icon:"💛",en:{name:"Encouragement",desc:"You naturally want to strengthen others with timely words and presence.",ministries:["Consolidation","Intercession","GC Leader"]},pt:{name:"Encorajamento",desc:"Voce naturalmente quer fortalecer outras pessoas com palavras e presenca no momento certo.",ministries:["Consolidacao","Intercessao","Lider de GC"]}},
-  {id:"faith",icon:"✨",en:{name:"Faith",desc:"You often remain steady in uncertain moments and help others recover hope.",ministries:["Intercession","GC Leader"]},pt:{name:"Fe",desc:"Voce frequentemente permanece firme em momentos incertos e ajuda outras pessoas a recuperarem a esperanca.",ministries:["Intercessao","Lider de GC"]}},
-  {id:"teaching",icon:"📖",en:{name:"Teaching",desc:"You want truth to become understandable, clear, and useful for others.",ministries:["Lagoinha Kids","GC Leader","Translation"]},pt:{name:"Ensino",desc:"Voce quer que a verdade se torne compreensivel, clara e util para outras pessoas.",ministries:["Lagoinha Kids","Lider de GC","Traducao"]}},
-  {id:"administration",icon:"📋",en:{name:"Administration",desc:"You instinctively organize moving parts and create systems that help things flow.",ministries:["Service Experience","Setup & Teardown","GC Leader"]},pt:{name:"Administracao",desc:"Voce organiza instintivamente as partes em movimento e cria sistemas que ajudam tudo a fluir.",ministries:["Experiencia do Culto","Montagem","Lider de GC"]}},
-  {id:"technical",icon:"🎛️",en:{name:"Technical Arts",desc:"You notice what is off behind the scenes and enjoy making complex things work well.",ministries:["Sound","Lighting","Projection","Streaming"]},pt:{name:"Artes Tecnicas",desc:"Voce percebe o que esta fora do lugar nos bastidores e gosta de fazer coisas complexas funcionarem bem.",ministries:["Som","Luz","Projecao","Transmissao"]}},
-  {id:"leadership",icon:"🧭",en:{name:"Influence & Servant Leadership",desc:"People often look to you for direction, and you care deeply about helping others grow.",ministries:["GC Leader","Service Experience","Consolidation"]},pt:{name:"Influencia & Lideranca Servidora",desc:"As pessoas frequentemente olham para voce em busca de direcao, e voce se importa profundamente em ajudar outros a crescer.",ministries:["Lider de GC","Experiencia do Culto","Consolidacao"]}},
-  {id:"creativity",icon:"🎨",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Social Media","Photo & Video","Service Experience"]},pt:{name:"Criatividade",desc:"Voce se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Midias Sociais","Foto & Video","Experiencia do Culto"]}},
-  {id:"prophetic",icon:"🔮",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Intercession","GC Leader"]},pt:{name:"Discernimento & Profetico",desc:"Voce tende a perceber impressoes, discernimento ou peso espiritual que outros talvez nao percebam.",ministries:["Intercessao","Lider de GC"]}}
+  {id:"worship",icon:"&#127925;",en:{name:"Worship & Music",desc:"There is a language in you that goes beyond words - music, poetry, and creative expression are the channels through which you connect with God.",ministries:["Worship Team","GC Leader"]},pt:{name:"Louvor & Musica",desc:"Ha em voce uma linguagem que vai alem das palavras - a musica, a poesia e a expressao criativa sao os canais pelos quais voce se conecta com Deus.",ministries:["Worship Team","Lider de GC"]}},
+  {id:"helps",icon:"&#128296;",en:{name:"Gift of Helps",desc:"You naturally notice practical needs and feel drawn to support what others are building.",ministries:["Setup & Teardown","Parking","Volunteer Coffee"]},pt:{name:"Dom de Ajudar",desc:"Voce naturalmente percebe necessidades praticas e se sente atraido a sustentar o que outros estao construindo.",ministries:["Montagem","Estacionamento","Cafe dos Voluntarios"]}},
+  {id:"visual",icon:"&#127916;",en:{name:"Visual Storytelling",desc:"You see stories where others see moments and feel drawn to capture and preserve them.",ministries:["Photo & Video","Streaming","Social Media"]},pt:{name:"Narrativa Visual",desc:"Voce ve historias onde outros veem apenas momentos e sente o impulso de capturar e preservar isso.",ministries:["Foto & Video","Transmissao","Midias Sociais"]}},
+  {id:"digital",icon:"&#128241;",en:{name:"Digital Communication",desc:"You think deeply about how messages reach people with clarity, timing, and authenticity.",ministries:["Social Media","Projection","Translation"]},pt:{name:"Comunicacao Digital",desc:"Voce pensa profundamente em como as mensagens chegam as pessoas com clareza, timing e autenticidade.",ministries:["Midias Sociais","Projecao","Traducao"]}},
+  {id:"intercession",icon:"&#128591;",en:{name:"Intercession",desc:"Prayer feels natural to you, especially when people or situations come to mind.",ministries:["Intercession"]},pt:{name:"Intercessao",desc:"A oracao parece natural para voce, especialmente quando pessoas ou situacoes vem a mente.",ministries:["Intercessao"]}},
+  {id:"hospitality",icon:"&#129309;",en:{name:"Hospitality",desc:"You instinctively move toward people and help them feel seen, safe, and welcomed.",ministries:["Hospitality - Welcome","Volunteer Coffee","Service Experience"]},pt:{name:"Hospitalidade",desc:"Voce se move instintivamente em direcao as pessoas e as ajuda a se sentirem vistas, seguras e bem-vindas.",ministries:["Recepcao","Cafe dos Voluntarios","Experiencia do Culto"]}},
+  {id:"evangelism",icon:"&#127758;",en:{name:"Evangelism",desc:"You feel a deep desire to reach people with hope, freedom, and salvation.",ministries:["Consolidation","GC Leader"]},pt:{name:"Evangelismo",desc:"Voce sente um desejo profundo de alcancar pessoas com esperanca, liberdade e salvacao.",ministries:["Consolidacao","Lider de GC"]}},
+  {id:"encouragement",icon:"&#128155;",en:{name:"Encouragement",desc:"You naturally want to strengthen others with timely words and presence.",ministries:["Consolidation","Intercession","GC Leader"]},pt:{name:"Encorajamento",desc:"Voce naturalmente quer fortalecer outras pessoas com palavras e presenca no momento certo.",ministries:["Consolidacao","Intercessao","Lider de GC"]}},
+  {id:"faith",icon:"&#10024;",en:{name:"Faith",desc:"You often remain steady in uncertain moments and help others recover hope.",ministries:["Intercession","GC Leader"]},pt:{name:"Fe",desc:"Voce frequentemente permanece firme em momentos incertos e ajuda outras pessoas a recuperarem a esperanca.",ministries:["Intercessao","Lider de GC"]}},
+  {id:"teaching",icon:"&#128214;",en:{name:"Teaching",desc:"You want truth to become understandable, clear, and useful for others.",ministries:["Lagoinha Kids","GC Leader","Translation"]},pt:{name:"Ensino",desc:"Voce quer que a verdade se torne compreensivel, clara e util para outras pessoas.",ministries:["Lagoinha Kids","Lider de GC","Traducao"]}},
+  {id:"administration",icon:"&#128203;",en:{name:"Administration",desc:"You instinctively organize moving parts and create systems that help things flow.",ministries:["Service Experience","Setup & Teardown","GC Leader"]},pt:{name:"Administracao",desc:"Voce organiza instintivamente as partes em movimento e cria sistemas que ajudam tudo a fluir.",ministries:["Experiencia do Culto","Montagem","Lider de GC"]}},
+  {id:"technical",icon:"&#127925;",en:{name:"Technical Arts",desc:"You notice what is off behind the scenes and enjoy making complex things work well.",ministries:["Sound","Lighting","Projection","Streaming"]},pt:{name:"Artes Tecnicas",desc:"Voce percebe o que esta fora do lugar nos bastidores e gosta de fazer coisas complexas funcionarem bem.",ministries:["Som","Luz","Projecao","Transmissao"]}},
+  {id:"leadership",icon:"&#129517;",en:{name:"Influence & Servant Leadership",desc:"People often look to you for direction, and you care deeply about helping others grow.",ministries:["GC Leader","Service Experience","Consolidation"]},pt:{name:"Influencia & Lideranca Servidora",desc:"As pessoas frequentemente olham para voce em busca de direcao, e voce se importa profundamente em ajudar outros a crescer.",ministries:["Lider de GC","Experiencia do Culto","Consolidacao"]}},
+  {id:"creativity",icon:"&#127912;",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Social Media","Photo & Video","Service Experience"]},pt:{name:"Criatividade",desc:"Voce se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Midias Sociais","Foto & Video","Experiencia do Culto"]}},
+  {id:"prophetic",icon:"&#128302;",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Intercession","GC Leader"]},pt:{name:"Discernimento & Profetico",desc:"Voce tende a perceber impressoes, discernimento ou peso espiritual que outros talvez nao percebam.",ministries:["Intercessao","Lider de GC"]}}
 ];
 
 var QUESTIONS=[
-  {g:"worship",en:"When I'm going through something — joy, pain, confusion — I find myself turning to a song, a poem, or even written words to express to God what I can't put into words on my own.",pt:"Quando estou passando por algo — uma alegria, uma dor, uma confusao — percebo que recorro a uma musica, um poema ou ate palavras escritas para expressar a Deus o que nao consigo colocar em palavras sozinho."},
-  {g:"helps",en:"When I'm in a space, I naturally notice what needs to be done — something that needs to be set up, carried, organized — and I feel an impulse to just take care of it.",pt:"Quando estou em um ambiente, naturalmente percebo o que precisa ser feito — algo que precisa ser arrumado, carregado, organizado — e sinto um impulso de simplesmente cuidar disso."},
-  {g:"visual",en:"In gatherings, events, or everyday moments, I'm almost always the one capturing — taking photos, recording — because I feel like these moments need to be preserved.",pt:"Em reunioes, eventos ou momentos do dia a dia, quase sempre sou eu quem esta registrando — tirando fotos, gravando videos — porque sinto que esses momentos precisam ser preservados."},
-  {g:"evangelism",en:"When I see someone who is lost, my heart breaks — and there's a deep longing in me for that person to experience the joy and freedom of salvation.",pt:"Quando vejo alguem perdido, meu coracao parte — e ha em mim um anseio profundo de que essa pessoa experimente a alegria e a liberdade da salvacao."},
+  {g:"worship",en:"When I'm going through something - joy, pain, confusion - I find myself turning to a song, a poem, or even written words to express to God what I can't put into words on my own.",pt:"Quando estou passando por algo - uma alegria, uma dor, uma confusao - percebo que recorro a uma musica, um poema ou ate palavras escritas para expressar a Deus o que nao consigo colocar em palavras sozinho."},
+  {g:"helps",en:"When I'm in a space, I naturally notice what needs to be done - something that needs to be set up, carried, organized - and I feel an impulse to just take care of it.",pt:"Quando estou em um ambiente, naturalmente percebo o que precisa ser feito - algo que precisa ser arrumado, carregado, organizado - e sinto um impulso de simplesmente cuidar disso."},
+  {g:"visual",en:"In gatherings, events, or everyday moments, I'm almost always the one capturing - taking photos, recording - because I feel like these moments need to be preserved.",pt:"Em reunioes, eventos ou momentos do dia a dia, quase sempre sou eu quem esta registrando - tirando fotos, gravando videos - porque sinto que esses momentos precisam ser preservados."},
+  {g:"evangelism",en:"When I see someone who is lost, my heart breaks - and there's a deep longing in me for that person to experience the joy and freedom of salvation.",pt:"Quando vejo alguem perdido, meu coracao parte - e ha em mim um anseio profundo de que essa pessoa experimente a alegria e a liberdade da salvacao."},
   {g:"leadership",en:"Even when it's not my area of expertise, I notice the people around me naturally start looking to me when they need direction or someone to make a call.",pt:"Mesmo quando nao e minha area de especialidade, percebo que as pessoas ao meu redor naturalmente comecam a me buscar quando precisam de direcao ou de alguem que tome uma decisao."},
-  {g:"helps",en:"There's something in me that wants to do the small things that allow someone else to shine — I don't need to be up front, I just want the whole thing to work well.",pt:"Ha algo em mim que quer fazer as pequenas coisas que permitem que outra pessoa brilhe — nao preciso estar na frente, so quero que o todo funcione bem."},
-  {g:"worship",en:"When I commit to something important, I feel a genuine desire to be the person who shows up — consistently and prepared — because I care about the people who are counting on me.",pt:"Quando me comprometo com algo importante, sinto um desejo genuino de ser a pessoa que aparece — com constancia e preparo — porque me importo com as pessoas que dependem de mim."},
-  {g:"administration",en:"When I'm in a group or project, I naturally start seeing how the pieces could fit together better — who does what, what order makes sense, how to avoid chaos.",pt:"Quando estou em um grupo ou projeto, naturalmente comeco a enxergar como as pecas poderiam se encaixar melhor — quem faz o que, qual e a ordem, como evitar o caos."},
-  {g:"visual",en:"Even without equipment in hand, I often see in my head how something could be told — the scenes, the sequence, what would capture the essence of that moment.",pt:"Mesmo sem ter o equipamento na mao, frequentemente consigo ver na minha cabeca como algo poderia ser contado — as cenas, a sequencia, o que capturaria a essencia daquele momento."},
-  {g:"faith",en:"When people around me are afraid or uncertain, I notice something inside me stays steady — not because I ignore reality, but because there's a trust I can't fully explain.",pt:"Quando as pessoas ao meu redor estao com medo ou inseguras, percebo que algo dentro de mim se mantem firme — nao porque ignoro a realidade, mas porque ha uma confianca que nao consigo explicar completamente."},
-  {g:"encouragement",en:"When I believe in someone, I can't just stay quiet. Something in me wants that person to know — because I feel like that word could change something in them.",pt:"Quando acredito em alguem, nao consigo simplesmente ficar quieto. Algo dentro de mim quer que essa pessoa saiba — porque sinto que essa palavra pode mudar algo nela."},
-  {g:"technical",en:"Learning how a complex system works — even when it requires patience and attempts — awakens a genuine curiosity in me that doesn't feel like effort, but like pleasure.",pt:"Aprender como um sistema complexo funciona — mesmo quando exige paciencia e tentativas — me desperta uma curiosidade genuina que nao sinto como esforco, mas como prazer."},
-  {g:"intercession",en:"When someone comes to my mind, my almost automatic response is to pray for that person — not as a task, but as something that simply happens.",pt:"Quando alguem vem a minha mente, minha resposta quase automatica e orar por essa pessoa — nao como tarefa, mas como algo que simplesmente acontece."},
-  {g:"digital",en:"I think a lot about how a message can truly reach someone who isn't looking for it — the right words, the right tone, the right moment to truly connect.",pt:"Penso bastante em como uma mensagem pode realmente chegar ate alguem que nao esta procurando por ela — as palavras certas, o tom certo, o momento certo para realmente conectar."},
-  {g:"creativity",en:"When I have space to create without restrictions, something in me lights up in a way that's hard to describe — it's where I feel most alive and most myself.",pt:"Quando tenho espaco para criar sem restricoes, algo em mim se acende de um jeito dificil de descrever — e onde me sinto mais vivo e mais eu mesmo."},
-  {g:"teaching",en:"When I'm going to share something with others, I feel a genuine desire to prepare well — not just to have something to say, but so that what I say truly makes sense to those listening.",pt:"Quando vou compartilhar algo com outras pessoas, sinto um desejo genuino de me preparar bem — nao so para ter o que dizer, mas para que o que eu diga realmente faca sentido para quem esta ouvindo."},
-  {g:"worship",en:"When I hear a song that moves me, I find myself returning to it many times — not just to enjoy it, but to better understand how it was made or discover how it works musically.",pt:"Quando ouco uma musica que me toca, percebo que volto a ela varias vezes — nao so para curtir, mas para entender melhor como ela foi feita ou descobrir como aquilo funciona musicalmente."},
+  {g:"helps",en:"There's something in me that wants to do the small things that allow someone else to shine - I don't need to be up front, I just want the whole thing to work well.",pt:"Ha algo em mim que quer fazer as pequenas coisas que permitem que outra pessoa brilhe - nao preciso estar na frente, so quero que o todo funcione bem."},
+  {g:"worship",en:"When I commit to something important, I feel a genuine desire to be the person who shows up - consistently and prepared - because I care about the people who are counting on me.",pt:"Quando me comprometo com algo importante, sinto um desejo genuino de ser a pessoa que aparece - com constancia e preparo - porque me importo com as pessoas que dependem de mim."},
+  {g:"administration",en:"When I'm in a group or project, I naturally start seeing how the pieces could fit together better - who does what, what order makes sense, how to avoid chaos.",pt:"Quando estou em um grupo ou projeto, naturalmente comeco a enxergar como as pecas poderiam se encaixar melhor - quem faz o que, qual e a ordem, como evitar o caos."},
+  {g:"visual",en:"Even without equipment in hand, I often see in my head how something could be told - the scenes, the sequence, what would capture the essence of that moment.",pt:"Mesmo sem ter o equipamento na mao, frequentemente consigo ver na minha cabeca como algo poderia ser contado - as cenas, a sequencia, o que capturaria a essencia daquele momento."},
+  {g:"faith",en:"When people around me are afraid or uncertain, I notice something inside me stays steady - not because I ignore reality, but because there's a trust I can't fully explain.",pt:"Quando as pessoas ao meu redor estao com medo ou inseguras, percebo que algo dentro de mim se mantem firme - nao porque ignoro a realidade, mas porque ha uma confianca que nao consigo explicar completamente."},
+  {g:"encouragement",en:"When I believe in someone, I can't just stay quiet. Something in me wants that person to know - because I feel like that word could change something in them.",pt:"Quando acredito em alguem, nao consigo simplesmente ficar quieto. Algo dentro de mim quer que essa pessoa saiba - porque sinto que essa palavra pode mudar algo nela."},
+  {g:"technical",en:"Learning how a complex system works - even when it requires patience and attempts - awakens a genuine curiosity in me that doesn't feel like effort, but like pleasure.",pt:"Aprender como um sistema complexo funciona - mesmo quando exige paciencia e tentativas - me desperta uma curiosidade genuina que nao sinto como esforco, mas como prazer."},
+  {g:"intercession",en:"When someone comes to my mind, my almost automatic response is to pray for that person - not as a task, but as something that simply happens.",pt:"Quando alguem vem a minha mente, minha resposta quase automatica e orar por essa pessoa - nao como tarefa, mas como algo que simplesmente acontece."},
+  {g:"digital",en:"I think a lot about how a message can truly reach someone who isn't looking for it - the right words, the right tone, the right moment to truly connect.",pt:"Penso bastante em como uma mensagem pode realmente chegar ate alguem que nao esta procurando por ela - as palavras certas, o tom certo, o momento certo para realmente conectar."},
+  {g:"creativity",en:"When I have space to create without restrictions, something in me lights up in a way that's hard to describe - it's where I feel most alive and most myself.",pt:"Quando tenho espaco para criar sem restricoes, algo em mim se acende de um jeito dificil de descrever - e onde me sinto mais vivo e mais eu mesmo."},
+  {g:"teaching",en:"When I'm going to share something with others, I feel a genuine desire to prepare well - not just to have something to say, but so that what I say truly makes sense to those listening.",pt:"Quando vou compartilhar algo com outras pessoas, sinto um desejo genuino de me preparar bem - nao so para ter o que dizer, mas para que o que eu diga realmente faca sentido para quem esta ouvindo."},
+  {g:"worship",en:"When I hear a song that moves me, I find myself returning to it many times - not just to enjoy it, but to better understand how it was made or discover how it works musically.",pt:"Quando ouco uma musica que me toca, percebo que volto a ela varias vezes - nao so para curtir, mas para entender melhor como ela foi feita ou descobrir como aquilo funciona musicalmente."},
   {g:"helps",en:"I don't need anyone to notice what I did to feel good about it. Knowing things worked and that I contributed in some way is already enough for me.",pt:"Nao preciso que alguem perceba o que fiz para me sentir bem com isso. Saber que as coisas funcionaram e que eu contribui de alguma forma ja e suficiente para mim."},
-  {g:"hospitality",en:"Creating an environment where people feel welcome and at ease — whether a space, an event, or a simple conversation — is something that gives me genuine joy.",pt:"Criar um ambiente onde as pessoas se sintam bem-vindas e a vontade — seja um espaco, um evento ou uma simples conversa — e algo que me da uma alegria genuina."},
-  {g:"leadership",en:"What moves me in a group is wanting each person to reach their potential and for everyone to work well together — there's a genuine desire in me to see people grow.",pt:"O que me move em um grupo e querer que cada pessoa alcance seu potencial e que todos funcionem bem juntos — ha em mim um desejo genuino de ver as pessoas crescerem."},
-  {g:"visual",en:"I have a hard time deleting photos or videos — I feel like every record has value and that someday that moment will matter to someone.",pt:"Tenho dificuldade em apagar fotos ou videos — sinto que cada registro tem valor e que um dia aquele momento vai importar para alguem."},
+  {g:"hospitality",en:"Creating an environment where people feel welcome and at ease - whether a space, an event, or a simple conversation - is something that gives me genuine joy.",pt:"Criar um ambiente onde as pessoas se sintam bem-vindas e a vontade - seja um espaco, um evento ou uma simples conversa - e algo que me da uma alegria genuina."},
+  {g:"leadership",en:"What moves me in a group is wanting each person to reach their potential and for everyone to work well together - there's a genuine desire in me to see people grow.",pt:"O que me move em um grupo e querer que cada pessoa alcance seu potencial e que todos funcionem bem juntos - ha em mim um desejo genuino de ver as pessoas crescerem."},
+  {g:"visual",en:"I have a hard time deleting photos or videos - I feel like every record has value and that someday that moment will matter to someone.",pt:"Tenho dificuldade em apagar fotos ou videos - sinto que cada registro tem valor e que um dia aquele momento vai importar para alguem."},
   {g:"intercession",en:"I've lived moments where I prayed for something specific and saw a response that deepened in me the conviction that praying truly matters and truly changes things.",pt:"Ja vivi momentos em que orei por algo especifico e vi uma resposta que aprofundou em mim a conviccao de que orar realmente importa e realmente muda coisas."},
-  {g:"administration",en:"When things are disorganized, I don't freeze — my mind already starts seeing how it could work better and I feel a desire to bring clarity to that situation.",pt:"Quando as coisas estao desorganizadas, nao fico paralisado — minha mente ja comeca a enxergar como poderia funcionar melhor e sinto um desejo de trazer clareza para aquela situacao."},
-  {g:"encouragement",en:"When I'm going through a hard time, I often find myself thinking about who else might be feeling something similar — and I feel a genuine desire to go to that person and encourage them.",pt:"Quando estou passando por um momento dificil, frequentemente me pego pensando em quem mais pode estar sentindo algo parecido — e sinto um desejo genuino de ir ate essa pessoa e encoreja-la."},
-  {g:"digital",en:"Representing a community or a cause through words and content feels like something with weight and meaning to me — not just a function, but a form of service.",pt:"Representar uma comunidade ou uma causa atraves de palavras e conteudo parece algo com peso e significado para mim — nao apenas uma funcao, mas uma forma de servir."},
-  {g:"faith",en:"I've taken steps forward in situations without guarantees — not because I trusted myself, but because I trusted Him. There's a certainty in me that when we move toward God, He opens and guides the way.",pt:"Ja dei passos em frente em situacoes sem garantias — nao porque confiei em mim mesmo, mas porque confiei n'Ele. Ha em mim uma certeza de que quando nos movemos na direcao de Deus, e Ele quem abre e guia o caminho."},
-  {g:"teaching",en:"When I understand something well, something in me wants to share it in a way that others can also understand — and that process of translating knowledge genuinely energizes me.",pt:"Quando entendo algo bem, algo dentro de mim quer compartilhar isso de um jeito que outras pessoas tambem possam entender — e esse processo de traduzir o conhecimento me energiza genuinamente."},
-  {g:"creativity",en:"I notice beauty and aesthetics in places where others might not pay attention — and I care deeply about the difference between something that just works and something that is also beautiful.",pt:"Percebo beleza e estetica em lugares onde outras pessoas talvez nao prestem atencao — e me importo profundamente com a diferenca entre algo que apenas funciona e algo que tambem e bonito."},
+  {g:"administration",en:"When things are disorganized, I don't freeze - my mind already starts seeing how it could work better and I feel a desire to bring clarity to that situation.",pt:"Quando as coisas estao desorganizadas, nao fico paralisado - minha mente ja comeca a enxergar como poderia funcionar melhor e sinto um desejo de trazer clareza para aquela situacao."},
+  {g:"encouragement",en:"When I'm going through a hard time, I often find myself thinking about who else might be feeling something similar - and I feel a genuine desire to go to that person and encourage them.",pt:"Quando estou passando por um momento dificil, frequentemente me pego pensando em quem mais pode estar sentindo algo parecido - e sinto um desejo genuino de ir ate essa pessoa e encoreja-la."},
+  {g:"digital",en:"Representing a community or a cause through words and content feels like something with weight and meaning to me - not just a function, but a form of service.",pt:"Representar uma comunidade ou uma causa atraves de palavras e conteudo parece algo com peso e significado para mim - nao apenas uma funcao, mas uma forma de servir."},
+  {g:"faith",en:"I've taken steps forward in situations without guarantees - not because I trusted myself, but because I trusted Him. There's a certainty in me that when we move toward God, He opens and guides the way.",pt:"Ja dei passos em frente em situacoes sem garantias - nao porque confiei em mim mesmo, mas porque confiei n'Ele. Ha em mim uma certeza de que quando nos movemos na direcao de Deus, e Ele quem abre e guia o caminho."},
+  {g:"teaching",en:"When I understand something well, something in me wants to share it in a way that others can also understand - and that process of translating knowledge genuinely energizes me.",pt:"Quando entendo algo bem, algo dentro de mim quer compartilhar isso de um jeito que outras pessoas tambem possam entender - e esse processo de traduzir o conhecimento me energiza genuinamente."},
+  {g:"creativity",en:"I notice beauty and aesthetics in places where others might not pay attention - and I care deeply about the difference between something that just works and something that is also beautiful.",pt:"Percebo beleza e estetica em lugares onde outras pessoas talvez nao prestem atencao - e me importo profundamente com a diferenca entre algo que apenas funciona e algo que tambem e bonito."},
   {g:"evangelism",en:"Some of the most important conversations of my life have been with just one person, when I noticed they were lost and felt a genuine desire to point them toward hope, freedom, and salvation.",pt:"Algumas das conversas mais importantes da minha vida foram com uma pessoa so, quando percebi que ela estava perdida e senti um desejo genuino de aponta-la para a esperanca, a liberdade e a salvacao."},
-  {g:"technical",en:"When something isn't working as it should in a space — a detail out of place, something that isn't sounding or looking right — my attention goes straight to it and I'm already thinking about how to fix it.",pt:"Quando algo nao esta funcionando como deveria em um ambiente — um detalhe fora do lugar, algo que nao esta soando ou parecendo certo — minha atencao vai direto para isso e ja comeco a pensar em como resolver."},
-  {g:"hospitality",en:"When I walk into a place and notice someone seems out of place or alone, something in me wants to move toward that person — not out of obligation, but because I genuinely care.",pt:"Quando entro em um lugar e percebo que alguem parece deslocado ou sozinho, algo dentro de mim quer se mover em direcao a essa pessoa — nao por obrigacao, mas porque genuinamente me importo."},
-  {g:"encouragement",en:"When I notice someone around me is carrying something heavy, I feel a genuine impulse to draw closer — not because I should, but because something inside me simply can't ignore it.",pt:"Quando percebo que alguem ao meu redor esta carregando algo pesado, sinto um impulso genuino de me aproximar — nao porque devo, mas porque algo dentro de mim nao consegue simplesmente ignorar."},
-  {g:"digital",en:"When I see something done well — a campaign, a post, a message that truly reached people — I'm moved by it, and sometimes find myself analyzing what worked so well.",pt:"Quando vejo algo bem feito — uma campanha, um post, uma comunicacao que realmente chegou nas pessoas — fico impactado, e as vezes me pego analisando o que funcionou tao bem."},
-  {g:"administration",en:"There's a genuine satisfaction in me when I manage to build a process or system that truly works — when the pieces fit together and things flow as they should.",pt:"Ha uma satisfacao genuina em mim quando consigo construir um processo ou um sistema que funciona de verdade — quando as pecas se encaixam e as coisas fluem como deveriam."},
-  {g:"intercession",en:"Praying isn't something I have to remind myself to do — it's more like a conversation that happens naturally, especially when someone or something comes to mind.",pt:"Orar nao e algo que preciso me lembrar de fazer — e mais como uma conversa que acontece naturalmente, especialmente quando alguem ou algo vem a minha mente e eu simplesmente levo isso a Deus."},
-  {g:"faith",en:"When people around me are low in faith or feel without perspective, they often seek me out to talk — and I notice that the faith I carry has the power to rekindle hope in them.",pt:"Quando as pessoas ao meu redor estao com a fe baixa ou sem perspectiva, frequentemente me buscam para conversar — e percebo que a fe que carrego tem o poder de reacender a esperanca nelas."},
-  {g:"evangelism",en:"When I encounter someone who is lost or far from God, I feel a genuine impulse to reach them — like someone who sees a person drowning and simply cannot stand still.",pt:"Quando encontro alguem perdido ou distante de Deus, sinto um impulso genuino de resgate — como quem ve alguem se afogando e nao consegue simplesmente ficar parado."},
-  {g:"leadership",en:"When I notice the people around me are watching how I handle things, it doesn't weigh on me — it drives me to want to be better and to keep growing.",pt:"Quando percebo que as pessoas ao meu redor estao me observando, isso nao me pesa — me impulsiona a querer ser melhor e a continuar crescendo."},
-  {g:"teaching",en:"Watching someone understand something I helped explain — that moment when something clicks for them — is one of the most gratifying feelings I know.",pt:"Ver alguem entender algo que eu ajudei a explicar — aquele momento em que algo se encaixa para a pessoa — e uma das sensacoes mais gratificantes que conheco."},
-  {g:"digital",en:"I've found myself thinking about how someone who has never been to church could be reached by a message — and I feel a genuine desire to be part of making that possible.",pt:"Ja me peguei pensando em como alguem que nunca foi a uma igreja poderia ser alcancado por uma mensagem — e sinto uma vontade genuina de ser parte de tornar isso possivel."},
-  {g:"creativity",en:"I'm rarely satisfied with the first solution — something inside me keeps exploring, looking for the path that not only works, but also feels right in a deeper way.",pt:"Raramente fico satisfeito com a primeira solucao — algo dentro de mim continua explorando, procurando o caminho que nao so funciona, mas que tambem parece certo de uma forma mais profunda."},
-  {g:"technical",en:"There's something in me that finds deep satisfaction in making things work well behind the scenes — even without recognition, just knowing I contributed to everything running smoothly.",pt:"Ha algo em mim que se satisfaz profundamente em fazer as coisas funcionarem bem nos bastidores — mesmo sem reconhecimento, so de saber que contribui para que tudo corresse bem."},
-  {g:"prophetic",en:"Sometimes I have a perception about a person or situation that goes beyond what I can rationally explain — it might be an impression, an image, or a word — and the Holy Spirit moves me not to ignore it.",pt:"As vezes tenho uma percepcao sobre uma pessoa ou situacao que vai alem do que consigo explicar racionalmente — pode ser uma impressao, uma imagem ou uma palavra — e o Espirito Santo me impulsiona a nao ignorar."},
-  {g:"prophetic",en:"Sometimes I feel a weight in my heart for specific people or situations — a concern that feels bigger than my own, as if I'm carrying something God feels about it.",pt:"As vezes sinto um peso no coracao por pessoas ou situacoes especificas — uma preocupacao que parece maior do que a minha, como se eu estivesse carregando algo que Deus sente em relacao aquilo."},
-  {g:"prophetic",en:"In moments of prayer or stillness, I notice I'm naturally attentive to impressions or thoughts I sense coming from the Holy Spirit — and I've learned to pay attention to them.",pt:"Em momentos de oracao ou silencio, percebo que estou naturalmente atento a impressoes ou pensamentos que sinto vir do Espirito Santo — e aprendi a prestar atencao neles."},
-  {g:"hospitality",en:"People have told me they felt at ease with me almost immediately — and I notice there's something in me that genuinely wants people to feel that way.",pt:"Ja ouvi de pessoas que se sentiram a vontade comigo quase que imediatamente — e percebo que ha algo em mim que genuinamente quer que as pessoas se sintam assim."}
+  {g:"technical",en:"When something isn't working as it should in a space - a detail out of place, something that isn't sounding or looking right - my attention goes straight to it and I'm already thinking about how to fix it.",pt:"Quando algo nao esta funcionando como deveria em um ambiente - um detalhe fora do lugar, algo que nao esta soando ou parecendo certo - minha atencao vai direto para isso e ja comeco a pensar em como resolver."},
+  {g:"hospitality",en:"When I walk into a place and notice someone seems out of place or alone, something in me wants to move toward that person - not out of obligation, but because I genuinely care.",pt:"Quando entro em um lugar e percebo que alguem parece deslocado ou sozinho, algo dentro de mim quer se mover em direcao a essa pessoa - nao por obrigacao, mas porque genuinamente me importo."},
+  {g:"encouragement",en:"When I notice someone around me is carrying something heavy, I feel a genuine impulse to draw closer - not because I should, but because something inside me simply can't ignore it.",pt:"Quando percebo que alguem ao meu redor esta carregando algo pesado, sinto um impulso genuino de me aproximar - nao porque devo, mas porque algo dentro de mim nao consegue simplesmente ignorar."},
+  {g:"digital",en:"When I see something done well - a campaign, a post, a message that truly reached people - I'm moved by it, and sometimes find myself analyzing what worked so well.",pt:"Quando vejo algo bem feito - uma campanha, um post, uma comunicacao que realmente chegou nas pessoas - fico impactado, e as vezes me pego analisando o que funcionou tao bem."},
+  {g:"administration",en:"There's a genuine satisfaction in me when I manage to build a process or system that truly works - when the pieces fit together and things flow as they should.",pt:"Ha uma satisfacao genuina em mim quando consigo construir um processo ou um sistema que funciona de verdade - quando as pecas se encaixam e as coisas fluem como deveriam."},
+  {g:"intercession",en:"Praying isn't something I have to remind myself to do - it's more like a conversation that happens naturally, especially when someone or something comes to mind.",pt:"Orar nao e algo que preciso me lembrar de fazer - e mais como uma conversa que acontece naturalmente, especialmente quando alguem ou algo vem a minha mente e eu simplesmente levo isso a Deus."},
+  {g:"faith",en:"When people around me are low in faith or feel without perspective, they often seek me out to talk - and I notice that the faith I carry has the power to rekindle hope in them.",pt:"Quando as pessoas ao meu redor estao com a fe baixa ou sem perspectiva, frequentemente me buscam para conversar - e percebo que a fe que carrego tem o poder de reacender a esperanca nelas."},
+  {g:"evangelism",en:"When I encounter someone who is lost or far from God, I feel a genuine impulse to reach them - like someone who sees a person drowning and simply cannot stand still.",pt:"Quando encontro alguem perdido ou distante de Deus, sinto um impulso genuino de resgate - como quem ve alguem se afogando e nao consegue simplesmente ficar parado."},
+  {g:"leadership",en:"When I notice the people around me are watching how I handle things, it doesn't weigh on me - it drives me to want to be better and to keep growing.",pt:"Quando percebo que as pessoas ao meu redor estao me observando, isso nao me pesa - me impulsiona a querer ser melhor e a continuar crescendo."},
+  {g:"teaching",en:"Watching someone understand something I helped explain - that moment when something clicks for them - is one of the most gratifying feelings I know.",pt:"Ver alguem entender algo que eu ajudei a explicar - aquele momento em que algo se encaixa para a pessoa - e uma das sensacoes mais gratificantes que conheco."},
+  {g:"digital",en:"I've found myself thinking about how someone who has never been to church could be reached by a message - and I feel a genuine desire to be part of making that possible.",pt:"Ja me peguei pensando em como alguem que nunca foi a uma igreja poderia ser alcancado por uma mensagem - e sinto uma vontade genuina de ser parte de tornar isso possivel."},
+  {g:"creativity",en:"I'm rarely satisfied with the first solution - something inside me keeps exploring, looking for the path that not only works, but also feels right in a deeper way.",pt:"Raramente fico satisfeito com a primeira solucao - algo dentro de mim continua explorando, procurando o caminho que nao so funciona, mas que tambem parece certo de uma forma mais profunda."},
+  {g:"technical",en:"There's something in me that finds deep satisfaction in making things work well behind the scenes - even without recognition, just knowing I contributed to everything running smoothly.",pt:"Ha algo em mim que se satisfaz profundamente em fazer as coisas funcionarem bem nos bastidores - mesmo sem reconhecimento, so de saber que contribui para que tudo corresse bem."},
+  {g:"prophetic",en:"Sometimes I have a perception about a person or situation that goes beyond what I can rationally explain - it might be an impression, an image, or a word - and the Holy Spirit moves me not to ignore it.",pt:"As vezes tenho uma percepcao sobre uma pessoa ou situacao que vai alem do que consigo explicar racionalmente - pode ser uma impressao, uma imagem ou uma palavra - e o Espirito Santo me impulsiona a nao ignorar."},
+  {g:"prophetic",en:"Sometimes I feel a weight in my heart for specific people or situations - a concern that feels bigger than my own, as if I'm carrying something God feels about it.",pt:"As vezes sinto um peso no coracao por pessoas ou situacoes especificas - uma preocupacao que parece maior do que a minha, como se eu estivesse carregando algo que Deus sente em relacao aquilo."},
+  {g:"prophetic",en:"In moments of prayer or stillness, I notice I'm naturally attentive to impressions or thoughts I sense coming from the Holy Spirit - and I've learned to pay attention to them.",pt:"Em momentos de oracao ou silencio, percebo que estou naturalmente atento a impressoes ou pensamentos que sinto vir do Espirito Santo - e aprendi a prestar atencao neles."},
+  {g:"hospitality",en:"People have told me they felt at ease with me almost immediately - and I notice there's something in me that genuinely wants people to feel that way.",pt:"Ja ouvi de pessoas que se sentiram a vontade comigo quase que imediatamente - e percebo que ha algo em mim que genuinamente quer que as pessoas se sintam assim."}
 ];
 
+/* ─── CORE NAVIGATION ───────────────────────────────────────────── */
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0)}
+
 function applyLang(){
   var t=T[lang];
   document.getElementById('langBtn').textContent=t.langBtn;
@@ -393,13 +518,22 @@ function applyLang(){
   document.getElementById('shareSubmitText').textContent=t.shareSubmit;
   document.getElementById('shareSuccessText').textContent=t.shareSuccess;
   document.getElementById('carismaLabel').textContent=t.carismaLabel;
+  document.getElementById('downloadCard1Text').textContent=t.downloadCard1;
+  document.getElementById('downloadCard2Text').textContent=t.downloadCard2;
+  document.getElementById('waShareText').textContent=t.waShare;
+  document.getElementById('copyTextText').textContent=t.copyText;
+  document.getElementById('saveLabel').textContent=t.saveLabel;
+  document.getElementById('shareActionsTitle').textContent=t.shareActionsTitle;
   renderCarismaChips();
   if(document.getElementById('screen-assessment').classList.contains('active'))renderQuestion();
   if(document.getElementById('screen-results').classList.contains('active')&&lastScores)renderResults(lastScores,lastSubmittedName);
   renderShareChips();
 }
+
 function toggleLang(){lang=lang==="pt"?"en":"pt";applyLang()}
 function startAssessment(){current=0;answers={};lastScores=null;lastSubmittedName="";lastSubmissionId=null;resetShareMore();showScreen('assessment');renderQuestion()}
+
+/* ─── QUESTION RENDER ───────────────────────────────────────────── */
 function renderQuestion(){
   var q=QUESTIONS[current],t=T[lang],total=QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
   document.getElementById('progLabel').textContent=t.progress(current+1,total);
@@ -427,6 +561,8 @@ function selectAnswer(i){
 }
 function handleNext(){if(answers[current]===undefined)return;if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}else showScreen('form')}
 function handleBack(){if(current>0){current--;renderQuestion()}else showScreen('welcome')}
+
+/* ─── FORM VALIDATION ───────────────────────────────────────────── */
 function checkForm(){
   var t=T[lang];
   var name=document.getElementById('inputName').value.trim();
@@ -445,6 +581,8 @@ function checkForm(){
   if(whatsapp){if(digits.length<8){whatsappValid=false;whatsappError.textContent=t.whatsappInvalid;whatsappError.style.display='block'}else if(digits.length>=11){whatsappNote.textContent=t.whatsappIntl;whatsappNote.style.display='block'}}
   submitBtn.disabled=!(name&&emailValid&&whatsappValid);
 }
+
+/* ─── SCORING ───────────────────────────────────────────────────── */
 function calcScores(){
   var by={};
   QUESTIONS.forEach(function(q,i){if(answers[i]!==undefined){if(!by[q.g])by[q.g]=[];by[q.g].push(answers[i])}});
@@ -454,6 +592,8 @@ function calcScores(){
   });
   sc.sort(function(a,b){return b.score-a.score});return sc;
 }
+
+/* ─── SUBMIT — wired to Cloudflare Worker ───────────────────────── */
 function handleSubmit(){
   var n=document.getElementById('inputName').value.trim();
   var e=document.getElementById('inputEmail').value.trim();
@@ -471,6 +611,8 @@ function handleSubmit(){
   renderResults(lastScores,lastSubmittedName);
   showScreen('results');
 }
+
+/* ─── RESULTS RENDER ────────────────────────────────────────────── */
 function renderResults(scores,name){
   var t=T[lang],rn=document.getElementById('rName');
   if(name){rn.textContent=name;rn.style.display='flex'}else{rn.textContent='';rn.style.display='none'}
@@ -479,16 +621,26 @@ function renderResults(scores,name){
   document.getElementById('topLabel').textContent=t.topLabel;
   document.getElementById('allLabel').textContent=t.allLabel;
   document.getElementById('minLabel').textContent=t.minLabel;
+  document.getElementById('saveLabel').textContent=t.saveLabel;
+  document.getElementById('shareActionsTitle').textContent=t.shareActionsTitle;
+  document.getElementById('downloadCard1Text').textContent=t.downloadCard1;
+  document.getElementById('downloadCard2Text').textContent=t.downloadCard2;
+  document.getElementById('waShareText').textContent=t.waShare;
+  document.getElementById('copyTextText').textContent=t.copyText;
   document.getElementById('ctaTitle').textContent=t.ctaTitle;
   document.getElementById('ctaText').textContent=t.ctaText;
   document.getElementById('ctaBtn').textContent=t.ctaBtn;
   document.getElementById('retakeBtn').textContent=t.retakeBtn;
+
+  /* Top 3 */
   var top3El=document.getElementById('top3');top3El.innerHTML='';
   scores.slice(0,3).forEach(function(g,i){
     var d=document.createElement('div');d.className='tc r'+(i+1);
     d.innerHTML='<div class="tc-rank">'+(i+1)+'</div><div class="tc-icon">'+g.icon+'</div><div class="tc-body"><div class="tc-name">'+g[lang].name+'</div><div class="tc-desc">'+g[lang].desc+'</div></div>';
     top3El.appendChild(d);
   });
+
+  /* All bars */
   var barsEl=document.getElementById('allBars');barsEl.innerHTML='';
   scores.forEach(function(g){
     var r=document.createElement('div');r.className='bar-row';
@@ -496,6 +648,8 @@ function renderResults(scores,name){
     barsEl.appendChild(r);
   });
   setTimeout(function(){document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.getAttribute('data-pct')})},100);
+
+  /* Ministry suggestions */
   var minEl=document.getElementById('ministriesOut');minEl.innerHTML='';
   scores.slice(0,5).forEach(function(g){
     var grp=document.createElement('div');grp.className='min-group';
@@ -503,30 +657,120 @@ function renderResults(scores,name){
     grp.innerHTML='<div class="min-gift">'+g.icon+' '+g[lang].name+'</div><div class="min-tags">'+tags+'</div>';
     minEl.appendChild(grp);
   });
+
+  /* Build share cards (off-screen) */
+  buildShareCards(scores, name);
   renderShareChips();
 }
 
-function resetShareMore(){
-  shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;
-  document.getElementById('pathServing').classList.remove('active');
-  document.getElementById('pathNew').classList.remove('active');
-  document.getElementById('shareForm').classList.remove('visible');
-  document.getElementById('shareSuccess').style.display='none';
-  document.getElementById('shareSubmitBtn').disabled=false;
-  var prev=document.getElementById('photoPreview');prev.style.display='none';prev.src='';
-  document.getElementById('photoIcon').style.display='block';
+/* ─── SHARE CARDS (off-screen, captured by html2canvas) ─────────── */
+function buildShareCards(scores, name){
+  var t=T[lang];
+  /* Card 1 header */
+  document.getElementById('sc1Title').textContent=t.sc1Title;
+  document.getElementById('sc1Name').textContent=name||'';
+  document.getElementById('sc2Title').textContent=t.sc2Title;
+  document.getElementById('sc2Name').textContent=name||'';
+  document.getElementById('sc2BarsLabel').textContent=t.sc2BarsLabel;
+  /* Card 1: top 3 */
+  var c1=document.getElementById('sc1Top3');c1.innerHTML='';
+  scores.slice(0,3).forEach(function(g,i){
+    var d=document.createElement('div');d.className='sc-tc'+(i===0?' sc-r1':'');
+    d.innerHTML='<div class="sc-rank">'+(i+1)+'</div><div class="sc-icon">'+g.icon+'</div><div><div class="sc-tc-name">'+g[lang].name+'</div><div class="sc-tc-desc">'+g[lang].desc+'</div></div>';
+    c1.appendChild(d);
+  });
+  /* Card 2: all bars */
+  var c2=document.getElementById('sc2Bars');c2.innerHTML='';
+  scores.forEach(function(g){
+    var r=document.createElement('div');r.className='sc-bar-row';
+    r.innerHTML='<div class="sc-bar-lbl">'+g.icon+' '+g[lang].name+'</div><div class="sc-bar-track"><div class="sc-bar-fill" style="width:'+g.pct+'%"></div></div><div class="sc-bar-pct">'+g.pct+'%</div>';
+    c2.appendChild(r);
+  });
 }
+
+function downloadCard(cardId, filename){
+  var el=document.getElementById(cardId);
+  if(!el||typeof html2canvas==='undefined')return;
+  html2canvas(el,{backgroundColor:'#0A0A0A',scale:2,useCORS:true,logging:false}).then(function(canvas){
+    var link=document.createElement('a');
+    link.download=filename;
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }).catch(function(e){console.warn('html2canvas error',e)});
+}
+
+/* ─── WHATSAPP SHARE ─────────────────────────────────────────────── */
+function shareWhatsApp(){
+  if(!lastScores)return;
+  var t=T[lang];
+  var top3=lastScores.slice(0,3).map(function(g){return g[lang].name});
+  var msg=t.waMsg(lastSubmittedName||'',top3);
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+/* ─── COPY TEXT ──────────────────────────────────────────────────── */
+function copyResultsText(){
+  if(!lastScores)return;
+  var t=T[lang];
+  var lines=[t.rTitle,''];
+  if(lastSubmittedName)lines.push(lastSubmittedName,'');
+  lines.push(t.topLabel+':');
+  lastScores.slice(0,3).forEach(function(g,i){lines.push((i+1)+'. '+g[lang].name+' ('+g.pct+'%)')});
+  lines.push('');
+  lines.push('https://farfromtimnah-hue.github.io/ministry-gifting/');
+  var text=lines.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){flashCopied()}).catch(function(){fallbackCopy(text)});
+  }else{fallbackCopy(text)}
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');flashCopied()}catch(e){}
+  document.body.removeChild(ta);
+}
+function flashCopied(){
+  var btn=document.getElementById('copyTextBtn');
+  btn.classList.add('copied');
+  btn.querySelector('#copyTextText').textContent=T[lang].copiedText;
+  setTimeout(function(){btn.classList.remove('copied');btn.querySelector('#copyTextText').textContent=T[lang].copyText},2000);
+}
+
+/* ─── SHARE MORE / ALREADY SERVING ─────────────────────────────── */
+function resetShareMore(){
+  shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;shareCarisma=[];
+  var ps=document.getElementById('pathServing'),pn=document.getElementById('pathNew');
+  if(ps)ps.classList.remove('active');
+  if(pn)pn.classList.remove('active');
+  var sf=document.getElementById('shareForm');if(sf)sf.classList.remove('visible');
+  var ss=document.getElementById('shareSuccess');if(ss)ss.style.display='none';
+  var sb=document.getElementById('shareSubmitBtn');if(sb)sb.disabled=false;
+  var prev=document.getElementById('photoPreview');if(prev){prev.style.display='none';prev.src='';}
+  var pi=document.getElementById('photoIcon');if(pi)pi.style.display='block';
+  /* Re-show path buttons if they were hidden after success */
+  var ps2=document.getElementById('pathServing');var pn2=document.getElementById('pathNew');
+  if(ps2)ps2.style.display='';if(pn2)pn2.style.display='';
+}
+
 function renderCarismaChips(){
   var t=T[lang];
   var cc=document.getElementById('carismaChips');if(!cc)return;cc.innerHTML='';
-  [{val:'1st Year',pt:t.carisma1,en:t.carisma1},{val:'Masters',pt:t.carismaMasters,en:t.carismaMasters}].forEach(function(item){
-    var c=document.createElement('button');c.type='button';
-    c.className='chip'+(shareCarisma.indexOf(item.val)>-1?' sel':'');
-    c.textContent=lang==='pt'?item.pt:item.en;
-    c.addEventListener('click',function(){toggleChip(shareCarisma,item.val,cc,c)});
-    cc.appendChild(c);
+  var levels=[{val:'1st Year',label:t.carisma1},{val:'Masters',label:t.carismaMasters}];
+  levels.forEach(function(item){
+    var btn=document.createElement('button');btn.type='button';
+    var active=shareCarisma.indexOf(item.val)>-1;
+    btn.className='carisma-btn'+(active?' sel':'');
+    btn.innerHTML='<img src="'+CARISMA_LOGO+'" alt="Carisma"> '+item.label;
+    (function(v,b){
+      b.addEventListener('click',function(){
+        var idx=shareCarisma.indexOf(v);
+        if(idx>-1){shareCarisma.splice(idx,1);b.classList.remove('sel')}
+        else{shareCarisma.push(v);b.classList.add('sel')}
+      });
+    })(item.val,btn);
+    cc.appendChild(btn);
   });
 }
+
 function renderShareChips(){
   var groupList=lang==='pt'?GROUP_LIST_PT:GROUP_LIST_EN;
   var langList=lang==='pt'?LANG_LIST_PT:LANG_LIST_EN;
@@ -549,17 +793,23 @@ function renderShareChips(){
   });
   renderCarismaChips();
 }
+
 function toggleChip(arr,val,wrap,btn){
   var idx=arr.indexOf(val);
   if(idx>-1){arr.splice(idx,1);btn.classList.remove('sel')}else{arr.push(val);btn.classList.add('sel')}
 }
+
 function selectPath(path){
   shareSelectedPath=path;
   document.getElementById('pathServing').classList.toggle('active',path==='serving');
   document.getElementById('pathNew').classList.toggle('active',path==='new');
   document.getElementById('shareForm').classList.add('visible');
-  document.getElementById('ministrySection').style.display=path==='serving'?'block':'none';
+  var ms=document.getElementById('ministrySection');
+  ms.style.display=path==='serving'?'block':'none';
+  var cs=document.getElementById('carismaSection');
+  cs.style.display=path==='serving'?'block':'none';
 }
+
 function submitShareMore(){
   if(!lastSubmissionId)return;
   var btn=document.getElementById('shareSubmitBtn');
@@ -584,6 +834,7 @@ function submitShareMore(){
   })
   .catch(function(){btn.disabled=false});
 }
+
 document.getElementById('photoInput').addEventListener('change',function(e){
   var file=e.target.files[0];if(!file)return;
   var reader=new FileReader();
@@ -606,6 +857,16 @@ function handleRetake(){
   showScreen('welcome');
 }
 
+/* ─── CTA WHATSAPP ──────────────────────────────────────────────── */
+function openCtaWhatsApp(){
+  var t=T[lang];
+  var name=lastSubmittedName||'';
+  var msg=t.ctaWaMsg(name);
+  var phone='12144485917';
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+/* ─── EVENT WIRING (iOS-safe: touchstart + click, bottom of body) ── */
 document.getElementById('langBtn').addEventListener('touchstart',function(e){e.preventDefault();toggleLang()},{passive:false});
 document.getElementById('langBtn').addEventListener('click',toggleLang);
 document.getElementById('startBtn').addEventListener('touchstart',function(e){e.preventDefault();startAssessment()},{passive:false});
@@ -618,10 +879,25 @@ document.getElementById('submitBtn').addEventListener('touchstart',function(e){e
 document.getElementById('submitBtn').addEventListener('click',handleSubmit);
 document.getElementById('retakeBtn').addEventListener('touchstart',function(e){e.preventDefault();handleRetake()},{passive:false});
 document.getElementById('retakeBtn').addEventListener('click',handleRetake);
-document.getElementById('ctaBtn').addEventListener('click',function(){window.location.href='mailto:contato@lagoinhatampa.com';});
+document.getElementById('ctaBtn').addEventListener('touchstart',function(e){e.preventDefault();openCtaWhatsApp()},{passive:false});
+document.getElementById('ctaBtn').addEventListener('click',openCtaWhatsApp);
 document.getElementById('inputName').addEventListener('input',checkForm);
 document.getElementById('inputEmail').addEventListener('input',checkForm);
 document.getElementById('inputWhatsapp').addEventListener('input',checkForm);
+document.getElementById('pathServing').addEventListener('touchstart',function(e){e.preventDefault();selectPath('serving')},{passive:false});
+document.getElementById('pathServing').addEventListener('click',function(){selectPath('serving')});
+document.getElementById('pathNew').addEventListener('touchstart',function(e){e.preventDefault();selectPath('new')},{passive:false});
+document.getElementById('pathNew').addEventListener('click',function(){selectPath('new')});
+document.getElementById('shareSubmitBtn').addEventListener('touchstart',function(e){e.preventDefault();submitShareMore()},{passive:false});
+document.getElementById('shareSubmitBtn').addEventListener('click',submitShareMore);
+document.getElementById('downloadCard1Btn').addEventListener('touchstart',function(e){e.preventDefault();downloadCard('shareCard1','meus-dons-top3.png')},{passive:false});
+document.getElementById('downloadCard1Btn').addEventListener('click',function(){downloadCard('shareCard1','meus-dons-top3.png')});
+document.getElementById('downloadCard2Btn').addEventListener('touchstart',function(e){e.preventDefault();downloadCard('shareCard2','meus-dons-completo.png')},{passive:false});
+document.getElementById('downloadCard2Btn').addEventListener('click',function(){downloadCard('shareCard2','meus-dons-completo.png')});
+document.getElementById('waShareBtn').addEventListener('touchstart',function(e){e.preventDefault();shareWhatsApp()},{passive:false});
+document.getElementById('waShareBtn').addEventListener('click',shareWhatsApp);
+document.getElementById('copyTextBtn').addEventListener('touchstart',function(e){e.preventDefault();copyResultsText()},{passive:false});
+document.getElementById('copyTextBtn').addEventListener('click',copyResultsText);
 </script>
 </body>
 </html>
