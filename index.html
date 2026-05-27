@@ -166,6 +166,53 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .cta p{font-size:.9rem;color:#999999;margin-bottom:22px;line-height:1.6}
 .cta-btn{display:inline-block;background-color:#2ABFBF;border:none;color:#000000;padding:14px 32px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation}
 .rtk{display:block;margin:0 auto;background-color:#1C1C1C;border:1px solid #444444;color:#888888;padding:10px 26px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:44px;cursor:pointer;touch-action:manipulation}
+/* ─── PREFERRED NAME SCREEN ───────────────────────────────── */
+.prefname-screen{max-width:500px;margin:0 auto;padding:60px 24px 80px}
+.prefname-card{background-color:#1C1C1C;border:1px solid #333333;border-top:2px solid #2ABFBF;border-radius:5px;padding:36px 28px}
+.prefname-card h2{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:8px}
+.prefname-card p{font-size:.9rem;color:#999999;margin-bottom:28px;line-height:1.65}
+.prefname-input{width:100%;padding:16px 14px;background-color:#242424;border:1px solid #444444;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:#FFFFFF;outline:none;letter-spacing:.02em;text-transform:uppercase}
+.prefname-input::placeholder{color:#555555;text-transform:none;font-size:1rem;font-weight:400;font-family:'Barlow',sans-serif}
+.prefname-input:focus{border-color:#2ABFBF}
+.prefname-hint{margin-top:8px;font-size:.8rem;color:#555555;line-height:1.4}
+.prefname-continue-btn{width:100%;margin-top:24px;background-color:#2ABFBF;border:none;color:#000000;padding:16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;touch-action:manipulation;display:block}
+.prefname-continue-btn:disabled{opacity:.35}
+.prefname-back-btn{display:block;margin:14px auto 0;background:none;border:none;color:#555555;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;padding:10px}
+/* ─── RESUME BANNER ───────────────────────────────────────── */
+.resume-banner{margin-top:20px;padding:14px 18px;background-color:rgba(42,191,191,0.08);border:1px solid rgba(42,191,191,0.3);border-radius:3px;display:none}
+.resume-banner-text{font-size:.85rem;color:#2ABFBF;margin-bottom:10px}
+.resume-btn{background-color:#2ABFBF;border:none;color:#000000;padding:10px 22px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:40px}
+/* ─── CONTINUE LATER BUTTON ───────────────────────────────── */
+.continue-later-btn{display:block;width:100%;margin-top:12px;background:none;border:1px solid #333333;color:#555555;padding:11px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:40px}
+.continue-later-btn:active{color:#2ABFBF;border-color:#2ABFBF}
+/* ─── MODAL OVERLAY (Saiba Mais + Confirmations) ─────────── */
+.modal-overlay{position:fixed;inset:0;background-color:rgba(0,0,0,0.82);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal-overlay.visible{display:flex}
+.modal-sheet{width:100%;max-width:600px;background-color:#181818;border-top:2px solid #2ABFBF;border-radius:10px 10px 0 0;padding:28px 24px 36px;max-height:80vh;overflow-y:auto}
+.modal-close-btn{float:right;background:none;border:none;color:#555555;font-size:1.2rem;cursor:pointer;padding:4px 8px;touch-action:manipulation;line-height:1}
+.modal-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin-bottom:8px}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;color:#FFFFFF;margin-bottom:14px;line-height:1.1;clear:both}
+.modal-desc{font-size:.9rem;color:#AAAAAA;line-height:1.7;margin-bottom:20px}
+.modal-min-title{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555555;margin-bottom:10px}
+.modal-min-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.modal-min-tag{background-color:rgba(42,191,191,0.07);border:1px solid rgba(42,191,191,0.2);color:#2ABFBF;padding:6px 14px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.modal-confirm-text{font-size:.95rem;color:#CCCCCC;line-height:1.65;margin-bottom:24px}
+.modal-confirm-btns{display:flex;gap:10px}
+.modal-confirm-yes{flex:1;background-color:#2ABFBF;border:none;color:#000000;padding:13px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:48px}
+.modal-confirm-no{flex:1;background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;padding:13px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:48px}
+/* ─── SAIBA MAIS BUTTON ON RESULT CARDS ──────────────────── */
+.tc-saiba{margin-top:8px;background:none;border:1px solid #333333;color:#2ABFBF;padding:6px 14px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation}
+/* ─── DISC PROFILE SECTION ────────────────────────────────── */
+.disc-profile-card{background-color:#141414;border:1px solid #252525;border-top:2px solid rgba(42,191,191,0.5);border-radius:4px;padding:22px 20px;margin-bottom:32px}
+.disc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.disc-dim-lbl{font-size:.78rem;color:#999999;min-width:100px;flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.disc-bar-track{flex:1;height:4px;background-color:#252525;border-radius:2px;overflow:hidden}
+.disc-bar-fill{height:100%;background-color:#2ABFBF;transition:width 1s ease}
+.disc-bar-pct{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#2ABFBF;font-weight:700;min-width:32px;text-align:right}
+.disc-primary-badge{display:inline-block;background-color:rgba(42,191,191,0.1);border:1px solid rgba(42,191,191,0.35);color:#2ABFBF;padding:4px 12px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-right:6px;margin-bottom:6px}
+.disc-trait-row{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
+/* ─── DRAFT SAVED TOAST ───────────────────────────────────── */
+.draft-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background-color:#1C1C1C;border:1px solid rgba(42,191,191,0.4);color:#2ABFBF;padding:12px 22px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;z-index:300;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
 </style>
 </head>
 <body>
@@ -188,7 +235,30 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
       <button type="button" class="start-btn" id="startBtn">
         <span id="startBtnText">Comecar Avaliacao</span> ->
       </button>
-      <p class="meta"><span id="minutesMeta">45</span> <span id="minutesText">perguntas . ~15 minutos</span></p>
+      <p class="meta"><span id="minutesMeta">59</span> <span id="minutesText">perguntas . ~20 minutos</span></p>
+      <div class="resume-banner" id="resumeBanner">
+        <div class="resume-banner-text" id="resumeBannerText">Voce tem uma avaliacao em andamento.</div>
+        <button type="button" class="resume-btn" id="resumeBtn">Continuar de onde parei</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREFERRED NAME -->
+  <div class="screen" id="screen-prefname">
+    <div class="prefname-screen">
+      <div class="prefname-card">
+        <div class="eyebrow" style="margin-bottom:12px">Lagoinha Tampa</div>
+        <h2 id="prefnameTitle">Como voce gostaria de ser chamado?</h2>
+        <p id="prefnameDesc">Esse e o nome que usaremos ao falar com voce. Pode ser seu apelido, nome do meio, ou como seus amigos te chamam.</p>
+        <input type="text" class="prefname-input" id="inputPrefname" placeholder="Seu apelido ou nome preferido" autocomplete="off" autocapitalize="words">
+        <div class="prefname-hint" id="prefnameHint">Exemplo: "Bia", "Rafa", "Jo"</div>
+        <button type="button" class="prefname-continue-btn" id="prefnameContinueBtn" disabled>
+          <span id="prefnameContinueText">Continuar</span>
+        </button>
+        <button type="button" class="prefname-back-btn" id="prefnameBackBtn" id="prefnameBackBtn">
+          <span id="prefnameBackText">Voltar</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -213,6 +283,9 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             <span id="nextText">Proximo -></span>
           </button>
         </div>
+        <button type="button" class="continue-later-btn" id="continueLaterBtn">
+          <span id="continueLaterText">Continuar Depois</span>
+        </button>
       </div>
     </div>
   </div>
@@ -225,9 +298,14 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         <h2 id="formTitle">Quase la!</h2>
         <p id="formSub">Insira suas informacoes para que um lider possa entrar em contato com voce.</p>
         <div class="field">
-          <label id="nameLabel">Seu Nome</label>
-          <input type="text" id="inputName" placeholder="Seu nome completo">
+          <label id="nameLabel">Como voce quer ser chamado?</label>
+          <input type="text" id="inputName" placeholder="Seu apelido ou nome preferido" autocomplete="off">
           <div class="field-error" id="nameError"></div>
+        </div>
+        <div class="field">
+          <label id="fullNameLabel">Nome Completo</label>
+          <input type="text" id="inputFullName" placeholder="Seu nome completo" autocomplete="name">
+          <div class="field-error" id="fullNameError"></div>
         </div>
         <div class="field">
           <label id="emailLabel">Email</label>
@@ -269,6 +347,11 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         <div class="sec-lbl" id="allLabel">Perfil Completo</div>
         <div id="allBars"></div>
       </div>
+
+      <div class="divider"></div>
+
+      <!-- 2.5. DISC Profile -->
+      <div id="discSection"></div>
 
       <div class="divider"></div>
 
@@ -366,6 +449,35 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 
 </div><!-- /app -->
 
+<!-- SAIBA MAIS MODAL -->
+<div class="modal-overlay" id="saibaMaisModal">
+  <div class="modal-sheet">
+    <button type="button" class="modal-close-btn" id="closeSaibaMaisBtn">&#10005;</button>
+    <div class="modal-eyebrow" id="modalGiftEyebrow">Dom Ministerial</div>
+    <div class="modal-title" id="modalGiftName"></div>
+    <div class="modal-desc" id="modalGiftDesc"></div>
+    <div class="modal-min-title" id="modalMinTitle">Onde voce pode servir</div>
+    <div class="modal-min-tags" id="modalMinTags"></div>
+  </div>
+</div>
+
+<!-- CARISMA LEVEL 5 CONFIRMATION MODAL -->
+<div class="modal-overlay" id="carismaLevel5Modal">
+  <div class="modal-sheet">
+    <button type="button" class="modal-close-btn" id="closeCarismaLevel5Btn">&#10005;</button>
+    <div class="modal-eyebrow">Carisma</div>
+    <div class="modal-title" id="carismaLevel5Title">Confirmar Nivel 5</div>
+    <div class="modal-confirm-text" id="carismaLevel5Text">Voce tem certeza que completou todos os 5 anos do programa Carisma? Esta opcao indica que voce e formado pelo Carisma completo.</div>
+    <div class="modal-confirm-btns">
+      <button type="button" class="modal-confirm-yes" id="carismaLevel5Yes"><span id="carismaLevel5YesText">Confirmar</span></button>
+      <button type="button" class="modal-confirm-no" id="carismaLevel5No"><span id="carismaLevel5NoText">Cancelar</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- DRAFT SAVED TOAST -->
+<div class="draft-toast" id="draftToast"><span id="draftToastText">Avaliacao salva!</span></div>
+
 <!-- OFF-SCREEN SHARE CARDS (rendered by html2canvas) -->
 <div class="share-card-wrap">
   <!-- Card 1: Top 3 -->
@@ -405,6 +517,7 @@ var CARISMA_LOGO = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZG
 
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubmissionId=null;
 var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
+var preferredName="",resumeToken=null;
 
 var MINISTRY_LIST=["Worship Team","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Translation","Lagoinha Kids","Intercession","Volunteer Coffee","Hospitality - Welcome","Parking","Setup & Teardown","GC Leader","Legacy","English Service"];
 var GROUP_LIST_PT=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","Outro"];
@@ -415,8 +528,186 @@ var LANG_LIST_EN=["Portugues","English","Both"];
 var LANG_VALS=["Portugues","English","Both"];
 
 var T={
-  pt:{langBtn:"English",welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",startBtn:"Comecar Avaliacao",minutesCount:"45",minutes:"perguntas . ~15 minutos",progress:function(c,t){return"Pergunta "+c+" de "+t},scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],back:"Voltar",next:"Proximo ->",seeResults:"Ver Resultados ->",formTitle:"Quase la!",formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",nameLabel:"Seu Nome",emailLabel:"Email",whatsappLabel:"Numero do WhatsApp",namePh:"Seu nome completo",emailPh:"email@exemplo.com",submitBtn:"Ver Meus Resultados",rTitle:"Seu Perfil de Dons",rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",topLabel:"Seus Principais Dons",allLabel:"Perfil Completo",minLabel:"Curioso onde seu dom pode florescer?",saveLabel:"Guardar Resultados",shareActionsTitle:"Salvar ou compartilhar seu perfil",downloadCard1:"Baixar Card (Top 3)",downloadCard2:"Baixar Card (Completo)",waShare:"Compartilhar no WhatsApp",copyText:"Copiar Texto",copiedText:"Copiado!",ctaTitle:"Pronto para o proximo passo?",ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",ctaBtn:"Conectar com um Lider",retakeBtn:"Refazer Avaliacao",emailInvalid:"Digite um email valido.",whatsappInvalid:"Digite pelo menos 8 digitos validos.",whatsappIntl:"Parece um numero internacional tudo certo!",shareEyebrow:"Para os Pastores",shareTitle:"Ajude-nos a te conhecer melhor",shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",pathServing:"Ja sirvo em algum ministerio",pathNew:"Ainda nao sirvo",ministryLabel:"Em quais ministerios voce ja serve?",groupLabel:"Qual grupo voce faz parte?",langSpokenLabel:"Quais idiomas voce fala?",photoLabel:"Uma foto sua (opcional)",photoTitle:"Adicionar foto",photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",shareSubmit:"Compartilhar com os Pastores",shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve.",carismaLabel:"Voce completou o Carisma?",carisma1:"1 Ano",carismaMasters:"Masters",carismaVals:["1st Year","Masters"],sc1Title:"Seu Perfil de Dons",sc2Title:"Perfil Completo de Dons",sc2BarsLabel:"Todos os Dons",footerTag:"Avaliacao de Dons",waMsg:function(name,top3){return"Ola! Fiz a Avaliacao de Dons da Lagoinha Tampa e quero compartilhar com voce! Meu nome eh "+name+" e meus principais dons sao:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nFiz a avaliacao em: https://farfromtimnah-hue.github.io/ministry-gifting/"},ctaWaMsg:function(name){return"Ola, Pra Alice! Tudo bem? \uD83D\uDE0A Me chamo "+name+" e acabei de fazer a Avaliacao de Dons da Lagoinha Tampa. Fiquei muito animado com os resultados e adoraria conversar com voce sobre meus dons aqui na Lagoinha. Quando seria um bom momento? Muito obrigado!"}},
-  en:{langBtn:"Portugues",welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",welcomeSub:"Find where you naturally fit and how you were made to serve.",startBtn:"Begin Assessment",minutesCount:"45",minutes:"questions . ~15 minutes",progress:function(c,t){return"Question "+c+" of "+t},scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],back:"Back",next:"Next ->",seeResults:"See Results ->",formTitle:"Almost there!",formSub:"Enter your info so a leader can follow up with you.",nameLabel:"Your Name",emailLabel:"Email",whatsappLabel:"WhatsApp Number",namePh:"Your full name",emailPh:"email@example.com",submitBtn:"See My Results",rTitle:"Your Gifting Profile",rSubtitle:"These are the areas where you are most naturally wired to make an impact.",topLabel:"Your Top Giftings",allLabel:"Your Full Profile",minLabel:"Curious Where Your Gifting Could Fit?",saveLabel:"Save Your Results",shareActionsTitle:"Save or share your profile",downloadCard1:"Download Card (Top 3)",downloadCard2:"Download Card (Full Profile)",waShare:"Share on WhatsApp",copyText:"Copy Text",copiedText:"Copied!",ctaTitle:"Ready to take the next step?",ctaText:"Connect with a ministry leader to explore where you fit best.",ctaBtn:"Connect with a Leader",retakeBtn:"Retake Assessment",emailInvalid:"Please enter a valid email address.",whatsappInvalid:"Please enter at least 8 valid digits.",whatsappIntl:"Looks like an international number that's fine!",shareEyebrow:"For the Pastors",shareTitle:"Help us know you better",shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",pathServing:"I'm already serving somewhere",pathNew:"I'm not serving yet",ministryLabel:"Which ministries are you already part of?",groupLabel:"Which group do you belong to?",langSpokenLabel:"Which languages do you speak?",photoLabel:"A photo of you (optional)",photoTitle:"Add a photo",photoDesc:"So pastors can recognize you with a smile when it's time to connect.",shareSubmit:"Share with the Pastors",shareSuccess:"Thank you! The pastors will be in touch soon.",carismaLabel:"Have you completed Carisma?",carisma1:"1st Year",carismaMasters:"Masters",carismaVals:["1st Year","Masters"],sc1Title:"Your Gifting Profile",sc2Title:"Full Gifting Profile",sc2BarsLabel:"All Giftings",footerTag:"Gifting Assessment",waMsg:function(name,top3){return"Hey! I just completed the Lagoinha Tampa Gifting Assessment and wanted to share with you! My name is "+name+" and my top giftings are:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nTake the assessment at: https://farfromtimnah-hue.github.io/ministry-gifting/"},ctaWaMsg:function(name){return"Hi Pra Alice! \uD83D\uDE0A My name is "+name+" and I just finished the Lagoinha Tampa Gifting Assessment. I was really excited about my results and would love to chat with you about my giftings here at Lagoinha. When would be a good time? Thank you so much!"}}
+  pt:{
+    langBtn:"English",
+    welcomeTitle:"Descubra<span class='ac'>Seus Dons</span>",
+    welcomeSub:"Encontre onde voce se encaixa naturalmente e como foi feito para servir.",
+    startBtn:"Comecar Avaliacao",
+    minutesCount:"59",
+    minutes:"perguntas . ~20 minutos",
+    resumeBannerText:"Voce tem uma avaliacao em andamento.",
+    resumeBtn:"Continuar de onde parei",
+    prefnameTitle:"Como voce gostaria de ser chamado?",
+    prefnameDesc:"Esse e o nome que usaremos ao falar com voce. Pode ser seu apelido, nome do meio, ou como seus amigos te chamam.",
+    prefnameHint:"Exemplo: Bia, Rafa, Jo",
+    prefnameContinue:"Continuar",
+    prefnameBack:"Voltar",
+    progress:function(c,t){return"Pergunta "+c+" de "+t},
+    scale:["Isso nao tem nada a ver comigo","Talvez um pouco","Me identifico as vezes","Me identifico bastante","Isso arde dentro de mim"],
+    back:"Voltar",
+    next:"Proximo ->",
+    seeResults:"Ver Resultados ->",
+    continueLater:"Continuar Depois",
+    draftSaved:"Avaliacao salva. Continue de onde parou!",
+    formTitle:"Quase la!",
+    formSub:"Insira suas informacoes para que um lider possa entrar em contato com voce.",
+    nameLabel:"Como voce quer ser chamado?",
+    namePh:"Seu apelido ou nome preferido",
+    fullNameLabel:"Nome Completo",
+    fullNamePh:"Seu nome completo",
+    emailLabel:"Email",
+    emailPh:"email@exemplo.com",
+    whatsappLabel:"Numero do WhatsApp",
+    submitBtn:"Ver Meus Resultados",
+    rTitle:"Seu Perfil de Dons",
+    rSubtitle:"Estas sao as areas onde voce e naturalmente mais forte para causar impacto.",
+    topLabel:"Seus Principais Dons",
+    allLabel:"Perfil Completo",
+    saibaMaisBtn:"Saiba mais",
+    discSectionTitle:"Perfil Comportamental",
+    discPrimaryLabel:"Tipo Principal",
+    discSecLabel:"Tipo Secundario",
+    naturalStrLabel:"Forca Natural",
+    leadershipLabel:"Tendencia de Lideranca",
+    emotionalLabel:"Perfil Emocional",
+    pairingLabel:"Complemento Ideal",
+    ministryFitLabel:"Areas de Atuacao",
+    modalMinTitle:"Onde voce pode servir",
+    modalGiftEyebrow:"Dom Ministerial",
+    minLabel:"Curioso onde seu dom pode florescer?",
+    saveLabel:"Guardar Resultados",
+    shareActionsTitle:"Salvar ou compartilhar seu perfil",
+    downloadCard1:"Baixar Card (Top 3)",
+    downloadCard2:"Baixar Card (Completo)",
+    waShare:"Compartilhar no WhatsApp",
+    copyText:"Copiar Texto",
+    copiedText:"Copiado!",
+    ctaTitle:"Pronto para o proximo passo?",
+    ctaText:"Conecte-se com um lider ministerial para explorar onde voce se encaixa melhor.",
+    ctaBtn:"Conectar com um Lider",
+    retakeBtn:"Refazer Avaliacao",
+    emailInvalid:"Digite um email valido.",
+    whatsappInvalid:"Digite pelo menos 8 digitos validos.",
+    whatsappIntl:"Parece um numero internacional tudo certo!",
+    shareEyebrow:"Para os Pastores",
+    shareTitle:"Ajude-nos a te conhecer melhor",
+    shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",
+    pathServing:"Ja sirvo em algum ministerio",
+    pathNew:"Ainda nao sirvo",
+    ministryLabel:"Em quais ministerios voce ja serve?",
+    groupLabel:"Qual grupo voce faz parte?",
+    langSpokenLabel:"Quais idiomas voce fala?",
+    photoLabel:"Uma foto sua (opcional)",
+    photoTitle:"Adicionar foto",
+    photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",
+    shareSubmit:"Compartilhar com os Pastores",
+    shareSuccess:"Obrigado! Os pastores vao entrar em contato em breve.",
+    carismaLabel:"Voce completou o Carisma?",
+    carisma1:"1 Ano",
+    carismaMasters:"Masters",
+    carismaFormado:"Formado (Nivel 5)",
+    carismaLevel5Title:"Confirmar Nivel 5",
+    carismaLevel5Text:"Voce tem certeza que completou todos os 5 anos do programa Carisma? Esta opcao e para quem e formado pelo Carisma completo.",
+    carismaLevel5Yes:"Confirmar",
+    carismaLevel5No:"Cancelar",
+    carismaVals:["1st Year","Masters","Level 5"],
+    sc1Title:"Seu Perfil de Dons",
+    sc2Title:"Perfil Completo de Dons",
+    sc2BarsLabel:"Todos os Dons",
+    footerTag:"Avaliacao de Dons",
+    waMsg:function(name,top3){return"Ola! Fiz a Avaliacao de Dons da Lagoinha Tampa e quero compartilhar com voce! Meu nome eh "+name+" e meus principais dons sao:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nFiz a avaliacao em: https://farfromtimnah-hue.github.io/ministry-gifting/"},
+    ctaWaMsg:function(name){return"Ola, Pra Alice! Tudo bem? 😊 Me chamo "+name+" e acabei de fazer a Avaliacao de Dons da Lagoinha Tampa. Fiquei muito animado com os resultados e adoraria conversar com voce sobre meus dons aqui na Lagoinha. Quando seria um bom momento? Muito obrigado!"}
+  },
+  en:{
+    langBtn:"Portugues",
+    welcomeTitle:"Discover<span class='ac'>Your Gifting</span>",
+    welcomeSub:"Find where you naturally fit and how you were made to serve.",
+    startBtn:"Begin Assessment",
+    minutesCount:"59",
+    minutes:"questions . ~20 minutes",
+    resumeBannerText:"You have an assessment in progress.",
+    resumeBtn:"Continue where I left off",
+    prefnameTitle:"What should we call you?",
+    prefnameDesc:"This is the name we will use when talking with you. It can be your nickname, middle name, or whatever your friends call you.",
+    prefnameHint:"Example: Bia, Rafa, Jo",
+    prefnameContinue:"Continue",
+    prefnameBack:"Back",
+    progress:function(c,t){return"Question "+c+" of "+t},
+    scale:["This doesn't feel like me","Maybe a little, sometimes","I recognize this in me","This feels strongly like me","This burns in me"],
+    back:"Back",
+    next:"Next ->",
+    seeResults:"See Results ->",
+    continueLater:"Continue Later",
+    draftSaved:"Assessment saved. Pick up where you left off!",
+    formTitle:"Almost there!",
+    formSub:"Enter your info so a leader can follow up with you.",
+    nameLabel:"What should we call you?",
+    namePh:"Your nickname or preferred name",
+    fullNameLabel:"Full Name",
+    fullNamePh:"Your full name",
+    emailLabel:"Email",
+    emailPh:"email@example.com",
+    whatsappLabel:"WhatsApp Number",
+    submitBtn:"See My Results",
+    rTitle:"Your Gifting Profile",
+    rSubtitle:"These are the areas where you are most naturally wired to make an impact.",
+    topLabel:"Your Top Giftings",
+    allLabel:"Your Full Profile",
+    saibaMaisBtn:"Learn more",
+    discSectionTitle:"Behavioral Profile",
+    discPrimaryLabel:"Primary Type",
+    discSecLabel:"Secondary Type",
+    naturalStrLabel:"Natural Strength",
+    leadershipLabel:"Leadership Tendency",
+    emotionalLabel:"Emotional Profile",
+    pairingLabel:"Ideal Pairing",
+    ministryFitLabel:"Ministry Fit Areas",
+    modalMinTitle:"Where you can serve",
+    modalGiftEyebrow:"Ministry Gifting",
+    minLabel:"Curious Where Your Gifting Could Fit?",
+    saveLabel:"Save Your Results",
+    shareActionsTitle:"Save or share your profile",
+    downloadCard1:"Download Card (Top 3)",
+    downloadCard2:"Download Card (Full Profile)",
+    waShare:"Share on WhatsApp",
+    copyText:"Copy Text",
+    copiedText:"Copied!",
+    ctaTitle:"Ready to take the next step?",
+    ctaText:"Connect with a ministry leader to explore where you fit best.",
+    ctaBtn:"Connect with a Leader",
+    retakeBtn:"Retake Assessment",
+    emailInvalid:"Please enter a valid email address.",
+    whatsappInvalid:"Please enter at least 8 valid digits.",
+    whatsappIntl:"Looks like an international number - that's fine!",
+    shareEyebrow:"For the Pastors",
+    shareTitle:"Help us know you better",
+    shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",
+    pathServing:"I'm already serving somewhere",
+    pathNew:"I'm not serving yet",
+    ministryLabel:"Which ministries are you already part of?",
+    groupLabel:"Which group do you belong to?",
+    langSpokenLabel:"Which languages do you speak?",
+    photoLabel:"A photo of you (optional)",
+    photoTitle:"Add a photo",
+    photoDesc:"So pastors can recognize you with a smile when it's time to connect.",
+    shareSubmit:"Share with the Pastors",
+    shareSuccess:"Thank you! The pastors will be in touch soon.",
+    carismaLabel:"Have you completed Carisma?",
+    carisma1:"1st Year",
+    carismaMasters:"Masters",
+    carismaFormado:"Graduate (Level 5)",
+    carismaLevel5Title:"Confirm Level 5",
+    carismaLevel5Text:"Are you sure you have completed all 5 years of the Carisma program? This option is for those who are fully graduated from Carisma.",
+    carismaLevel5Yes:"Confirm",
+    carismaLevel5No:"Cancel",
+    carismaVals:["1st Year","Masters","Level 5"],
+    sc1Title:"Your Gifting Profile",
+    sc2Title:"Full Gifting Profile",
+    sc2BarsLabel:"All Giftings",
+    footerTag:"Gifting Assessment",
+    waMsg:function(name,top3){return"Hey! I just completed the Lagoinha Tampa Gifting Assessment and wanted to share with you! My name is "+name+" and my top giftings are:\n\n1. "+top3[0]+"\n2. "+top3[1]+"\n3. "+top3[2]+"\n\nTake the assessment at: https://farfromtimnah-hue.github.io/ministry-gifting/"},
+    ctaWaMsg:function(name){return"Hi Pra Alice! 😊 My name is "+name+" and I just finished the Lagoinha Tampa Gifting Assessment. I was really excited about my results and would love to chat with you about my giftings here at Lagoinha. When would be a good time? Thank you so much!"}
+  }
 };
 
 var GIFTINGS=[
@@ -431,12 +722,35 @@ var GIFTINGS=[
   {id:"faith",icon:"&#10024;",en:{name:"Faith",desc:"You often remain steady in uncertain moments and help others recover hope.",ministries:["Intercession","GC Leader"]},pt:{name:"Fe",desc:"Voce frequentemente permanece firme em momentos incertos e ajuda outras pessoas a recuperarem a esperanca.",ministries:["Intercessao","Lider de GC"]}},
   {id:"teaching",icon:"&#128214;",en:{name:"Teaching",desc:"You want truth to become understandable, clear, and useful for others.",ministries:["Lagoinha Kids","GC Leader","Translation"]},pt:{name:"Ensino",desc:"Voce quer que a verdade se torne compreensivel, clara e util para outras pessoas.",ministries:["Lagoinha Kids","Lider de GC","Traducao"]}},
   {id:"administration",icon:"&#128203;",en:{name:"Administration",desc:"You instinctively organize moving parts and create systems that help things flow.",ministries:["Service Experience","Setup & Teardown","GC Leader"]},pt:{name:"Administracao",desc:"Voce organiza instintivamente as partes em movimento e cria sistemas que ajudam tudo a fluir.",ministries:["Experiencia do Culto","Montagem","Lider de GC"]}},
-  {id:"technical",icon:"&#127925;",en:{name:"Technical Arts",desc:"You notice what is off behind the scenes and enjoy making complex things work well.",ministries:["Sound","Lighting","Projection","Streaming"]},pt:{name:"Artes Tecnicas",desc:"Voce percebe o que esta fora do lugar nos bastidores e gosta de fazer coisas complexas funcionarem bem.",ministries:["Som","Luz","Projecao","Transmissao"]}},
+  {id:"technical",icon:"&#9881;",en:{name:"Technical Arts",desc:"Complex systems awaken genuine curiosity in you and you find deep satisfaction in making things work well behind the scenes.",ministries:["Sound","Lighting","Projection","Streaming"]},pt:{name:"Artes Tecnicas",desc:"Sistemas complexos despertam curiosidade genuina em voce e voce encontra profunda satisfacao em fazer as coisas funcionarem bem nos bastidores.",ministries:["Som","Luz","Projecao","Transmissao"]}},
   {id:"leadership",icon:"&#129517;",en:{name:"Influence & Servant Leadership",desc:"People often look to you for direction, and you care deeply about helping others grow.",ministries:["GC Leader","Service Experience","Consolidation"]},pt:{name:"Influencia & Lideranca Servidora",desc:"As pessoas frequentemente olham para voce em busca de direcao, e voce se importa profundamente em ajudar outros a crescer.",ministries:["Lider de GC","Experiencia do Culto","Consolidacao"]}},
   {id:"creativity",icon:"&#127912;",en:{name:"Creativity",desc:"You care about beauty, originality, and expressing truth in meaningful ways.",ministries:["Social Media","Photo & Video","Service Experience"]},pt:{name:"Criatividade",desc:"Voce se importa com beleza, originalidade e em expressar a verdade de maneiras significativas.",ministries:["Midias Sociais","Foto & Video","Experiencia do Culto"]}},
   {id:"prophetic",icon:"&#128302;",en:{name:"Discernment & Prophetic",desc:"You tend to sense impressions, insight, or spiritual weight that others may miss.",ministries:["Intercession","GC Leader"]},pt:{name:"Discernimento & Profetico",desc:"Voce tende a perceber impressoes, discernimento ou peso espiritual que outros talvez nao percebam.",ministries:["Intercessao","Lider de GC"]}}
 ];
 
+/* ─── CALIBRATION QUESTIONS (2) ─────────────────────────────────── */
+var CAL_QUESTIONS=[
+  {type:"cal",id:"CA1",en:"In a group of new people, I usually adapt to the group's rhythm before taking initiative.",pt:"Em um grupo de pessoas novas, costumo me adaptar ao ritmo do grupo antes de tomar iniciativa."},
+  {type:"cal",id:"CA2",en:"Before acting, I prefer to think carefully about consequences and make sure I have done everything right.",pt:"Antes de agir, prefiro pensar bastante sobre as consequencias e me certificar de que fiz tudo certo."}
+];
+
+/* ─── DISC QUESTIONS (12) ────────────────────────────────────────── */
+var DISC_QUESTIONS=[
+  {type:"disc",dim:"D",en:"I enjoy leading situations and making decisions directly, even without having all the information.",pt:"Gosto de liderar situacoes e tomar decisoes de forma direta, mesmo sem ter todas as informacoes."},
+  {type:"disc",dim:"I",en:"I feel energized by being with people and love creating connections that energize and inspire others.",pt:"Me sinto energizado por estar com pessoas e adoro criar conexoes que animam e inspiram os outros."},
+  {type:"disc",dim:"S",en:"I prefer a predictable and stable environment where things work consistently and in an organized way.",pt:"Prefiro um ambiente previsivel e estavel, onde as coisas funcionam de forma consistente e organizada."},
+  {type:"disc",dim:"C",en:"Before acting, I need to fully understand the process and ensure I am doing the right thing the right way.",pt:"Antes de agir, preciso entender bem o processo e garantir que estou fazendo a coisa certa do jeito certo."},
+  {type:"disc",dim:"D",en:"When there is a challenge to solve, my tendency is to take action immediately rather than wait for the perfect situation.",pt:"Quando ha um desafio a resolver, minha tendencia e entrar em acao imediatamente em vez de esperar pela situacao perfeita."},
+  {type:"disc",dim:"I",en:"I find it easy to persuade people and create enthusiasm for an idea or vision.",pt:"Tenho facilidade em convencer pessoas e criar entusiasmo por uma ideia ou visao."},
+  {type:"disc",dim:"S",en:"I am patient, consistent and remain steady even when the pace of change around me is fast.",pt:"Sou paciente, constante e me mantenho firme mesmo quando o ritmo de mudancas ao meu redor e rapido."},
+  {type:"disc",dim:"C",en:"I am someone who pays close attention to detail and prefers to do something precisely rather than quickly.",pt:"Sou alguem que presta muita atencao nos detalhes e prefere fazer algo com precisao a fazer de forma rapida."},
+  {type:"disc",dim:"D",en:"I feel comfortable making tough decisions when necessary, even if it creates discomfort for others.",pt:"Me sinto confortavel tomando decisoes dificeis quando necessario, mesmo que isso gere desconforto nos outros."},
+  {type:"disc",dim:"I",en:"In social settings, I am usually the one who starts conversations and makes the environment more lively and welcoming.",pt:"Em ambientes sociais, costumo ser quem puxa conversa e torna o ambiente mais animado e acolhedor."},
+  {type:"disc",dim:"S",en:"I care deeply about the well-being of those around me and avoid situations of unnecessary conflict.",pt:"Me importo profundamente com o bem-estar das pessoas ao meu redor e evito situacoes de conflito desnecessario."},
+  {type:"disc",dim:"C",en:"I prefer to base my decisions on facts and logic rather than intuition or feelings.",pt:"Prefiro basear minhas decisoes em fatos e logica do que em intuicao ou sentimentos."}
+];
+
+/* ─── GIFTING QUESTIONS (45) ────────────────────────────────────── */
 var QUESTIONS=[
   {g:"worship",en:"When I'm going through something - joy, pain, confusion - I find myself turning to a song, a poem, or even written words to express to God what I can't put into words on my own.",pt:"Quando estou passando por algo - uma alegria, uma dor, uma confusao - percebo que recorro a uma musica, um poema ou ate palavras escritas para expressar a Deus o que nao consigo colocar em palavras sozinho."},
   {g:"helps",en:"When I'm in a space, I naturally notice what needs to be done - something that needs to be set up, carried, organized - and I feel an impulse to just take care of it.",pt:"Quando estou em um ambiente, naturalmente percebo o que precisa ser feito - algo que precisa ser arrumado, carregado, organizado - e sinto um impulso de simplesmente cuidar disso."},
@@ -486,9 +800,108 @@ var QUESTIONS=[
   {g:"hospitality",en:"People have told me they felt at ease with me almost immediately - and I notice there's something in me that genuinely wants people to feel that way.",pt:"Ja ouvi de pessoas que se sentiram a vontade comigo quase que imediatamente - e percebo que ha algo em mim que genuinamente quer que as pessoas se sintam assim."}
 ];
 
+/* ─── ALL QUESTIONS (combined) ──────────────────────────────────── */
+var ALL_QUESTIONS=CAL_QUESTIONS.concat(
+  QUESTIONS.map(function(q){return{type:'gifting',g:q.g,en:q.en,pt:q.pt}}),
+  DISC_QUESTIONS
+);
+
+/* ─── DISC DERIVATION TABLES ─────────────────────────────────────── */
+var DISC_NAMES={
+  D:{pt:"Executor",en:"Driver"},
+  I:{pt:"Comunicador",en:"Influencer"},
+  S:{pt:"Planejador",en:"Planner"},
+  C:{pt:"Analista",en:"Analyst"}
+};
+var DISC_NATURAL_STR={
+  D:{pt:"Lideranca direta",en:"Direct leadership"},
+  I:{pt:"Influencia e comunicacao",en:"Influence and communication"},
+  S:{pt:"Consistencia e cuidado",en:"Consistency and care"},
+  C:{pt:"Analise e excelencia",en:"Analysis and excellence"}
+};
+var DISC_LEADERSHIP={
+  D:{pt:"Visionario",en:"Visionary"},
+  I:{pt:"Inspiracional",en:"Inspirational"},
+  S:{pt:"Servidor",en:"Servant"},
+  C:{pt:"Estrategico",en:"Strategic"},
+  DI:{pt:"Persuasivo",en:"Persuasive"},
+  DS:{pt:"Reformador",en:"Reformer"},
+  DC:{pt:"Preciso",en:"Precise"},
+  IS:{pt:"Empatico",en:"Empathetic"},
+  IC:{pt:"Criativo",en:"Creative"},
+  SC:{pt:"Equilibrado",en:"Balanced"},
+  ID:{pt:"Persuasivo",en:"Persuasive"},
+  SD:{pt:"Reformador",en:"Reformer"},
+  CD:{pt:"Preciso",en:"Precise"},
+  SI:{pt:"Empatico",en:"Empathetic"},
+  CI:{pt:"Criativo",en:"Creative"},
+  CS:{pt:"Equilibrado",en:"Balanced"}
+};
+var DISC_EMOTIONAL={
+  D:{high:{pt:"Alta intensidade",en:"High intensity"},mid:{pt:"Focado",en:"Focused"},low:{pt:"Reservado",en:"Reserved"}},
+  I:{high:{pt:"Expressivo",en:"Expressive"},mid:{pt:"Sociavel",en:"Sociable"},low:{pt:"Introspectivo",en:"Introspective"}},
+  S:{high:{pt:"Calmo e constante",en:"Calm and steady"},mid:{pt:"Ponderado",en:"Measured"},low:{pt:"Adaptavel",en:"Adaptable"}},
+  C:{high:{pt:"Analitico rigoroso",en:"Rigorous analytical"},mid:{pt:"Metodico",en:"Methodical"},low:{pt:"Cauteloso",en:"Cautious"}}
+};
+var DISC_PAIRING={
+  D:{pt:["Planejador","Analista"],en:["Planner","Analyst"]},
+  I:{pt:["Planejador","Analista"],en:["Planner","Analyst"]},
+  S:{pt:["Executor","Comunicador"],en:["Driver","Influencer"]},
+  C:{pt:["Comunicador","Executor"],en:["Influencer","Driver"]}
+};
+var DISC_MINISTRY_FIT={
+  D:{pt:["Lideranca","Evangelismo","Missoes"],en:["Leadership","Evangelism","Missions"]},
+  I:{pt:["Louvor","Comunicacao","Acolhimento"],en:["Worship","Communication","Welcome"]},
+  S:{pt:["Intercessao","Apoio","Grupos Pequenos"],en:["Intercession","Support","Small Groups"]},
+  C:{pt:["Ensino","Administracao","Tecnologia"],en:["Teaching","Administration","Technology"]}
+};
+
+function deriveDISC(d,i,s,c){
+  var scores={D:d,I:i,S:s,C:c};
+  var dims=["D","I","S","C"];
+  dims.sort(function(a,b){return scores[b]-scores[a]});
+  var primary=dims[0],secondary=dims[1];
+  var combo=primary+secondary;
+  var score=scores[primary];
+  var level=score>=12?'high':score>=7?'mid':'low';
+  var natural_strength_pt=DISC_NATURAL_STR[primary].pt;
+  var natural_strength_en=DISC_NATURAL_STR[primary].en;
+  var leadership_pt=(DISC_LEADERSHIP[combo]||DISC_LEADERSHIP[primary]).pt;
+  var leadership_en=(DISC_LEADERSHIP[combo]||DISC_LEADERSHIP[primary]).en;
+  var emotional_pt=DISC_EMOTIONAL[primary][level].pt;
+  var emotional_en=DISC_EMOTIONAL[primary][level].en;
+  var pairing_pt=DISC_PAIRING[primary].pt;
+  var pairing_en=DISC_PAIRING[primary].en;
+  var ministry_fit_pt=DISC_MINISTRY_FIT[primary].pt;
+  var ministry_fit_en=DISC_MINISTRY_FIT[primary].en;
+  /* pastoral_flag: high S with meaningful I or C */
+  var pastoral_flag=(s>=12&&i>=10)||(s>=12&&c>=12)||(s>=13)?1:0;
+  return{
+    disc_primary:primary,
+    disc_secondary:secondary,
+    natural_strength:natural_strength_pt,
+    leadership_tendency:leadership_pt,
+    emotional_profile:emotional_pt,
+    pairing_labels:JSON.stringify(pairing_pt),
+    ministry_fit:JSON.stringify(ministry_fit_pt),
+    pastoral_flag:pastoral_flag,
+    /* for display */
+    _primary_label_pt:DISC_NAMES[primary].pt,
+    _primary_label_en:DISC_NAMES[primary].en,
+    _secondary_label_pt:DISC_NAMES[secondary].pt,
+    _secondary_label_en:DISC_NAMES[secondary].en,
+    _natural_str_en:natural_strength_en,
+    _leadership_en:leadership_en,
+    _emotional_en:emotional_en,
+    _pairing_en:pairing_en,
+    _ministry_fit_en:ministry_fit_en
+  };
+}
+
 /* ─── CORE NAVIGATION ───────────────────────────────────────────── */
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0)}
 
+/* ─── LANGUAGE ──────────────────────────────────────────────────── */
 function applyLang(){
   var t=T[lang];
   document.getElementById('langBtn').textContent=t.langBtn;
@@ -497,12 +910,22 @@ function applyLang(){
   document.getElementById('startBtnText').textContent=t.startBtn;
   document.getElementById('minutesMeta').textContent=t.minutesCount;
   document.getElementById('minutesText').textContent=t.minutes;
+  document.getElementById('resumeBannerText').textContent=t.resumeBannerText;
+  document.getElementById('resumeBtn').textContent=t.resumeBtn;
+  document.getElementById('prefnameTitle').textContent=t.prefnameTitle;
+  document.getElementById('prefnameDesc').textContent=t.prefnameDesc;
+  document.getElementById('prefnameHint').textContent=t.prefnameHint;
+  document.getElementById('prefnameContinueText').textContent=t.prefnameContinue;
+  document.getElementById('prefnameBackText').textContent=t.prefnameBack;
+  document.getElementById('continueLaterText').textContent=t.continueLater;
   document.getElementById('formTitle').textContent=t.formTitle;
   document.getElementById('formSub').textContent=t.formSub;
   document.getElementById('nameLabel').textContent=t.nameLabel;
+  document.getElementById('fullNameLabel').textContent=t.fullNameLabel;
   document.getElementById('emailLabel').textContent=t.emailLabel;
   document.getElementById('whatsappLabel').textContent=t.whatsappLabel;
   document.getElementById('inputName').placeholder=t.namePh;
+  document.getElementById('inputFullName').placeholder=t.fullNamePh;
   document.getElementById('inputEmail').placeholder=t.emailPh;
   document.getElementById('submitText').textContent=t.submitBtn;
   document.getElementById('shareEyebrow').textContent=t.shareEyebrow;
@@ -525,6 +948,13 @@ function applyLang(){
   document.getElementById('copyTextText').textContent=t.copyText;
   document.getElementById('saveLabel').textContent=t.saveLabel;
   document.getElementById('shareActionsTitle').textContent=t.shareActionsTitle;
+  document.getElementById('carismaLevel5Title').textContent=t.carismaLevel5Title;
+  document.getElementById('carismaLevel5Text').textContent=t.carismaLevel5Text;
+  document.getElementById('carismaLevel5YesText').textContent=t.carismaLevel5Yes;
+  document.getElementById('carismaLevel5NoText').textContent=t.carismaLevel5No;
+  document.getElementById('modalMinTitle').textContent=t.modalMinTitle;
+  document.getElementById('modalGiftEyebrow').textContent=t.modalGiftEyebrow;
+  document.getElementById('draftToastText').textContent=t.draftSaved;
   renderCarismaChips();
   if(document.getElementById('screen-assessment').classList.contains('active'))renderQuestion();
   if(document.getElementById('screen-results').classList.contains('active')&&lastScores)renderResults(lastScores,lastSubmittedName);
@@ -532,11 +962,36 @@ function applyLang(){
 }
 
 function toggleLang(){lang=lang==="pt"?"en":"pt";applyLang()}
-function startAssessment(){current=0;answers={};lastScores=null;lastSubmittedName="";lastSubmissionId=null;resetShareMore();showScreen('assessment');renderQuestion()}
+
+/* ─── WELCOME / PREFNAME / ASSESSMENT FLOW ──────────────────────── */
+function startAssessment(){
+  current=0;answers={};lastScores=null;lastSubmittedName="";lastSubmissionId=null;
+  preferredName="";
+  document.getElementById('inputPrefname').value="";
+  document.getElementById('prefnameContinueBtn').disabled=true;
+  resetShareMore();
+  showScreen('prefname');
+}
+
+function handlePrefname(){
+  var val=document.getElementById('inputPrefname').value.trim();
+  if(!val)return;
+  preferredName=val;
+  /* Pre-populate the form name field */
+  document.getElementById('inputName').value=preferredName;
+  checkForm();
+  showScreen('assessment');
+  renderQuestion();
+}
+
+function checkPrefname(){
+  var val=document.getElementById('inputPrefname').value.trim();
+  document.getElementById('prefnameContinueBtn').disabled=!val;
+}
 
 /* ─── QUESTION RENDER ───────────────────────────────────────────── */
 function renderQuestion(){
-  var q=QUESTIONS[current],t=T[lang],total=QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
+  var q=ALL_QUESTIONS[current],t=T[lang],total=ALL_QUESTIONS.length,pct=Math.round(((current+1)/total)*100);
   document.getElementById('progLabel').textContent=t.progress(current+1,total);
   document.getElementById('progPct').textContent=pct+'%';
   document.getElementById('progFill').style.width=pct+'%';
@@ -552,16 +1007,88 @@ function renderQuestion(){
   });
   var nb=document.getElementById('nextBtn'),has=answers[current]!==undefined;
   nb.disabled=!has;nb.style.opacity=has?'1':'0.35';
-  document.getElementById('nextText').textContent=current<QUESTIONS.length-1?T[lang].next:T[lang].seeResults;
+  document.getElementById('nextText').textContent=current<ALL_QUESTIONS.length-1?T[lang].next:T[lang].seeResults;
   document.getElementById('backText').textContent=T[lang].back;
 }
+
 function selectAnswer(i){
   answers[current]=i;
   document.querySelectorAll('.scale-btn').forEach(function(btn,idx){btn.className='scale-btn'+(idx===i?' sel':'')});
   var nb=document.getElementById('nextBtn');nb.disabled=false;nb.style.opacity='1';
 }
-function handleNext(){if(answers[current]===undefined)return;if(current<QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}else showScreen('form')}
-function handleBack(){if(current>0){current--;renderQuestion()}else showScreen('welcome')}
+
+function handleNext(){
+  if(answers[current]===undefined)return;
+  if(current<ALL_QUESTIONS.length-1){current++;renderQuestion();window.scrollTo(0,0)}
+  else showScreen('form');
+}
+
+function handleBack(){
+  if(current>0){current--;renderQuestion()}
+  else showScreen('prefname');
+}
+
+/* ─── CONTINUE LATER (DRAFT) ────────────────────────────────────── */
+function saveDraft(){
+  /* Save to localStorage first */
+  var draftData={preferred_name:preferredName,answers:answers,current:current,token:resumeToken,lang:lang};
+  try{localStorage.setItem('ltc_draft',JSON.stringify(draftData))}catch(e){}
+  /* POST to server for token */
+  var calRes=calcCalibration();
+  var payload={
+    preferred_name:preferredName||null,
+    language:lang.toUpperCase(),
+    calibration_score:calRes!==null?calRes:null
+  };
+  if(resumeToken)payload.resume_token=resumeToken;
+  fetch('https://ltc-api.farfromtimnah.workers.dev/draft',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(r){return r.json()}).then(function(d){
+    if(d&&d.token){
+      resumeToken=d.token;
+      draftData.token=d.token;
+      try{localStorage.setItem('ltc_draft',JSON.stringify(draftData))}catch(e){}
+    }
+  }).catch(function(){});
+  showDraftToast();
+}
+
+function showDraftToast(){
+  var toast=document.getElementById('draftToast');
+  toast.style.display='block';
+  setTimeout(function(){toast.style.display='none'},3000);
+}
+
+function checkResumeToken(){
+  var raw=null;
+  try{raw=localStorage.getItem('ltc_draft')}catch(e){}
+  if(!raw)return;
+  var data=null;
+  try{data=JSON.parse(raw)}catch(e){}
+  if(!data||!data.answers||Object.keys(data.answers).length<3)return;
+  var banner=document.getElementById('resumeBanner');
+  if(banner)banner.style.display='block';
+}
+
+function resumeDraft(){
+  var raw=null;
+  try{raw=localStorage.getItem('ltc_draft')}catch(e){}
+  if(!raw)return;
+  var data=null;
+  try{data=JSON.parse(raw)}catch(e){}
+  if(!data)return;
+  preferredName=data.preferred_name||'';
+  answers=data.answers||{};
+  current=data.current||0;
+  resumeToken=data.token||null;
+  if(data.lang)lang=data.lang;
+  document.getElementById('inputName').value=preferredName;
+  checkForm();
+  showScreen('assessment');
+  renderQuestion();
+}
 
 /* ─── FORM VALIDATION ───────────────────────────────────────────── */
 function checkForm(){
@@ -586,7 +1113,12 @@ function checkForm(){
 /* ─── SCORING ───────────────────────────────────────────────────── */
 function calcScores(){
   var by={};
-  QUESTIONS.forEach(function(q,i){if(answers[i]!==undefined){if(!by[q.g])by[q.g]=[];by[q.g].push(answers[i])}});
+  ALL_QUESTIONS.forEach(function(q,i){
+    if(q.type==='gifting'&&answers[i]!==undefined){
+      if(!by[q.g])by[q.g]=[];
+      by[q.g].push(answers[i]);
+    }
+  });
   var sc=GIFTINGS.map(function(g){
     var s=by[g.id]||[],sorted=s.slice().sort(function(a,b){return b-a}),top2=sorted.slice(0,2),avg=top2.length?top2.reduce(function(a,b){return a+b},0)/top2.length:0;
     return{id:g.id,icon:g.icon,en:g.en,pt:g.pt,score:avg,pct:Math.round((avg/4)*100)};
@@ -594,9 +1126,26 @@ function calcScores(){
   sc.sort(function(a,b){return b.score-a.score});return sc;
 }
 
-/* ─── SUBMIT — wired to Cloudflare Worker ───────────────────────── */
+function calcCalibration(){
+  var total=0,count=0;
+  ALL_QUESTIONS.forEach(function(q,i){
+    if(q.type==='cal'&&answers[i]!==undefined){total+=(answers[i]+1);count++}
+  });
+  return count>0?Math.round((total/(count*5))*100)/100:null;
+}
+
+function calcDisc(){
+  var raw={D:0,I:0,S:0,C:0};
+  ALL_QUESTIONS.forEach(function(q,i){
+    if(q.type==='disc'&&answers[i]!==undefined){raw[q.dim]+=(answers[i]+1)}
+  });
+  return raw;
+}
+
+/* ─── SUBMIT ─────────────────────────────────────────────────────── */
 function handleSubmit(){
   var n=document.getElementById('inputName').value.trim();
+  var fn=document.getElementById('inputFullName').value.trim();
   var e=document.getElementById('inputEmail').value.trim();
   var w=document.getElementById('inputWhatsapp').value.trim();
   if(!n||!e)return;
@@ -604,17 +1153,52 @@ function handleSubmit(){
   lastSubmittedName=n;
   var scores={};
   lastScores.forEach(function(g){scores[g.en.name]=g.pct});
-  var payload={name:n,email:e,whatsapp:w,language:lang.toUpperCase(),gifting_1:lastScores[0]?lastScores[0].en.name:'',gifting_2:lastScores[1]?lastScores[1].en.name:'',gifting_3:lastScores[2]?lastScores[2].en.name:'',scores:scores};
+  var calScore=calcCalibration();
+  var discRaw=calcDisc();
+  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C);
+  var payload={
+    name:n,
+    preferred_name:preferredName||null,
+    full_name:fn||null,
+    email:e,
+    whatsapp:w,
+    language:lang.toUpperCase(),
+    gifting_1:lastScores[0]?lastScores[0].en.name:'',
+    gifting_2:lastScores[1]?lastScores[1].en.name:'',
+    gifting_3:lastScores[2]?lastScores[2].en.name:'',
+    scores:scores,
+    calibration_score:calScore,
+    disc_d:discRaw.D,
+    disc_i:discRaw.I,
+    disc_s:discRaw.S,
+    disc_c:discRaw.C,
+    disc_primary:discData.disc_primary,
+    disc_secondary:discData.disc_secondary,
+    natural_strength:discData.natural_strength,
+    leadership_tendency:discData.leadership_tendency,
+    emotional_profile:discData.emotional_profile,
+    pairing_labels:JSON.parse(discData.pairing_labels),
+    ministry_fit:JSON.parse(discData.ministry_fit),
+    pastoral_flag:discData.pastoral_flag
+  };
+  if(resumeToken)payload.resume_token=resumeToken;
   fetch('https://ltc-api.farfromtimnah.workers.dev/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
   .then(function(r){return r.json()})
-  .then(function(d){if(d&&d.id)lastSubmissionId=d.id})
+  .then(function(d){
+    if(d&&d.id){
+      lastSubmissionId=d.id;
+      /* Clear draft from localStorage on successful submission */
+      try{localStorage.removeItem('ltc_draft')}catch(e2){}
+      resumeToken=null;
+    }
+  })
   .catch(function(){});
-  renderResults(lastScores,lastSubmittedName);
+  renderResults(lastScores,lastSubmittedName,discData);
   showScreen('results');
 }
 
-/* ─── RESULTS RENDER ────────────────────────────────────────────── */
-function renderResults(scores,name){
+/* ─── RESULTS RENDER ─────────────────────────────────────────────── */
+function renderResults(scores,name,discData){
   var t=T[lang],rn=document.getElementById('rName');
   if(name){rn.textContent=name;rn.style.display='flex'}else{rn.textContent='';rn.style.display='none'}
   document.getElementById('rTitle').textContent=t.rTitle;
@@ -633,11 +1217,17 @@ function renderResults(scores,name){
   document.getElementById('ctaBtn').textContent=t.ctaBtn;
   document.getElementById('retakeBtn').textContent=t.retakeBtn;
 
-  /* Top 3 */
+  /* Top 3 with Saiba Mais button */
   var top3El=document.getElementById('top3');top3El.innerHTML='';
   scores.slice(0,3).forEach(function(g,i){
     var d=document.createElement('div');d.className='tc r'+(i+1);
     d.innerHTML='<div class="tc-rank">'+(i+1)+'</div><div class="tc-icon">'+g.icon+'</div><div class="tc-body"><div class="tc-name">'+g[lang].name+'</div><div class="tc-desc">'+g[lang].desc+'</div></div>';
+    var saibaMaisBtn=document.createElement('button');
+    saibaMaisBtn.type='button';
+    saibaMaisBtn.className='tc-saiba';
+    saibaMaisBtn.textContent=t.saibaMaisBtn;
+    (function(giftId){saibaMaisBtn.addEventListener('click',function(){openSaibaMais(giftId)})})(g.id);
+    d.appendChild(saibaMaisBtn);
     top3El.appendChild(d);
   });
 
@@ -650,6 +1240,13 @@ function renderResults(scores,name){
   });
   setTimeout(function(){document.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.getAttribute('data-pct')})},100);
 
+  /* DISC section */
+  var discEl=document.getElementById('discSection');
+  if(discEl){
+    if(discData){renderDiscSection(discData,discEl)}
+    else{discEl.innerHTML=''}
+  }
+
   /* Ministry suggestions */
   var minEl=document.getElementById('ministriesOut');minEl.innerHTML='';
   scores.slice(0,5).forEach(function(g){
@@ -659,15 +1256,88 @@ function renderResults(scores,name){
     minEl.appendChild(grp);
   });
 
-  /* Build share cards (off-screen) */
-  buildShareCards(scores, name);
+  buildShareCards(scores,name);
   renderShareChips();
 }
 
-/* ─── SHARE CARDS (off-screen, captured by html2canvas) ─────────── */
-function buildShareCards(scores, name){
+/* ─── DISC SECTION RENDER ────────────────────────────────────────── */
+function renderDiscSection(discData,container){
   var t=T[lang];
-  /* Card 1 header */
+  var discRaw=calcDisc();
+  var dims=["D","I","S","C"];
+  var maxScore=15;
+  var primaryLabel=lang==='pt'?discData._primary_label_pt:discData._primary_label_en;
+  var secondaryLabel=lang==='pt'?discData._secondary_label_pt:discData._secondary_label_en;
+  var naturalStr=lang==='pt'?discData.natural_strength:discData._natural_str_en;
+  var leadership=lang==='pt'?discData.leadership_tendency:discData._leadership_en;
+  var emotional=lang==='pt'?discData.emotional_profile:discData._emotional_en;
+  var pairing=lang==='pt'?JSON.parse(discData.pairing_labels):discData._pairing_en;
+  var ministryFit=lang==='pt'?JSON.parse(discData.ministry_fit):discData._ministry_fit_en;
+
+  var html='<div class="sec-lbl">'+t.discSectionTitle+'</div>';
+  html+='<div class="disc-profile-card">';
+  dims.forEach(function(dim){
+    var score=discRaw[dim]||0;
+    var pct=Math.round((score/maxScore)*100);
+    var label=DISC_NAMES[dim][lang==='pt'?'pt':'en'];
+    html+='<div class="disc-row"><div class="disc-dim-lbl">'+label+'</div><div class="disc-bar-track"><div class="disc-bar-fill" style="width:'+pct+'%"></div></div><div class="disc-bar-pct">'+score+'</div></div>';
+  });
+  html+='<div class="disc-trait-row">';
+  html+='<span class="disc-primary-badge">'+t.discPrimaryLabel+': '+primaryLabel+'</span>';
+  html+='<span class="disc-primary-badge">'+t.naturalStrLabel+': '+naturalStr+'</span>';
+  html+='<span class="disc-primary-badge">'+t.leadershipLabel+': '+leadership+'</span>';
+  html+='<span class="disc-primary-badge">'+t.emotionalLabel+': '+emotional+'</span>';
+  html+='</div>';
+  html+='</div>';
+  container.innerHTML=html;
+}
+
+/* ─── SAIBA MAIS MODAL ───────────────────────────────────────────── */
+function openSaibaMais(giftId){
+  var g=null;
+  for(var k=0;k<GIFTINGS.length;k++){if(GIFTINGS[k].id===giftId){g=GIFTINGS[k];break}}
+  if(!g)return;
+  var t=T[lang];
+  document.getElementById('modalGiftEyebrow').textContent=t.modalGiftEyebrow;
+  document.getElementById('modalGiftName').textContent=g[lang].name;
+  document.getElementById('modalGiftDesc').textContent=g[lang].desc;
+  document.getElementById('modalMinTitle').textContent=t.modalMinTitle;
+  var tagsEl=document.getElementById('modalMinTags');tagsEl.innerHTML='';
+  g[lang].ministries.forEach(function(m){
+    var span=document.createElement('span');span.className='modal-min-tag';span.textContent=m;tagsEl.appendChild(span);
+  });
+  document.getElementById('saibaMaisModal').classList.add('visible');
+  document.body.style.overflow='hidden';
+}
+
+function closeSaibaMais(){
+  document.getElementById('saibaMaisModal').classList.remove('visible');
+  document.body.style.overflow='';
+}
+
+/* ─── CARISMA LEVEL 5 CONFIRM ────────────────────────────────────── */
+var pendingLevel5=false;
+
+function openCarismaLevel5Confirm(){
+  document.getElementById('carismaLevel5Modal').classList.add('visible');
+  document.body.style.overflow='hidden';
+}
+function closeCarismaLevel5(){
+  document.getElementById('carismaLevel5Modal').classList.remove('visible');
+  document.body.style.overflow='';
+  pendingLevel5=false;
+}
+function confirmCarismaLevel5(){
+  closeCarismaLevel5();
+  var val='Level 5';
+  var idx=shareCarisma.indexOf(val);
+  if(idx===-1){shareCarisma.push(val)}
+  renderCarismaChips();
+}
+
+/* ─── SHARE CARDS (off-screen, captured by html2canvas) ─────────── */
+function buildShareCards(scores,name){
+  var t=T[lang];
   var l1=document.getElementById('sc1Logo');if(l1)l1.src=LAGOINHA_LOGO;
   var l2=document.getElementById('sc2Logo');if(l2)l2.src=LAGOINHA_LOGO;
   var ft1=document.getElementById('sc1FooterTag');if(ft1)ft1.textContent=t.footerTag;
@@ -677,14 +1347,12 @@ function buildShareCards(scores, name){
   document.getElementById('sc2Title').textContent=t.sc2Title;
   document.getElementById('sc2Name').textContent=name||'';
   document.getElementById('sc2BarsLabel').textContent=t.sc2BarsLabel;
-  /* Card 1: top 3 */
   var c1=document.getElementById('sc1Top3');c1.innerHTML='';
   scores.slice(0,3).forEach(function(g,i){
     var d=document.createElement('div');d.className='sc-tc'+(i===0?' sc-r1':'');
     d.innerHTML='<div class="sc-rank">'+(i+1)+'</div><div class="sc-icon">'+g.icon+'</div><div><div class="sc-tc-name">'+g[lang].name+'</div><div class="sc-tc-desc">'+g[lang].desc+'</div></div>';
     c1.appendChild(d);
   });
-  /* Card 2: all bars */
   var c2=document.getElementById('sc2Bars');c2.innerHTML='';
   scores.forEach(function(g){
     var r=document.createElement('div');r.className='sc-bar-row';
@@ -693,7 +1361,7 @@ function buildShareCards(scores, name){
   });
 }
 
-function downloadCard(cardId, filename){
+function downloadCard(cardId,filename){
   var el=document.getElementById(cardId);
   if(!el||typeof html2canvas==='undefined')return;
   html2canvas(el,{backgroundColor:'#0A0A0A',scale:2,useCORS:true,logging:false}).then(function(canvas){
@@ -740,7 +1408,7 @@ function flashCopied(){
   setTimeout(function(){btn.classList.remove('copied');btn.querySelector('#copyTextText').textContent=T[lang].copyText},2000);
 }
 
-/* ─── SHARE MORE / ALREADY SERVING ─────────────────────────────── */
+/* ─── SHARE MORE / ALREADY SERVING ──────────────────────────────── */
 function resetShareMore(){
   shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;shareCarisma=[];
   var ps=document.getElementById('pathServing'),pn=document.getElementById('pathNew');
@@ -751,7 +1419,6 @@ function resetShareMore(){
   var sb=document.getElementById('shareSubmitBtn');if(sb)sb.disabled=false;
   var prev=document.getElementById('photoPreview');if(prev){prev.style.display='none';prev.src='';}
   var pi=document.getElementById('photoIcon');if(pi)pi.style.display='block';
-  /* Re-show path buttons if they were hidden after success */
   var ps2=document.getElementById('pathServing');var pn2=document.getElementById('pathNew');
   if(ps2)ps2.style.display='';if(pn2)pn2.style.display='';
 }
@@ -759,19 +1426,28 @@ function resetShareMore(){
 function renderCarismaChips(){
   var t=T[lang];
   var cc=document.getElementById('carismaChips');if(!cc)return;cc.innerHTML='';
-  var levels=[{val:'1st Year',label:t.carisma1},{val:'Masters',label:t.carismaMasters}];
+  var levels=[
+    {val:'1st Year',label:t.carisma1},
+    {val:'Masters',label:t.carismaMasters},
+    {val:'Level 5',label:t.carismaFormado}
+  ];
   levels.forEach(function(item){
     var btn=document.createElement('button');btn.type='button';
     var active=shareCarisma.indexOf(item.val)>-1;
     btn.className='carisma-btn'+(active?' sel':'');
     btn.innerHTML='<img src="'+CARISMA_LOGO+'" alt="Carisma"> '+item.label;
-    (function(v,b){
+    (function(v,b,isLevel5){
       b.addEventListener('click',function(){
+        if(isLevel5&&shareCarisma.indexOf(v)===-1){
+          /* Level 5 needs confirmation before selecting */
+          openCarismaLevel5Confirm();
+          return;
+        }
         var idx=shareCarisma.indexOf(v);
         if(idx>-1){shareCarisma.splice(idx,1);b.classList.remove('sel')}
         else{shareCarisma.push(v);b.classList.add('sel')}
       });
-    })(item.val,btn);
+    })(item.val,btn,item.val==='Level 5');
     cc.appendChild(btn);
   });
 }
@@ -809,11 +1485,9 @@ function selectPath(path){
   document.getElementById('pathServing').classList.toggle('active',path==='serving');
   document.getElementById('pathNew').classList.toggle('active',path==='new');
   if(path==='new'){
-    /* "Not serving yet" — open warm WhatsApp message to Pra Alice */
     openCtaWhatsApp();
     return;
   }
-  /* "Already serving" — show the Share More form */
   document.getElementById('shareForm').classList.add('visible');
   document.getElementById('ministrySection').style.display='block';
   document.getElementById('carismaSection').style.display='block';
@@ -857,11 +1531,14 @@ document.getElementById('photoInput').addEventListener('change',function(e){
 });
 
 function handleRetake(){
-  answers={};current=0;lastScores=null;lastSubmittedName='';lastSubmissionId=null;
+  answers={};current=0;lastScores=null;lastSubmittedName='';lastSubmissionId=null;preferredName='';
+  document.getElementById('inputPrefname').value='';
   document.getElementById('inputName').value='';
+  document.getElementById('inputFullName').value='';
   document.getElementById('inputEmail').value='';
   document.getElementById('inputWhatsapp').value='';
   document.getElementById('submitBtn').disabled=true;
+  document.getElementById('prefnameContinueBtn').disabled=true;
   resetShareMore();
   showScreen('welcome');
 }
@@ -875,15 +1552,28 @@ function openCtaWhatsApp(){
   window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank');
 }
 
+/* ─── INIT ───────────────────────────────────────────────────────── */
+applyLang();
+checkResumeToken();
+
 /* ─── EVENT WIRING (iOS-safe: touchstart + click, bottom of body) ── */
 document.getElementById('langBtn').addEventListener('touchstart',function(e){e.preventDefault();toggleLang()},{passive:false});
 document.getElementById('langBtn').addEventListener('click',toggleLang);
 document.getElementById('startBtn').addEventListener('touchstart',function(e){e.preventDefault();startAssessment()},{passive:false});
 document.getElementById('startBtn').addEventListener('click',startAssessment);
+document.getElementById('resumeBtn').addEventListener('touchstart',function(e){e.preventDefault();resumeDraft()},{passive:false});
+document.getElementById('resumeBtn').addEventListener('click',resumeDraft);
+document.getElementById('inputPrefname').addEventListener('input',checkPrefname);
+document.getElementById('prefnameContinueBtn').addEventListener('touchstart',function(e){e.preventDefault();handlePrefname()},{passive:false});
+document.getElementById('prefnameContinueBtn').addEventListener('click',handlePrefname);
+document.getElementById('prefnameBackBtn').addEventListener('touchstart',function(e){e.preventDefault();showScreen('welcome')},{passive:false});
+document.getElementById('prefnameBackBtn').addEventListener('click',function(){showScreen('welcome')});
 document.getElementById('backBtn').addEventListener('touchstart',function(e){e.preventDefault();handleBack()},{passive:false});
 document.getElementById('backBtn').addEventListener('click',handleBack);
 document.getElementById('nextBtn').addEventListener('touchstart',function(e){e.preventDefault();handleNext()},{passive:false});
 document.getElementById('nextBtn').addEventListener('click',handleNext);
+document.getElementById('continueLaterBtn').addEventListener('touchstart',function(e){e.preventDefault();saveDraft()},{passive:false});
+document.getElementById('continueLaterBtn').addEventListener('click',saveDraft);
 document.getElementById('submitBtn').addEventListener('touchstart',function(e){e.preventDefault();handleSubmit()},{passive:false});
 document.getElementById('submitBtn').addEventListener('click',handleSubmit);
 document.getElementById('retakeBtn').addEventListener('touchstart',function(e){e.preventDefault();handleRetake()},{passive:false});
@@ -891,6 +1581,7 @@ document.getElementById('retakeBtn').addEventListener('click',handleRetake);
 document.getElementById('ctaBtn').addEventListener('touchstart',function(e){e.preventDefault();openCtaWhatsApp()},{passive:false});
 document.getElementById('ctaBtn').addEventListener('click',openCtaWhatsApp);
 document.getElementById('inputName').addEventListener('input',checkForm);
+document.getElementById('inputFullName').addEventListener('input',checkForm);
 document.getElementById('inputEmail').addEventListener('input',checkForm);
 document.getElementById('inputWhatsapp').addEventListener('input',checkForm);
 document.getElementById('pathServing').addEventListener('touchstart',function(e){e.preventDefault();selectPath('serving')},{passive:false});
@@ -907,6 +1598,19 @@ document.getElementById('waShareBtn').addEventListener('touchstart',function(e){
 document.getElementById('waShareBtn').addEventListener('click',shareWhatsApp);
 document.getElementById('copyTextBtn').addEventListener('touchstart',function(e){e.preventDefault();copyResultsText()},{passive:false});
 document.getElementById('copyTextBtn').addEventListener('click',copyResultsText);
+document.getElementById('closeSaibaMaisBtn').addEventListener('touchstart',function(e){e.preventDefault();closeSaibaMais()},{passive:false});
+document.getElementById('closeSaibaMaisBtn').addEventListener('click',closeSaibaMais);
+document.getElementById('saibaMaisModal').addEventListener('touchstart',function(e){if(e.target===this){e.preventDefault();closeSaibaMais()}},{passive:false});
+document.getElementById('saibaMaisModal').addEventListener('click',function(e){if(e.target===this)closeSaibaMais()});
+document.getElementById('closeCarismaLevel5Btn').addEventListener('touchstart',function(e){e.preventDefault();closeCarismaLevel5()},{passive:false});
+document.getElementById('closeCarismaLevel5Btn').addEventListener('click',closeCarismaLevel5);
+document.getElementById('carismaLevel5Yes').addEventListener('touchstart',function(e){e.preventDefault();confirmCarismaLevel5()},{passive:false});
+document.getElementById('carismaLevel5Yes').addEventListener('click',confirmCarismaLevel5);
+document.getElementById('carismaLevel5No').addEventListener('touchstart',function(e){e.preventDefault();closeCarismaLevel5()},{passive:false});
+document.getElementById('carismaLevel5No').addEventListener('click',closeCarismaLevel5);
+document.getElementById('carismaLevel5Modal').addEventListener('touchstart',function(e){if(e.target===this){e.preventDefault();closeCarismaLevel5()}},{passive:false});
+document.getElementById('carismaLevel5Modal').addEventListener('click',function(e){if(e.target===this)closeCarismaLevel5()});
+
 </script>
 </body>
 </html>
