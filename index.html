@@ -885,86 +885,126 @@ var DISC_NAMES={
   C:{pt:"Analista",en:"Analyst"}
 };
 var DISC_NATURAL_STR={
-  D:{pt:"Lideranca direta",en:"Direct leadership"},
-  I:{pt:"Influencia e comunicacao",en:"Influence and communication"},
-  S:{pt:"Consistencia e cuidado",en:"Consistency and care"},
-  C:{pt:"Analise e excelencia",en:"Analysis and excellence"}
+  D:{pt:"Mobilizador",en:"Mobilizer"},
+  I:{pt:"Conector",en:"Connector"},
+  S:{pt:"Sustentador",en:"Sustainer"},
+  C:{pt:"Arquiteto",en:"Architect"}
 };
 var DISC_LEADERSHIP={
-  D:{pt:"Visionario",en:"Visionary"},
-  I:{pt:"Inspiracional",en:"Inspirational"},
-  S:{pt:"Servidor",en:"Servant"},
-  C:{pt:"Estrategico",en:"Strategic"},
-  DI:{pt:"Persuasivo",en:"Persuasive"},
-  DS:{pt:"Reformador",en:"Reformer"},
-  DC:{pt:"Preciso",en:"Precise"},
-  IS:{pt:"Empatico",en:"Empathetic"},
-  IC:{pt:"Criativo",en:"Creative"},
-  SC:{pt:"Equilibrado",en:"Balanced"},
-  ID:{pt:"Persuasivo",en:"Persuasive"},
-  SD:{pt:"Reformador",en:"Reformer"},
-  CD:{pt:"Preciso",en:"Precise"},
-  SI:{pt:"Empatico",en:"Empathetic"},
-  CI:{pt:"Criativo",en:"Creative"},
-  CS:{pt:"Equilibrado",en:"Balanced"}
+  D:{pt:"Lider Visionario",en:"Visionary Leader"},
+  I:{pt:"Lider Relacional",en:"Relational Leader"},
+  S:{pt:"Lider Estrutural",en:"Structural Leader"},
+  C:{pt:"Influenciador de Suporte",en:"Supporting Influencer"}
 };
 var DISC_EMOTIONAL={
-  D:{high:{pt:"Alta intensidade",en:"High intensity"},mid:{pt:"Focado",en:"Focused"},low:{pt:"Reservado",en:"Reserved"}},
-  I:{high:{pt:"Expressivo",en:"Expressive"},mid:{pt:"Sociavel",en:"Sociable"},low:{pt:"Introspectivo",en:"Introspective"}},
-  S:{high:{pt:"Calmo e constante",en:"Calm and steady"},mid:{pt:"Ponderado",en:"Measured"},low:{pt:"Adaptavel",en:"Adaptable"}},
-  C:{high:{pt:"Analitico rigoroso",en:"Rigorous analytical"},mid:{pt:"Metodico",en:"Methodical"},low:{pt:"Cauteloso",en:"Cautious"}}
+  D:{pt:"Processador Orientado",en:"Driven Processor"},
+  I:{pt:"Processador Expressivo",en:"Expressive Processor"},
+  S:{pt:"Carregador Estavel",en:"Steady Carrier"},
+  C:{pt:"Processador Analitico",en:"Analytical Processor"}
 };
-var DISC_PAIRING={
-  D:{pt:["Planejador","Analista"],en:["Planner","Analyst"]},
-  I:{pt:["Planejador","Analista"],en:["Planner","Analyst"]},
-  S:{pt:["Executor","Comunicador"],en:["Driver","Influencer"]},
-  C:{pt:["Comunicador","Executor"],en:["Influencer","Driver"]}
-};
+/* Pairing rules: gifting + disc (primary OR secondary) triggers a named pairing */
+var DISC_PAIRING=[
+  {gifting:"Worship & Music",disc:"D",en:"Worship Culture Builder",pt:"Construtor de Cultura de Louvor"},
+  {gifting:"Worship & Music",disc:"C",en:"Deep Worshiper",pt:"Adorador Profundo"},
+  {gifting:"Worship & Music",disc:"S",en:"Consistent Worshiper",pt:"Adorador Consistente"},
+  {gifting:"Gift of Helps",disc:"D",en:"Initiative Servant",pt:"Servidor de Iniciativa"},
+  {gifting:"Evangelism",disc:"I",en:"Relational Evangelist",pt:"Evangelista Relacional"},
+  {gifting:"Evangelism",disc:"S",en:"Relational Evangelist",pt:"Evangelista Relacional"},
+  {gifting:"Evangelism",disc:"D",en:"Bold Evangelist",pt:"Evangelista Ousado"},
+  {gifting:"Teaching",disc:"C",en:"Deep Teacher",pt:"Professor em Profundidade"},
+  {gifting:"Teaching",disc:"D",en:"Activating Teacher",pt:"Professor Ativador"},
+  {gifting:"Teaching",disc:"I",en:"Activating Teacher",pt:"Professor Ativador"},
+  {gifting:"Administration",disc:"C",en:"Systems Architect",pt:"Arquiteto de Sistemas"},
+  {gifting:"Administration",disc:"D",en:"Structure Builder",pt:"Construtor de Estruturas"},
+  {gifting:"Administration",disc:"S",en:"Structure Builder",pt:"Construtor de Estruturas"},
+  {gifting:"Intercession",disc:"S",en:"Faithful Intercessor",pt:"Intercessor Fiel"},
+  {gifting:"Intercession",disc:"C",en:"Strategic Intercessor",pt:"Intercessor Estrategico"},
+  {gifting:"Intercession",disc:"D",en:"Strategic Intercessor",pt:"Intercessor Estrategico"},
+  {gifting:"Discernment & Prophetic",disc:"S",en:"High-Care Prophetic",pt:"Profetico de Alta Atencao"},
+  {gifting:"Discernment & Prophetic",disc:"I",en:"High-Care Prophetic",pt:"Profetico de Alta Atencao"},
+  {gifting:"Discernment & Prophetic",disc:"C",en:"Steady Prophetic",pt:"Profetico Estavel"},
+  {gifting:"Influence & Servant Leadership",disc:"I",en:"Natural Relational Leader",pt:"Lider Relacional Natural"},
+  {gifting:"Influence & Servant Leadership",disc:"S",en:"Natural Relational Leader",pt:"Lider Relacional Natural"},
+  {gifting:"Influence & Servant Leadership",disc:"D",en:"High-Impact Leader",pt:"Lider de Alto Impacto"},
+  {gifting:"Hospitality",disc:"S",en:"Deep Hospitality",pt:"Hospitalidade Profunda"},
+  {gifting:"Hospitality",disc:"I",en:"Expressive Hospitality",pt:"Hospitalidade Expressiva"},
+  {gifting:"Creativity",disc:"S",en:"Collaborative Creative",pt:"Criativo Colaborativo"},
+  {gifting:"Creativity",disc:"I",en:"Collaborative Creative",pt:"Criativo Colaborativo"},
+  {gifting:"Creativity",disc:"D",en:"High-Execution Creative",pt:"Criativo de Alta Execucao"},
+  {gifting:"Creativity",disc:"C",en:"High-Execution Creative",pt:"Criativo de Alta Execucao"}
+];
 var DISC_MINISTRY_FIT={
-  D:{pt:["Lideranca","Evangelismo","Missoes"],en:["Leadership","Evangelism","Missions"]},
-  I:{pt:["Louvor","Comunicacao","Acolhimento"],en:["Worship","Communication","Welcome"]},
-  S:{pt:["Intercessao","Apoio","Grupos Pequenos"],en:["Intercession","Support","Small Groups"]},
-  C:{pt:["Ensino","Administracao","Tecnologia"],en:["Teaching","Administration","Technology"]}
+  D:{pt:"Alta energia evangelistica. Emparelhe com alguem orientado ao discipulado.",en:"High evangelistic energy. Pair with a discipleship-oriented teammate."},
+  I:{pt:"Melhor em ministerios relacionais e criativos. Construa conexao antes de convocar.",en:"Best in relational and creative ministry. Build connection before deploying."},
+  S_prophetic:{pt:"Dom profetico e de intercessao. Proteja o espaco de oracao e proporcione cobertura pastoral.",en:"Prophetic and intercession gifting. Protect prayer space and provide pastoral covering."},
+  S:{pt:"Dom relacional natural. Posicione em pontos de entrada e cuidado.",en:"Natural relational gifting. Position at entry points and care roles."},
+  C:{pt:"Forte em funcoes operacionais e tecnicas. Autonomia e padroes claros.",en:"Strong in operational and technical roles. Give autonomy and clear standards."}
 };
 
-function deriveDISC(d,i,s,c){
+function deriveDISC(d,i,s,c,g1,g2,g3){
   var scores={D:d,I:i,S:s,C:c};
   var dims=["D","I","S","C"];
   dims.sort(function(a,b){return scores[b]-scores[a]});
   var primary=dims[0],secondary=dims[1];
-  var combo=primary+secondary;
-  var score=scores[primary];
-  var level=score>=12?'high':score>=7?'mid':'low';
-  var natural_strength_pt=DISC_NATURAL_STR[primary].pt;
+  /* Natural strength: canonical EN stored to D1 */
   var natural_strength_en=DISC_NATURAL_STR[primary].en;
-  var leadership_pt=(DISC_LEADERSHIP[combo]||DISC_LEADERSHIP[primary]).pt;
-  var leadership_en=(DISC_LEADERSHIP[combo]||DISC_LEADERSHIP[primary]).en;
-  var emotional_pt=DISC_EMOTIONAL[primary][level].pt;
-  var emotional_en=DISC_EMOTIONAL[primary][level].en;
-  var pairing_pt=DISC_PAIRING[primary].pt;
-  var pairing_en=DISC_PAIRING[primary].en;
-  var ministry_fit_pt=DISC_MINISTRY_FIT[primary].pt;
-  var ministry_fit_en=DISC_MINISTRY_FIT[primary].en;
+  var natural_strength_pt=DISC_NATURAL_STR[primary].pt;
+  /* Leadership tendency: primary-based only, canonical EN */
+  var leadership_en=DISC_LEADERSHIP[primary].en;
+  var leadership_pt=DISC_LEADERSHIP[primary].pt;
+  /* Emotional profile: primary-based only, canonical EN */
+  var emotional_en=DISC_EMOTIONAL[primary].en;
+  var emotional_pt=DISC_EMOTIONAL[primary].pt;
+  /* Ministry fit: single canonical EN string */
+  var mfKey=primary;
+  if(primary==='S'){
+    var propheticGiftings=['Intercession','Discernment & Prophetic'];
+    var giftings=[g1,g2,g3];
+    for(var gi=0;gi<propheticGiftings.length;gi++){
+      if(giftings.indexOf(propheticGiftings[gi])!==-1){mfKey='S_prophetic';break;}
+    }
+  }
+  var ministry_fit_en=DISC_MINISTRY_FIT[mfKey].en;
+  var ministry_fit_pt=DISC_MINISTRY_FIT[mfKey].pt;
+  /* Pairing labels: gifting + (primary OR secondary) DISC triggers named pairings */
+  var giftingList=[g1,g2,g3].filter(Boolean);
+  var pairingEn=[],pairingPt=[],pairingSeen={};
+  for(var pi=0;pi<DISC_PAIRING.length;pi++){
+    var rule=DISC_PAIRING[pi];
+    if(!pairingSeen[rule.en]&&
+       giftingList.indexOf(rule.gifting)!==-1&&
+       (rule.disc===primary||rule.disc===secondary)){
+      pairingEn.push(rule.en);
+      pairingPt.push(rule.pt);
+      pairingSeen[rule.en]=1;
+    }
+  }
   /* pastoral_flag: high S with meaningful I or C */
   var pastoral_flag=(s>=12&&i>=10)||(s>=12&&c>=12)||(s>=13)?1:0;
   return{
     disc_primary:primary,
     disc_secondary:secondary,
-    natural_strength:natural_strength_pt,
-    leadership_tendency:leadership_pt,
-    emotional_profile:emotional_pt,
-    pairing_labels:JSON.stringify(pairing_pt),
-    ministry_fit:JSON.stringify(ministry_fit_pt),
+    /* canonical EN values stored to D1 */
+    natural_strength:natural_strength_en,
+    leadership_tendency:leadership_en,
+    emotional_profile:emotional_en,
+    pairing_labels:JSON.stringify(pairingEn),
+    ministry_fit:ministry_fit_en,
     pastoral_flag:pastoral_flag,
-    /* for display */
+    /* for display on results screen */
     _primary_label_pt:DISC_NAMES[primary].pt,
     _primary_label_en:DISC_NAMES[primary].en,
     _secondary_label_pt:DISC_NAMES[secondary].pt,
     _secondary_label_en:DISC_NAMES[secondary].en,
+    _natural_str_pt:natural_strength_pt,
     _natural_str_en:natural_strength_en,
+    _leadership_pt:leadership_pt,
     _leadership_en:leadership_en,
+    _emotional_pt:emotional_pt,
     _emotional_en:emotional_en,
-    _pairing_en:pairing_en,
+    _pairing_pt:pairingPt,
+    _pairing_en:pairingEn,
+    _ministry_fit_pt:ministry_fit_pt,
     _ministry_fit_en:ministry_fit_en
   };
 }
@@ -1292,7 +1332,10 @@ function handleSubmit(){
   lastScores.forEach(function(g){scores[g.en.name]=g.pct});
   var calScore=calcCalibration();
   var discRaw=calcDisc();
-  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C);
+  var g1=lastScores[0]?lastScores[0].en.name:'';
+  var g2=lastScores[1]?lastScores[1].en.name:'';
+  var g3=lastScores[2]?lastScores[2].en.name:'';
+  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3);
   var payload={
     name:n,
     preferred_name:preferredName||null,
@@ -1300,9 +1343,9 @@ function handleSubmit(){
     email:e,
     whatsapp:w,
     language:lang.toUpperCase(),
-    gifting_1:lastScores[0]?lastScores[0].en.name:'',
-    gifting_2:lastScores[1]?lastScores[1].en.name:'',
-    gifting_3:lastScores[2]?lastScores[2].en.name:'',
+    gifting_1:g1,
+    gifting_2:g2,
+    gifting_3:g3,
     scores:scores,
     calibration_score:calScore,
     disc_d:discRaw.D,
@@ -1315,7 +1358,7 @@ function handleSubmit(){
     leadership_tendency:discData.leadership_tendency,
     emotional_profile:discData.emotional_profile,
     pairing_labels:JSON.parse(discData.pairing_labels),
-    ministry_fit:JSON.parse(discData.ministry_fit),
+    ministry_fit:discData.ministry_fit,
     pastoral_flag:discData.pastoral_flag
   };
   if(resumeToken)payload.resume_token=resumeToken;
@@ -1402,11 +1445,11 @@ function renderDiscSection(discData,container){
   var maxScore=15;
   var primaryLabel=lang==='pt'?discData._primary_label_pt:discData._primary_label_en;
   var secondaryLabel=lang==='pt'?discData._secondary_label_pt:discData._secondary_label_en;
-  var naturalStr=lang==='pt'?discData.natural_strength:discData._natural_str_en;
-  var leadership=lang==='pt'?discData.leadership_tendency:discData._leadership_en;
-  var emotional=lang==='pt'?discData.emotional_profile:discData._emotional_en;
-  var pairing=lang==='pt'?JSON.parse(discData.pairing_labels):discData._pairing_en;
-  var ministryFit=lang==='pt'?JSON.parse(discData.ministry_fit):discData._ministry_fit_en;
+  var naturalStr=lang==='pt'?discData._natural_str_pt:discData._natural_str_en;
+  var leadership=lang==='pt'?discData._leadership_pt:discData._leadership_en;
+  var emotional=lang==='pt'?discData._emotional_pt:discData._emotional_en;
+  var pairing=lang==='pt'?discData._pairing_pt:discData._pairing_en;
+  var ministryFit=lang==='pt'?discData._ministry_fit_pt:discData._ministry_fit_en;
 
   var html='<div class="sec-lbl">'+t.discSectionTitle+'</div>';
   html+='<div class="disc-profile-card">';
