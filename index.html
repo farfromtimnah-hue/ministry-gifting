@@ -214,10 +214,10 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 /* ─── DRAFT SAVED TOAST ───────────────────────────────────── */
 .draft-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background-color:#1C1C1C;border:1px solid rgba(42,191,191,0.4);color:#2ABFBF;padding:12px 22px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;z-index:300;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
 /* DISC section pill */
-.disc-section-pill{display:inline-block;background-color:rgba(42,191,191,0.12);border:1px solid rgba(42,191,191,0.3);color:#2ABFBF;padding:4px 14px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.disc-section-pill{display:inline-block;background-color:#2ABFBF;color:#000000;font-size:11px;padding:3px 12px;border-radius:999px;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 /* Scale labels fade-in on first DISC question */
 @keyframes scaleFadeIn{from{opacity:0}to{opacity:1}}
-.scale-wrap.disc-first .scale-btn{animation:scaleFadeIn 0.4s ease forwards}
+.scale-wrap.disc-first .scale-btn{animation:scaleFadeIn 0.4s ease 0.2s both}
 /* Learn More modal back button */
 .modal-back-btn{display:block;width:100%;margin-bottom:20px;background-color:#1C1C1C;border:1px solid rgba(42,191,191,0.35);color:#2ABFBF;padding:13px 18px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:52px;text-align:center}
 </style>
@@ -227,8 +227,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 
   <nav class="nav">
     <div class="logo">
-      <div class="logo-dot"></div>
-      <div class="logo-text">Lagoinha <span>Tampa</span></div>
+      <img src="LTC1.svg" alt="Lagoinha Tampa" style="height:36px;width:auto;display:block;">
     </div>
     <button type="button" class="lang-btn" id="langBtn">English</button>
   </nav>
@@ -1133,7 +1132,9 @@ function renderQuestion(){
   /* Change 2: fade-in animation on first DISC card only */
   if(isFirstDisc){wrap.classList.add('disc-first')}else{wrap.classList.remove('disc-first')}
 
-  t.scale.forEach(function(lbl,i){
+  var scaleLabels=t.scale.slice();
+  if(!isDisc){scaleLabels[4]=lang==='pt'?'Isso arde dentro de mim':'This burns in me';}
+  scaleLabels.forEach(function(lbl,i){
     var btn=document.createElement('button');
     btn.type='button';
     btn.className='scale-btn'+(answers[current]===i?' sel':'');
@@ -1165,7 +1166,8 @@ function showLevel5Confirm(){
   card.style.cssText='background:#1C1C1C;border:1px solid #333333;border-top:2px solid #2ABFBF;border-radius:5px;padding:28px 24px;max-width:420px;width:100%';
   var heading=document.createElement('div');
   heading.style.cssText="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:.05em;text-transform:uppercase;color:#FFFFFF;margin-bottom:12px";
-  heading.textContent=lang==='pt'?'Isso fala muito de mim':'This is deeply me';
+  var isDiscQ=ALL_QUESTIONS[current]&&ALL_QUESTIONS[current].type==='disc';
+  heading.textContent=isDiscQ?(lang==='pt'?'Isso fala muito de mim':'This is deeply me'):(lang==='pt'?'Isso arde dentro de mim':'This burns in me');
   var body=document.createElement('p');
   body.style.cssText='font-size:.9rem;color:#AAAAAA;line-height:1.65;margin-bottom:24px;margin-top:0';
   body.textContent=lang==='pt'?'Marcar isso mostra que essa qualidade e profundamente enraizada em quem voce e.':'Selecting this shows that this quality is deeply rooted in who you are.';
@@ -1174,7 +1176,7 @@ function showLevel5Confirm(){
   var confirmBtn=document.createElement('button');
   confirmBtn.type='button';
   confirmBtn.style.cssText="background-color:#2ABFBF;border:none;color:#000000;padding:15px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;touch-action:manipulation;width:100%";
-  confirmBtn.textContent=lang==='pt'?'Sim, com certeza':'Yes, absolutely';
+  confirmBtn.textContent=lang==='pt'?'Sim, isso e central para mim':'Yes, this is core to me';
   var backBtn=document.createElement('button');
   backBtn.type='button';
   backBtn.style.cssText="background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;padding:13px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation;width:100%";
@@ -1601,9 +1603,8 @@ function renderCarismaChips(){
   var t=T[lang];
   var cc=document.getElementById('carismaChips');if(!cc)return;cc.innerHTML='';
   var levels=[
-    {val:'1st Year',label:t.carisma1},
     {val:'Masters',label:t.carismaMasters},
-    {val:'Level 5',label:t.carismaFormado}
+    {val:'1st Year',label:t.carisma1}
   ];
   levels.forEach(function(item){
     var btn=document.createElement('button');btn.type='button';
