@@ -92,3 +92,58 @@ The Worker's POST /submit handler may not pass `reliability_flag` to D1 bind. Ve
 ---
 
 _Last updated: 2026-05-31 — Session 4 (ministry/group list updates) complete._
+
+---
+
+## Session 5 (2026-05-31) — Pastoral Flag Redesign
+
+### Fix A1 — Pastoral flag trigger logic (index.html)
+
+**Lines changed:** 943 (function signature), 981–982 (trigger), 1342–1343 (call site)
+
+**What changed:**
+- Added `leadershipScore` as 8th parameter to `deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore)`
+- Old trigger: `(s>=12&&i>=10)||(s>=12&&c>=12)||(s>=13)?1:0` — fired too broadly on high-S profiles
+- New trigger: ALL THREE must be true simultaneously:
+  1. `s >= 12` (high relational steadiness)
+  2. `leadershipScore >= 60` (gifting "Influence & Servant Leadership" at ≥60%)
+  3. `leadership_en` is "Visionary Leader", "Relational Leader", or "Structural Leader"
+- `handleSubmit` now computes `leadershipScore = scores["Influence & Servant Leadership"] || 0` before calling `deriveDISC`
+
+**Why `leadershipScore` is a parameter:** Inside `deriveDISC`, the local `scores` object is `{D,I,S,C}` (DISC raw scores), not gifting percentages. Gifting pct scores are built in `handleSubmit`. Passing as parameter was the correct approach.
+
+**Commit:** `1a85ebc`
+
+---
+
+## Session 6 (2026-05-31) — Mobile iOS Safari Fixes
+
+### Fix A1 — WhatsApp share button iOS (line 1787)
+- Removed `e.preventDefault()` from touchstart handler on `waShareBtn`
+- Changed `passive:false` to `passive:true`
+- Without this, iOS Safari blocks `window.open()` called from a touchstart with preventDefault as an untrusted popup
+- **Commit:** `19cf95b`
+
+### Fix A2 — Viewport height (lines 15, 525–528)
+- Added `:root{--app-height:100vh}` CSS at top of style block
+- Changed `.app` from `min-height:100vh` to `min-height:var(--app-height,100vh)`
+- Added `setAppHeight()` JS function before global vars (line 525): sets `--app-height` to `window.innerHeight`
+- Fires on load, `resize`, and `visualViewport.resize`
+
+### Fix A3 — Input font-size
+- `.field input` already has `font-size:16px` — no change needed
+- `.prefname-input` has `font-size:1.3rem` — already above 16px
+- `html,body` already has `-webkit-text-size-adjust:100%`
+
+### Fix A4 — Name on results screen (line ~71)
+- `.r-name` changed from `font-size:.72rem` (~11.5px) to `font-size:1.75rem`, `font-weight:800`, `display:block`
+- Removed `::before` decorative line (no longer needed with block display)
+- Name is now bold, teal (#2ABFBF), unmissable
+
+### Fix A5 — Overlays (lines ~190–192)
+- `.modal-overlay` updated: explicit `top/left/right/bottom:0`, `height:var(--app-height,100vh)`, `transform:translateZ(0)`, `-webkit-transform:translateZ(0)`
+- `.modal-sheet` updated: added `-webkit-overflow-scrolling:touch`
+- All buttons already had `touch-action:manipulation` and `-webkit-tap-highlight-color:transparent`
+- **Commit (A2–A5):** `d752cac`
+
+_Last updated: 2026-05-31 — Session 6 (iOS mobile fixes) complete._
