@@ -147,3 +147,34 @@ _Last updated: 2026-05-31 — Session 4 (ministry/group list updates) complete._
 - **Commit (A2–A5):** `d752cac`
 
 _Last updated: 2026-05-31 — Session 6 (iOS mobile fixes) complete._
+
+---
+
+## Session 7 (2026-06-01) — Group Roles Feature
+
+### D1 Schema
+- Created `group_roles` table: `id, submission_id, group_name, role, created_at`
+- Added `group_attendance TEXT DEFAULT '[]'` column to `connections` table
+
+### Worker (ltc-api/worker.js) — deployed 9019cd1f
+- `PEOPLE_SELECT`: added `c.group_attendance`
+- `GET /person/:id`: fetches `group_roles` rows and returns in response alongside notes
+- `PUT /person/:id/connection` (both authenticated and unauthenticated paths): accepts `group_attendance` (JSON array) and `group_roles` (array of `{group_name, role}` objects); saves via COALESCE for attendance and DELETE+INSERT for roles
+
+### Assessment App (ministry-gifting/index.html) — commit 630654b
+- **Section A (always shown):** 9 group attendance chips with info (i) popup; GC connected Yes/No chips
+- **Section B:** existing serving gate unchanged
+- **Section C:** Sunday ministry chips with updated label + sublabel
+- **Section D:** 10 group role chips with expandable role checklists per group
+- New CSS: `.chip-with-info`, `.role-check-row`, `.gc-chip`, `.group-info-popup`, `.group-info-backdrop`
+- New data: `ATTENDANCE_GROUPS` (descriptions PT/EN), `GROUP_ROLE_MAP` (roles per group)
+- New vars: `shareSelectedGroupAttendance`, `shareGroupRoles`, `shareGcConnected`
+- `submitShareMore` sends `group_attendance` and `group_roles` in payload
+
+### Dashboard (ltc-dashboard/src/App.jsx) — commit 5ed4a05
+- PersonPanel display: group attendance (grey chips) and group roles (teal chips, grouped by group name), shown above Notes for all roles
+- PersonPanel edit: group attendance toggles (auto-save), group roles chip + role checklist with dirty-state Save button
+- New constants: `ATTENDANCE_GROUPS_DASH`, `GROUP_ROLE_MAP_DASH`
+- New state: `editGroupRoles`, `groupRolesDirty`
+
+_Last updated: 2026-06-01 — Session 7 (group roles feature) complete._
