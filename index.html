@@ -221,6 +221,40 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .scale-wrap.disc-first .scale-btn{animation:scaleFadeIn 0.4s ease 0.2s both}
 /* Learn More modal back button */
 .modal-back-btn{display:block;width:100%;margin-bottom:20px;background-color:#1C1C1C;border:1px solid rgba(42,191,191,0.35);color:#2ABFBF;padding:13px 18px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:52px;text-align:center}
+/* ─── GROUP INFO POPUP ───────────────────────────────────── */
+.group-info-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background-color:#1C1C1C;border:1px solid #2ABFBF;border-radius:5px;padding:18px 20px;max-width:280px;width:calc(100% - 40px);z-index:400;box-shadow:0 8px 32px rgba(0,0,0,0.6);display:none}
+.group-info-popup.visible{display:block}
+.group-info-popup-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;color:#2ABFBF;margin-bottom:6px}
+.group-info-popup-desc{font-size:.88rem;color:#CCCCCC;line-height:1.55}
+.group-info-popup-close{display:block;margin-top:14px;background:#2ABFBF;border:none;color:#000;padding:9px 18px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:40px;width:100%}
+.group-info-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:399;display:none}
+.group-info-backdrop.visible{display:block}
+/* ─── CHIP WITH INFO ICON ────────────────────────────────── */
+.chip-with-info{display:inline-flex;align-items:center;border-radius:3px;border:1px solid #444444;background-color:#2A2A2A;overflow:hidden;margin:4px 4px 4px 0;vertical-align:top}
+.chip-with-info.sel{border-color:#2ABFBF;background-color:#0d2e2e}
+.chip-main{padding:9px 10px 9px 14px;color:#CCCCCC;font-family:'Barlow',sans-serif;font-size:.88rem;cursor:pointer;touch-action:manipulation;background:none;border:none;min-height:40px;line-height:1}
+.chip-with-info.sel .chip-main{color:#FFFFFF}
+.chip-info-btn{padding:9px 11px 9px 8px;color:#555555;background:none;border:none;border-left:1px solid #333333;cursor:pointer;touch-action:manipulation;font-size:.75rem;min-height:40px;line-height:1;flex-shrink:0}
+.chip-with-info.sel .chip-info-btn{border-left-color:#1a4a4a;color:#2ABFBF}
+/* ─── SECTION HEADING (Share More sections) ──────────────── */
+.share-section-hd{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2ABFBF;margin:20px 0 10px;display:flex;align-items:center;gap:10px}
+.share-section-hd::after{content:'';flex:1;height:1px;background-color:#252525}
+.share-sublabel{font-size:.8rem;color:#505050;margin-top:-4px;margin-bottom:10px;line-height:1.4}
+/* ─── GROUP ROLES EXPANDABLE ─────────────────────────────── */
+.group-roles-block{margin-bottom:12px}
+.group-roles-checklist{margin-top:8px;padding:12px 14px;background-color:#141414;border:1px solid #252525;border-radius:3px;display:none}
+.group-roles-checklist.visible{display:block}
+.role-check-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #1E1E1E;cursor:pointer;touch-action:manipulation}
+.role-check-row:last-child{border-bottom:none}
+.role-check-box{width:18px;height:18px;border:1.5px solid #444444;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#1C1C1C}
+.role-check-row.checked .role-check-box{border-color:#2ABFBF;background:#0d2e2e}
+.role-check-tick{width:10px;height:10px;background:#2ABFBF;border-radius:1px;display:none}
+.role-check-row.checked .role-check-tick{display:block}
+.role-check-label{font-size:.88rem;color:#CCCCCC;line-height:1}
+.role-check-row.checked .role-check-label{color:#FFFFFF}
+/* ─── GC CONNECTION CHIPS ────────────────────────────────── */
+.gc-chip{display:inline-flex;align-items:center;padding:9px 18px;border-radius:3px;border:1px solid #444444;background:#2A2A2A;color:#CCCCCC;font-family:'Barlow',sans-serif;font-size:.88rem;cursor:pointer;touch-action:manipulation;margin:4px 4px 4px 0;min-height:40px}
+.gc-chip.sel{border-color:#2ABFBF;background:#0d2e2e;color:#FFFFFF}
 </style>
 </head>
 <body>
@@ -362,31 +396,58 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 
       <div class="divider"></div>
 
-      <!-- 3. Already Serving — MOVED UP -->
+      <!-- 3. Share More -->
       <div class="already-section" id="shareMoreSection">
         <div class="already-eyebrow" id="shareEyebrow">Para os Pastores</div>
         <div class="already-title" id="shareTitle">Ajude-nos a te conhecer melhor</div>
         <p class="already-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.</p>
-        <div class="path-btns">
-          <button type="button" class="share-path-btn" id="pathServing">
-            <span id="pathServingText">Ja sirvo em algum ministerio</span>
-          </button>
-          <button type="button" class="share-path-btn" id="pathNew">
-            <span id="pathNewText">Ainda nao sirvo</span>
-          </button>
 
+        <!-- SECTION A — Church Connection (always shown) -->
+        <div id="sectionChurchConnection">
+          <div class="share-section-hd" id="sectionAHd">Conexao com a Igreja</div>
+
+          <span class="share-field-label" id="groupAttendLabel">Voce participa de algum grupo?</span>
+          <div class="chip-wrap" id="groupAttendChips"></div>
+
+          <div style="margin-top:14px">
+            <span class="share-field-label" id="gcLabel">Voce esta em um GC (Grupo de Crescimento)?</span>
+            <div id="gcChips">
+              <button type="button" class="gc-chip" id="gcYes"><span id="gcYesText">Sim</span></button>
+              <button type="button" class="gc-chip" id="gcNo"><span id="gcNoText">Nao</span></button>
+            </div>
+          </div>
         </div>
 
+        <!-- SECTION B — Serving gate -->
+        <div id="sectionServingGate" style="margin-top:18px">
+          <div class="path-btns">
+            <button type="button" class="share-path-btn" id="pathServing">
+              <span id="pathServingText">Ja sirvo em algum ministerio</span>
+            </button>
+            <button type="button" class="share-path-btn" id="pathNew">
+              <span id="pathNewText">Ainda nao sirvo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SECTION C + D + photo + carisma + submit (shown when serving=yes) -->
         <div class="share-form" id="shareForm">
-          <div id="ministrySection" style="display:none;margin-top:18px">
-            <span class="share-field-label" id="ministryLabel">Em quais ministerios voce ja serve?</span>
+
+          <!-- SECTION C — Sunday ministries -->
+          <div id="ministrySection" style="margin-top:18px">
+            <span class="share-field-label" id="ministryLabel">Eu sirvo nessas areas nos domingos</span>
+            <div class="share-sublabel" id="ministrySubLabel">(Apenas culto de domingo — nao inclui funcoes em Legacy, SHINE ou outros grupos)</div>
             <div class="chip-wrap" id="ministryChips"></div>
           </div>
-          <div style="margin-top:4px">
-            <span class="share-field-label" id="groupLabel">Qual grupo voce faz parte?</span>
-            <div class="chip-wrap" id="groupChips"></div>
+
+          <!-- SECTION D — Group Roles -->
+          <div style="margin-top:18px">
+            <span class="share-field-label" id="groupRolesLabel">Eu tambem sirvo nesses grupos</span>
+            <div id="groupRolesChips"></div>
           </div>
-          <div>
+
+          <!-- Languages -->
+          <div style="margin-top:14px">
             <span class="share-field-label" id="langSpokenLabel">Quais idiomas voce fala?</span>
             <div class="chip-wrap" id="langChips"></div>
           </div>
@@ -405,7 +466,7 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             <input type="file" id="photoInput" accept="image/jpeg,image/png,image/heic,image/heif,image/*">
           </div>
 
-          <!-- Carisma — between photo and submit, with logo buttons -->
+          <!-- Carisma -->
           <div class="carisma-section-wrap" id="carismaSection" style="display:none">
             <span class="share-field-label" id="carismaLabel">Voce completou o Carisma?</span>
             <div class="carisma-btns" id="carismaChips"></div>
@@ -418,6 +479,14 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             <span id="shareSuccessText">Obrigado! Os pastores vao entrar em contato em breve.</span>
           </div>
         </div>
+      </div>
+
+      <!-- Group info popup -->
+      <div class="group-info-backdrop" id="groupInfoBackdrop"></div>
+      <div class="group-info-popup" id="groupInfoPopup">
+        <div class="group-info-popup-name" id="groupInfoName"></div>
+        <div class="group-info-popup-desc" id="groupInfoDesc"></div>
+        <button type="button" class="group-info-popup-close" id="groupInfoClose"><span id="groupInfoCloseText">Fechar</span></button>
       </div>
 
       <div class="divider"></div>
@@ -528,6 +597,7 @@ window.addEventListener('resize',setAppHeight);
 if(window.visualViewport){window.visualViewport.addEventListener('resize',setAppHeight)}
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubmissionId=null;
 var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
+var shareSelectedGroupAttendance=[],shareGroupRoles={},shareGcConnected=null;
 var preferredName="",resumeToken=null;
 
 var MINISTRY_LIST=["Worship Team","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Translation","Lagoinha Kids","Intercession","Volunteer Coffee","Hospitality - Welcome","Parking","Setup & Teardown","GC Leader","Legacy","English Service","WE CARE"];
@@ -537,6 +607,31 @@ var GROUP_VALS=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe",
 var LANG_LIST_PT=["Portugues","Ingles","Ambos"];
 var LANG_LIST_EN=["Portugues","English","Both"];
 var LANG_VALS=["Portugues","English","Both"];
+
+var ATTENDANCE_GROUPS=[
+  {val:"Legacy",   descPT:"Grupo de jovens adultos para universitarios e profissionais — sextas-feiras", descEN:"Young adults group for college students and professionals — meets Fridays"},
+  {val:"Rocket",   descPT:"Grupo de adolescentes — sabados",                                            descEN:"Teenagers group — meets Saturdays"},
+  {val:"SHINE",    descPT:"Grupo feminino — encontro mensal",                                           descEN:"Women's group — meets monthly"},
+  {val:"HERO",     descPT:"Grupo masculino — encontro mensal",                                          descEN:"Men's group — meets monthly"},
+  {val:"Link",     descPT:"Grupo pre-adolescentes — domingos",                                          descEN:"Pre-teen group — meets Sundays"},
+  {val:"Culto Hope",      descPT:"Culto semanal — tercas-feiras",                                       descEN:"Weeknight service — Tuesdays"},
+  {val:"Culto Fe",        descPT:"Culto semanal — quartas-feiras",                                      descEN:"Weeknight service — Wednesdays"},
+  {val:"English Service", descPT:"Culto mensal inteiramente em ingles — ultimo sabado do mes as 19h30", descEN:"Monthly service held entirely in English — last Saturday of the month at 7:30PM"},
+  {val:"CRIE",     descPT:"Grupo para empreendedores e profissionais criativos",                        descEN:"Entrepreneur and creative professionals group"}
+];
+
+var GROUP_ROLE_MAP={
+  "Legacy":          ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Kids","Translation"],
+  "Rocket":          ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "SHINE":           ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation","Cafe/Food"],
+  "HERO":            ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "Link":            ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "Culto Hope":      ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "Culto Fe":        ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "English Service": ["Welcome","Set Up","Worship","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Intercession","Translation"],
+  "CRIE":            ["Welcome","Set Up","Sound","Projection","Streaming","Photo & Video","Social Media","Service Experience","Intercession"],
+  "Carisma Serve Team": ["Welcome","Set Up","Sound","Projection","Photo & Video","Social Media","Kids","Cafe/Food"]
+};
 
 var T={
   pt:{
@@ -603,11 +698,18 @@ var T={
     shareEyebrow:"Para os Pastores",
     shareTitle:"Ajude-nos a te conhecer melhor",
     shareSub:"Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.",
+    sectionAHd:"Conexao com a Igreja",
+    groupAttendLabel:"Voce participa de algum grupo?",
+    gcLabel:"Voce esta em um GC (Grupo de Crescimento)?",
+    gcYes:"Sim",gcNo:"Nao",
     pathServing:"Ja sirvo em algum ministerio",
     pathNew:"Ainda nao sirvo",
-    ministryLabel:"Em quais ministerios voce ja serve?",
+    ministryLabel:"Eu sirvo nessas areas nos domingos",
+    ministrySubLabel:"(Apenas culto de domingo — nao inclui funcoes em Legacy, SHINE ou outros grupos)",
+    groupRolesLabel:"Eu tambem sirvo nesses grupos",
     groupLabel:"Qual grupo voce faz parte?",
     langSpokenLabel:"Quais idiomas voce fala?",
+    groupInfoClose:"Fechar",
     photoLabel:"Uma foto sua (opcional)",
     photoTitle:"Adicionar foto",
     photoDesc:"Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.",
@@ -693,11 +795,18 @@ var T={
     shareEyebrow:"For the Pastors",
     shareTitle:"Help us know you better",
     shareSub:"This helps our pastors connect you to the right place. Takes less than a minute and it's completely optional.",
+    sectionAHd:"Church Connection",
+    groupAttendLabel:"Do you attend any of these groups?",
+    gcLabel:"Are you connected to a GC (Growth Group)?",
+    gcYes:"Yes",gcNo:"No",
     pathServing:"I'm already serving somewhere",
     pathNew:"I'm not serving yet",
-    ministryLabel:"Which ministries are you already part of?",
+    ministryLabel:"I serve in these areas on Sundays",
+    ministrySubLabel:"(Sunday service only — not roles in Legacy, SHINE, or other groups)",
+    groupRolesLabel:"I also serve in these groups",
     groupLabel:"Which group do you belong to?",
     langSpokenLabel:"Which languages do you speak?",
+    groupInfoClose:"Close",
     photoLabel:"A photo of you (optional)",
     photoTitle:"Add a photo",
     photoDesc:"So pastors can recognize you with a smile when it's time to connect.",
@@ -1057,9 +1166,16 @@ function applyLang(){
   document.getElementById('shareSub').textContent=t.shareSub;
   document.getElementById('pathServingText').textContent=t.pathServing;
   document.getElementById('pathNewText').textContent=t.pathNew;
+  document.getElementById('sectionAHd').textContent=t.sectionAHd;
+  document.getElementById('groupAttendLabel').textContent=t.groupAttendLabel;
+  document.getElementById('gcLabel').textContent=t.gcLabel;
+  document.getElementById('gcYesText').textContent=t.gcYes;
+  document.getElementById('gcNoText').textContent=t.gcNo;
   document.getElementById('ministryLabel').textContent=t.ministryLabel;
-  document.getElementById('groupLabel').textContent=t.groupLabel;
+  document.getElementById('ministrySubLabel').textContent=t.ministrySubLabel;
+  document.getElementById('groupRolesLabel').textContent=t.groupRolesLabel;
   document.getElementById('langSpokenLabel').textContent=t.langSpokenLabel;
+  document.getElementById('groupInfoCloseText').textContent=t.groupInfoClose;
   document.getElementById('photoLabel').textContent=t.photoLabel;
   document.getElementById('photoTitle').textContent=t.photoTitle;
   document.getElementById('photoDesc').textContent=t.photoDesc;
@@ -1607,6 +1723,7 @@ function flashCopied(){
 /* ─── SHARE MORE / ALREADY SERVING ──────────────────────────────── */
 function resetShareMore(){
   shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;shareCarisma=[];
+  shareSelectedGroupAttendance=[];shareGroupRoles={};shareGcConnected=null;
   var ps=document.getElementById('pathServing'),pn=document.getElementById('pathNew');
   if(ps)ps.classList.remove('active');
   if(pn)pn.classList.remove('active');
@@ -1648,26 +1765,131 @@ function renderCarismaChips(){
 }
 
 function renderShareChips(){
-  var groupList=lang==='pt'?GROUP_LIST_PT:GROUP_LIST_EN;
   var langList=lang==='pt'?LANG_LIST_PT:LANG_LIST_EN;
+
+  // SECTION A — Group Attendance chips (with info icon)
+  var ac=document.getElementById('groupAttendChips');ac.innerHTML='';
+  ATTENDANCE_GROUPS.forEach(function(g){
+    var val=g.val;
+    var sel=shareSelectedGroupAttendance.indexOf(val)>-1;
+    var wrap=document.createElement('span');wrap.className='chip-with-info'+(sel?' sel':'');
+
+    var mainBtn=document.createElement('button');mainBtn.type='button';mainBtn.className='chip-main';mainBtn.textContent=val;
+    (function(v,w,mb){
+      mb.addEventListener('touchstart',function(e){e.preventDefault();toggleAttendGroup(v,w)},{passive:false});
+      mb.addEventListener('click',function(){toggleAttendGroup(v,w)});
+    })(val,wrap,mainBtn);
+
+    var infoBtn=document.createElement('button');infoBtn.type='button';infoBtn.className='chip-info-btn';infoBtn.textContent='i';
+    var desc=lang==='pt'?g.descPT:g.descEN;
+    (function(v,d){
+      infoBtn.addEventListener('touchstart',function(e){e.preventDefault();openGroupInfo(v,d)},{passive:false});
+      infoBtn.addEventListener('click',function(){openGroupInfo(v,d)});
+    })(val,desc);
+
+    wrap.appendChild(mainBtn);wrap.appendChild(infoBtn);
+    ac.appendChild(wrap);
+  });
+
+  // SECTION B — Ministry chips (Section C label)
   var mc=document.getElementById('ministryChips');mc.innerHTML='';
   MINISTRY_LIST.forEach(function(m){
     var c=document.createElement('button');c.type='button';c.className='chip'+(shareSelectedMinistries.indexOf(m)>-1?' sel':'');c.textContent=m;
     c.addEventListener('click',function(){toggleChip(shareSelectedMinistries,m,mc,c)});mc.appendChild(c);
   });
-  var gc=document.getElementById('groupChips');gc.innerHTML='';
-  groupList.forEach(function(g,i){
-    var val=GROUP_VALS[i];
-    var c=document.createElement('button');c.type='button';c.className='chip'+(shareSelectedGroups.indexOf(val)>-1?' sel':'');c.textContent=g;
-    c.addEventListener('click',function(){toggleChip(shareSelectedGroups,val,gc,c)});gc.appendChild(c);
+
+  // SECTION D — Group Roles
+  var grc=document.getElementById('groupRolesChips');grc.innerHTML='';
+  Object.keys(GROUP_ROLE_MAP).forEach(function(groupName){
+    var roles=GROUP_ROLE_MAP[groupName];
+    var isSelected=shareSelectedGroups.indexOf(groupName)>-1;
+
+    var block=document.createElement('div');block.className='group-roles-block';
+
+    var chipBtn=document.createElement('button');chipBtn.type='button';
+    chipBtn.className='chip'+(isSelected?' sel':'');
+    chipBtn.textContent=groupName;
+
+    var checklist=document.createElement('div');
+    checklist.className='group-roles-checklist'+(isSelected?' visible':'');
+
+    roles.forEach(function(role){
+      var isChecked=shareGroupRoles[groupName]&&shareGroupRoles[groupName].indexOf(role)>-1;
+      var row=document.createElement('div');row.className='role-check-row'+(isChecked?' checked':'');
+
+      var box=document.createElement('div');box.className='role-check-box';
+      var tick=document.createElement('div');tick.className='role-check-tick';
+      box.appendChild(tick);
+
+      var lbl=document.createElement('span');lbl.className='role-check-label';lbl.textContent=role;
+      row.appendChild(box);row.appendChild(lbl);
+
+      (function(gn,r,rw){
+        rw.addEventListener('touchstart',function(e){e.preventDefault();toggleGroupRole(gn,r,rw)},{passive:false});
+        rw.addEventListener('click',function(){toggleGroupRole(gn,r,rw)});
+      })(groupName,role,row);
+
+      checklist.appendChild(row);
+    });
+
+    (function(gn,cb,cl){
+      cb.addEventListener('touchstart',function(e){e.preventDefault();toggleServingGroup(gn,cb,cl)},{passive:false});
+      cb.addEventListener('click',function(){toggleServingGroup(gn,cb,cl)});
+    })(groupName,chipBtn,checklist);
+
+    block.appendChild(chipBtn);block.appendChild(checklist);
+    grc.appendChild(block);
   });
+
+  // Languages
   var lc=document.getElementById('langChips');lc.innerHTML='';
   langList.forEach(function(l,i){
     var val=LANG_VALS[i];
     var c=document.createElement('button');c.type='button';c.className='chip'+(shareSelectedLangs.indexOf(val)>-1?' sel':'');c.textContent=l;
     c.addEventListener('click',function(){toggleChip(shareSelectedLangs,val,lc,c)});lc.appendChild(c);
   });
+
   renderCarismaChips();
+}
+
+function toggleAttendGroup(val,wrapEl){
+  var idx=shareSelectedGroupAttendance.indexOf(val);
+  if(idx>-1){shareSelectedGroupAttendance.splice(idx,1);wrapEl.classList.remove('sel')}
+  else{shareSelectedGroupAttendance.push(val);wrapEl.classList.add('sel')}
+}
+
+function toggleServingGroup(groupName,chipBtn,checklist){
+  var idx=shareSelectedGroups.indexOf(groupName);
+  if(idx>-1){
+    shareSelectedGroups.splice(idx,1);
+    delete shareGroupRoles[groupName];
+    chipBtn.classList.remove('sel');
+    checklist.classList.remove('visible');
+  } else {
+    shareSelectedGroups.push(groupName);
+    chipBtn.classList.add('sel');
+    checklist.classList.add('visible');
+  }
+}
+
+function toggleGroupRole(groupName,role,rowEl){
+  if(!shareGroupRoles[groupName])shareGroupRoles[groupName]=[];
+  var arr=shareGroupRoles[groupName];
+  var idx=arr.indexOf(role);
+  if(idx>-1){arr.splice(idx,1);rowEl.classList.remove('checked')}
+  else{arr.push(role);rowEl.classList.add('checked')}
+}
+
+function openGroupInfo(name,desc){
+  document.getElementById('groupInfoName').textContent=name;
+  document.getElementById('groupInfoDesc').textContent=desc;
+  document.getElementById('groupInfoPopup').classList.add('visible');
+  document.getElementById('groupInfoBackdrop').classList.add('visible');
+}
+
+function closeGroupInfo(){
+  document.getElementById('groupInfoPopup').classList.remove('visible');
+  document.getElementById('groupInfoBackdrop').classList.remove('visible');
 }
 
 function toggleChip(arr,val,wrap,btn){
@@ -1684,7 +1906,6 @@ function selectPath(path){
     return;
   }
   document.getElementById('shareForm').classList.add('visible');
-  document.getElementById('ministrySection').style.display='block';
   document.getElementById('carismaSection').style.display='block';
 }
 
@@ -1692,12 +1913,19 @@ function submitShareMore(){
   if(!lastSubmissionId)return;
   var btn=document.getElementById('shareSubmitBtn');
   btn.disabled=true;
+  // Build group_roles flat array from shareGroupRoles map
+  var grFlat=[];
+  Object.keys(shareGroupRoles).forEach(function(gn){
+    shareGroupRoles[gn].forEach(function(role){grFlat.push({group_name:gn,role:role})});
+  });
   var payload={
     current_ministries:shareSelectedMinistries,
     special_groups:shareSelectedGroups,
     languages_spoken:shareSelectedLangs,
     photo:sharePhotoBase64||null,
-    carisma_completed:shareCarisma.length>0?shareCarisma:null
+    carisma_completed:shareCarisma.length>0?shareCarisma:null,
+    group_attendance:shareSelectedGroupAttendance.length>0?shareSelectedGroupAttendance:null,
+    group_roles:grFlat.length>0?grFlat:null
   };
   fetch('https://ltc-api.farfromtimnah.workers.dev/person/'+lastSubmissionId+'/connection',{
     method:'PUT',
@@ -1779,6 +2007,14 @@ document.getElementById('inputName').addEventListener('input',checkForm);
 document.getElementById('inputFullName').addEventListener('input',checkForm);
 document.getElementById('inputEmail').addEventListener('input',checkForm);
 document.getElementById('inputWhatsapp').addEventListener('input',checkForm);
+document.getElementById('gcYes').addEventListener('touchstart',function(e){e.preventDefault();shareGcConnected=1;document.getElementById('gcYes').classList.add('sel');document.getElementById('gcNo').classList.remove('sel')},{passive:false});
+document.getElementById('gcYes').addEventListener('click',function(){shareGcConnected=1;document.getElementById('gcYes').classList.add('sel');document.getElementById('gcNo').classList.remove('sel')});
+document.getElementById('gcNo').addEventListener('touchstart',function(e){e.preventDefault();shareGcConnected=0;document.getElementById('gcNo').classList.add('sel');document.getElementById('gcYes').classList.remove('sel')},{passive:false});
+document.getElementById('gcNo').addEventListener('click',function(){shareGcConnected=0;document.getElementById('gcNo').classList.add('sel');document.getElementById('gcYes').classList.remove('sel')});
+document.getElementById('groupInfoClose').addEventListener('touchstart',function(e){e.preventDefault();closeGroupInfo()},{passive:false});
+document.getElementById('groupInfoClose').addEventListener('click',closeGroupInfo);
+document.getElementById('groupInfoBackdrop').addEventListener('touchstart',function(e){e.preventDefault();closeGroupInfo()},{passive:false});
+document.getElementById('groupInfoBackdrop').addEventListener('click',closeGroupInfo);
 document.getElementById('pathServing').addEventListener('touchstart',function(e){e.preventDefault();selectPath('serving')},{passive:false});
 document.getElementById('pathServing').addEventListener('click',function(){selectPath('serving')});
 document.getElementById('pathNew').addEventListener('touchstart',function(e){e.preventDefault();selectPath('new')},{passive:false});
