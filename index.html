@@ -1773,7 +1773,7 @@ document.getElementById('submitBtn').addEventListener('touchstart',function(e){e
 document.getElementById('submitBtn').addEventListener('click',handleSubmit);
 document.getElementById('retakeBtn').addEventListener('touchstart',function(e){e.preventDefault();handleRetake()},{passive:false});
 document.getElementById('retakeBtn').addEventListener('click',handleRetake);
-document.getElementById('ctaBtn').addEventListener('touchstart',function(e){e.preventDefault();openCtaWhatsApp()},{passive:false});
+document.getElementById('ctaBtn').addEventListener('touchstart',function(e){openCtaWhatsApp();},{passive:true});
 document.getElementById('ctaBtn').addEventListener('click',openCtaWhatsApp);
 document.getElementById('inputName').addEventListener('input',checkForm);
 document.getElementById('inputFullName').addEventListener('input',checkForm);
