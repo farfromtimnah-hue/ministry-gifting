@@ -1214,7 +1214,7 @@ function saveDraft(){
   try{localStorage.setItem('ltc_draft',JSON.stringify(draftData))}catch(e){}
   /* POST to server for token */
   var calRes=calcCalibration();
-  var draftReliabilityAnswer=answers[6]!==undefined?answers[6]:0;
+  var draftReliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var payload={
     preferred_name:preferredName||null,
     language:lang.toUpperCase(),
@@ -1340,7 +1340,7 @@ function handleSubmit(){
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
   var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3);
-  var reliabilityAnswer=answers[6]!==undefined?answers[6]:0;
+  var reliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var reliability_flag=reliabilityAnswer>=4?1:0;
   var payload={
     name:n,
