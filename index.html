@@ -940,7 +940,7 @@ var DISC_MINISTRY_FIT={
   C:{pt:"Forte em funcoes operacionais e tecnicas. Autonomia e padroes claros.",en:"Strong in operational and technical roles. Give autonomy and clear standards."}
 };
 
-function deriveDISC(d,i,s,c,g1,g2,g3){
+function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore){
   var scores={D:d,I:i,S:s,C:c};
   var dims=["D","I","S","C"];
   dims.sort(function(a,b){return scores[b]-scores[a]});
@@ -978,8 +978,17 @@ function deriveDISC(d,i,s,c,g1,g2,g3){
       pairingSeen[rule.en]=1;
     }
   }
-  /* pastoral_flag: high S with meaningful I or C */
-  var pastoral_flag=(s>=12&&i>=10)||(s>=12&&c>=12)||(s>=13)?1:0;
+  /* Pastoral Potential — all three conditions required */
+  var leadershipTendencyConfirmed=(
+    leadership_en==="Visionary Leader"||
+    leadership_en==="Relational Leader"||
+    leadership_en==="Structural Leader"
+  );
+  var pastoral_flag=(
+    s>=12&&
+    (leadershipScore||0)>=60&&
+    leadershipTendencyConfirmed
+  )?1:0;
   return{
     disc_primary:primary,
     disc_secondary:secondary,
@@ -1339,7 +1348,8 @@ function handleSubmit(){
   var g1=lastScores[0]?lastScores[0].en.name:'';
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
-  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3);
+  var leadershipScore=scores["Influence & Servant Leadership"]||0;
+  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3,leadershipScore);
   var reliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var reliability_flag=reliabilityAnswer>=4?1:0;
   var payload={
