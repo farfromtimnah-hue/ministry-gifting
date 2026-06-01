@@ -1214,10 +1214,12 @@ function saveDraft(){
   try{localStorage.setItem('ltc_draft',JSON.stringify(draftData))}catch(e){}
   /* POST to server for token */
   var calRes=calcCalibration();
+  var draftReliabilityAnswer=answers[6]!==undefined?answers[6]:0;
   var payload={
     preferred_name:preferredName||null,
     language:lang.toUpperCase(),
-    calibration_score:calRes!==null?calRes:null
+    calibration_score:calRes!==null?calRes:null,
+    reliability_flag:draftReliabilityAnswer>=4?1:0
   };
   if(resumeToken)payload.resume_token=resumeToken;
   fetch('https://ltc-api.farfromtimnah.workers.dev/draft',{
@@ -1338,6 +1340,8 @@ function handleSubmit(){
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
   var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3);
+  var reliabilityAnswer=answers[6]!==undefined?answers[6]:0;
+  var reliability_flag=reliabilityAnswer>=4?1:0;
   var payload={
     name:n,
     preferred_name:preferredName||null,
@@ -1361,7 +1365,8 @@ function handleSubmit(){
     emotional_profile:discData.emotional_profile,
     pairing_labels:JSON.parse(discData.pairing_labels),
     ministry_fit:discData.ministry_fit,
-    pastoral_flag:discData.pastoral_flag
+    pastoral_flag:discData.pastoral_flag,
+    reliability_flag:reliability_flag
   };
   if(resumeToken)payload.resume_token=resumeToken;
   fetch('https://ltc-api.farfromtimnah.workers.dev/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
