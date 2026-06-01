@@ -83,4 +83,12 @@ The Worker's POST /submit handler may not pass `reliability_flag` to D1 bind. Ve
 - DISC labels: always Executor/Comunicador/Planejador/Analista — never D/I/S/C letters as labels
 - Canonical D1 values always in English; only display translates
 
-_Last updated: 2026-05-31 — Session 2 Redux (reliability flag) complete._
+### Session 4 (2026-05-31) — Ministry/Group List Updates
+- Fixes 1–5 were already implemented in prior sessions (confirm button text, DISC pill/fade/border, scale labels, logo, Carisma 2-option rendering)
+- Fix 6: Added "WE CARE" to MINISTRY_LIST (line 528)
+- Fix 7: Added "CRIE", "Gerações", "Carisma Student" (EN) / "Aluno do Carisma" (PT) to GROUP_VALS, GROUP_LIST_EN, GROUP_LIST_PT (lines 529–531)
+- Commit: see below
+
+---
+
+_Last updated: 2026-05-31 — Session 4 (ministry/group list updates) complete._
