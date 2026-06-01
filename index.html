@@ -1784,7 +1784,7 @@ document.getElementById('downloadCard1Btn').addEventListener('touchstart',functi
 document.getElementById('downloadCard1Btn').addEventListener('click',function(){downloadCard('shareCard1','meus-dons-top3.png')});
 document.getElementById('downloadCard2Btn').addEventListener('touchstart',function(e){e.preventDefault();downloadCard('shareCard2','meus-dons-completo.png')},{passive:false});
 document.getElementById('downloadCard2Btn').addEventListener('click',function(){downloadCard('shareCard2','meus-dons-completo.png')});
-document.getElementById('waShareBtn').addEventListener('touchstart',function(e){e.preventDefault();shareWhatsApp()},{passive:false});
+document.getElementById('waShareBtn').addEventListener('touchstart',function(e){shareWhatsApp();},{passive:true});
 document.getElementById('waShareBtn').addEventListener('click',shareWhatsApp);
 document.getElementById('copyTextBtn').addEventListener('touchstart',function(e){e.preventDefault();copyResultsText()},{passive:false});
 document.getElementById('copyTextBtn').addEventListener('click',copyResultsText);
