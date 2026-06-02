@@ -1054,6 +1054,35 @@ var DISC_MINISTRY_FIT={
   C:{pt:"Forte em funcoes operacionais e tecnicas. Autonomia e padroes claros.",en:"Strong in operational and technical roles. Give autonomy and clear standards."}
 };
 
+function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c){
+  var scores={D:disc_d,I:disc_i,S:disc_s,C:disc_c};
+  var sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
+  var primary=sorted[0][0];
+  var secondary=sorted[1][0];
+  var gap=sorted[0][1]-sorted[1][1];
+  if(gap<=2){
+    if((primary==='S'&&secondary==='I')||(primary==='I'&&secondary==='S')){
+      return 'Expressive Processor';
+    }
+    if((primary==='S'&&secondary==='C')||(primary==='C'&&secondary==='S')){
+      return 'Steady Carrier';
+    }
+    if((primary==='D'&&secondary==='I')||(primary==='I'&&secondary==='D')){
+      return 'Expressive Processor';
+    }
+    if((primary==='D'&&secondary==='C')||(primary==='C'&&secondary==='D')){
+      return 'Driven Processor';
+    }
+    if((primary==='C'&&secondary==='I')||(primary==='I'&&secondary==='C')){
+      return 'Expressive Processor';
+    }
+    if((primary==='D'&&secondary==='S')||(primary==='S'&&secondary==='D')){
+      return 'Driven Processor';
+    }
+  }
+  var map={I:'Expressive Processor',S:'Steady Carrier',D:'Driven Processor',C:'Analytical Processor'};
+  return map[primary];
+}
 function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore){
   var scores={D:d,I:i,S:s,C:c};
   var dims=["D","I","S","C"];
@@ -1065,9 +1094,12 @@ function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore){
   /* Leadership tendency: primary-based only, canonical EN */
   var leadership_en=DISC_LEADERSHIP[primary].en;
   var leadership_pt=DISC_LEADERSHIP[primary].pt;
-  /* Emotional profile: primary-based only, canonical EN */
-  var emotional_en=DISC_EMOTIONAL[primary].en;
-  var emotional_pt=DISC_EMOTIONAL[primary].pt;
+  /* Emotional profile: gap-based derivation */
+  var emotional_en=deriveEmotionalProfile(d,i,s,c);
+  var emotional_pt=(function(en){
+    var rev={'Driven Processor':DISC_EMOTIONAL.D.pt,'Expressive Processor':DISC_EMOTIONAL.I.pt,'Steady Carrier':DISC_EMOTIONAL.S.pt,'Analytical Processor':DISC_EMOTIONAL.C.pt};
+    return rev[en]||DISC_EMOTIONAL[primary].pt;
+  })(emotional_en);
   /* Ministry fit: single canonical EN string */
   var mfKey=primary;
   if(primary==='S'){
