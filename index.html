@@ -914,8 +914,8 @@ var GIFTINGS=[
 
 /* ─── CALIBRATION QUESTIONS (2) ─────────────────────────────────── */
 var CAL_QUESTIONS=[
-  {type:"cal",id:"CA1",en:"In a group of new people, I usually adapt to the group's rhythm before taking initiative.",pt:"Em um grupo de pessoas novas, costumo me adaptar ao ritmo do grupo antes de tomar iniciativa."},
-  {type:"cal",id:"CA2",en:"Before acting, I prefer to think carefully about consequences and make sure I have done everything right.",pt:"Antes de agir, prefiro pensar bastante sobre as consequencias e me certificar de que fiz tudo certo."}
+  {type:"cal",id:"CA1",en:"When I'm carrying something heavy emotionally, talking it through with someone I trust is what actually helps me feel better.",pt:"Quando estou carregando algo pesado emocionalmente, conversar com alguem de confianca e o que realmente me ajuda a me sentir melhor."},
+  {type:"cal",id:"CA2",en:"When I'm carrying something heavy emotionally, I need time and space alone to process before I'm ready to talk.",pt:"Quando estou carregando algo pesado emocionalmente, preciso de tempo e espaco sozinho para processar antes de estar pronto para conversar."}
 ];
 
 /* ─── DISC QUESTIONS (12) ────────────────────────────────────────── */
@@ -1054,7 +1054,17 @@ var DISC_MINISTRY_FIT={
   C:{pt:"Forte em funcoes operacionais e tecnicas. Autonomia e padroes claros.",en:"Strong in operational and technical roles. Give autonomy and clear standards."}
 };
 
-function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c){
+function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c,calibration_a,calibration_b){
+  // SIGNAL 1: Direct processing style from calibration questions
+  // CA1 = expressive signal (talk it out), CA2 = steady signal (time alone)
+  var ca1=calibration_a||0;
+  var ca2=calibration_b||0;
+  var caDiff=ca1-ca2;
+  // Strong expressive signal: CA1 clearly higher than CA2
+  if(caDiff>=2){return 'Expressive Processor';}
+  // Strong steady signal: CA2 clearly higher than CA1
+  if(caDiff<=-2){return 'Steady Carrier';}
+  // SIGNAL 2: Calibration neutral or ambiguous -- use gap-based DISC derivation
   var scores={D:disc_d,I:disc_i,S:disc_s,C:disc_c};
   var sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
   var primary=sorted[0][0];
@@ -1080,10 +1090,11 @@ function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c){
       return 'Driven Processor';
     }
   }
+  // Clear primary dominance (gap > 2) -- standard mapping
   var map={I:'Expressive Processor',S:'Steady Carrier',D:'Driven Processor',C:'Analytical Processor'};
   return map[primary];
 }
-function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore){
+function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore,calA,calB){
   var scores={D:d,I:i,S:s,C:c};
   var dims=["D","I","S","C"];
   dims.sort(function(a,b){return scores[b]-scores[a]});
@@ -1095,7 +1106,7 @@ function deriveDISC(d,i,s,c,g1,g2,g3,leadershipScore){
   var leadership_en=DISC_LEADERSHIP[primary].en;
   var leadership_pt=DISC_LEADERSHIP[primary].pt;
   /* Emotional profile: gap-based derivation */
-  var emotional_en=deriveEmotionalProfile(d,i,s,c);
+  var emotional_en=deriveEmotionalProfile(d,i,s,c,calA,calB);
   var emotional_pt=(function(en){
     var rev={'Driven Processor':DISC_EMOTIONAL.D.pt,'Expressive Processor':DISC_EMOTIONAL.I.pt,'Steady Carrier':DISC_EMOTIONAL.S.pt,'Analytical Processor':DISC_EMOTIONAL.C.pt};
     return rev[en]||DISC_EMOTIONAL[primary].pt;
@@ -1497,12 +1508,14 @@ function handleSubmit(){
   var scores={};
   lastScores.forEach(function(g){scores[g.en.name]=g.pct});
   var calScore=calcCalibration();
+  var calA=answers[0]!==undefined?answers[0]+1:0;
+  var calB=answers[1]!==undefined?answers[1]+1:0;
   var discRaw=calcDisc();
   var g1=lastScores[0]?lastScores[0].en.name:'';
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
   var leadershipScore=scores["Influence & Servant Leadership"]||0;
-  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3,leadershipScore);
+  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3,leadershipScore,calA,calB);
   var reliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var reliability_flag=reliabilityAnswer>=4?1:0;
   var payload={
@@ -1517,6 +1530,8 @@ function handleSubmit(){
     gifting_3:g3,
     scores:scores,
     calibration_score:calScore,
+    calibration_a:calA,
+    calibration_b:calB,
     disc_d:discRaw.D,
     disc_i:discRaw.I,
     disc_s:discRaw.S,
