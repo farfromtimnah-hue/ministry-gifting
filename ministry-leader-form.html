@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ministry Leader Form | Lagoinha Tampa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;background:#0a0a0f;color:#e6f1f0;font-family:'Inter',sans-serif;font-size:15px;line-height:1.5;display:flex;flex-direction:column;align-items:center;padding:32px 16px 64px}
+.wrap{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:28px}
+.logo-row{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.logo-img{height:48px;width:auto;display:block}
+.lang-toggle{display:flex;gap:6px;padding:4px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.07)}
+.lang-btn{padding:5px 14px;border:none;background:transparent;color:#6b7a82;cursor:pointer;border-radius:6px;font-size:13px;font-weight:600;font-family:inherit;transition:all 0.15s}
+.lang-btn.active{background:rgba(42,191,191,0.15);color:#2ABFBF;border:1px solid rgba(42,191,191,0.25)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#e6f1f0;text-align:center;letter-spacing:-0.01em}
+form{width:100%;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;font-weight:600;color:#aebac0}
+input,select,textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#e6f1f0;font-size:15px;font-family:inherit;padding:12px 14px;outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#2ABFBF}
+input::placeholder{color:#475a64}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a82' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+select option{background:#0c1a24;color:#e6f1f0}
+.other-input{margin-top:8px}
+.submit-btn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,#2ABFBF,#0d9488);border:none;color:#fff;font-size:16px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;letter-spacing:0.02em;transition:opacity 0.15s;margin-top:8px}
+.submit-btn:hover{opacity:0.9}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+.thank-you{display:none;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:40px 20px}
+.thank-you.visible{display:flex}
+.thank-you-icon{width:64px;height:64px;border-radius:50%;background:rgba(39,174,96,0.15);border:2px solid rgba(39,174,96,0.4);display:flex;align-items:center;justify-content:center;font-size:28px}
+.thank-you h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e6f1f0}
+.thank-you p{font-size:14px;color:#6b7a82;max-width:320px}
+.err-msg{color:#E74C3C;font-size:12px;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo-row">
+    <img src="LTC1.svg" alt="Lagoinha Tampa" class="logo-img">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnPT" type="button">PT</button>
+      <button class="lang-btn" id="btnEN" type="button">EN</button>
+    </div>
+  </div>
+
+  <h1 id="heading">Formulario do Lider de Ministerio</h1>
+
+  <form id="leaderForm" autocomplete="off">
+    <!-- Ministry -->
+    <div class="field">
+      <label id="lblMinistry">Seu Ministerio</label>
+      <select id="fieldMinistry" required>
+        <option value="" disabled selected></option>
+      </select>
+      <input type="text" id="fieldMinistryOther" class="other-input" style="display:none" placeholder="">
+    </div>
+
+    <!-- Preferred name -->
+    <div class="field">
+      <label id="lblPreferred">Como gostaria de ser chamado(a)?</label>
+      <input type="text" id="fieldPreferred" required>
+    </div>
+
+    <!-- Full name -->
+    <div class="field">
+      <label id="lblFull">Nome completo</label>
+      <input type="text" id="fieldFull" required>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="field">
+      <label id="lblWhatsapp">Seu WhatsApp</label>
+      <input type="tel" id="fieldWhatsapp" placeholder="+1 (813) 000-0000" required>
+    </div>
+
+    <!-- Actual count -->
+    <div class="field">
+      <label id="lblActual">Quantas pessoas servem atualmente no seu ministerio?</label>
+      <input type="number" id="fieldActual" min="0" required>
+    </div>
+
+    <!-- Min needed -->
+    <div class="field">
+      <label id="lblMin">Qual e o minimo de pessoas necessarias para o ministerio funcionar bem?</label>
+      <input type="number" id="fieldMin" min="0" required>
+    </div>
+
+    <!-- Ideal -->
+    <div class="field">
+      <label id="lblIdeal">Qual seria o numero ideal de voluntarios no seu ministerio?</label>
+      <input type="number" id="fieldIdeal" min="0" required>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Enviar</button>
+  </form>
+
+  <div class="thank-you" id="thankYou">
+    <div class="thank-you-icon">&#10003;</div>
+    <h2 id="tyHeading">Obrigado!</h2>
+    <p id="tyBody">Suas informacoes foram recebidas.</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var WORKER_URL = 'https://ltc-api.farfromtimnah.workers.dev';
+
+  var MINISTRIES_PT = [
+    "Ministerio de Louvor","Som","Luz","Projecao","Transmissao",
+    "Foto e Video","Midias Sociais","Experiencia do Culto","Consolidacao",
+    "Traducao","Lagoinha Kids","Intercessao","Cafe dos Voluntarios",
+    "Recepcao","Estacionamento","Montagem",
+    "WE CARE - Ajuda Pratica","WE CARE - Evangelismo","Lider de GC",
+    "Outro"
+  ];
+  var MINISTRIES_EN = [
+    "Worship Team","Sound","Lighting","Projection","Streaming",
+    "Photo & Video","Social Media","Service Experience","Consolidation",
+    "Translation","Lagoinha Kids","Intercession","Volunteer Coffee",
+    "Hospitality - Welcome","Parking","Setup & Teardown",
+    "WE CARE - Helps","WE CARE - Evangelism","GC Leader",
+    "Other"
+  ];
+  var MINISTRY_VALUES = [
+    "Worship Team","Sound","Lighting","Projection","Streaming",
+    "Photo & Video","Social Media","Service Experience","Consolidation",
+    "Translation","Lagoinha Kids","Intercession","Volunteer Coffee",
+    "Hospitality - Welcome","Parking","Setup & Teardown",
+    "WE CARE - Helps","WE CARE - Evangelism","GC Leader",
+    "Other"
+  ];
+
+  var lang = 'PT';
+
+  var strings = {
+    PT: {
+      heading: "Formulario do Lider de Ministerio",
+      lblMinistry: "Seu Ministerio",
+      ministryOtherPlaceholder: "Qual e o seu ministerio?",
+      lblPreferred: "Como gostaria de ser chamado(a)?",
+      lblFull: "Nome completo",
+      lblWhatsapp: "Seu WhatsApp",
+      lblActual: "Quantas pessoas servem atualmente no seu ministerio?",
+      lblMin: "Qual e o minimo de pessoas necessarias para o ministerio funcionar bem?",
+      lblIdeal: "Qual seria o numero ideal de voluntarios no seu ministerio?",
+      submit: "Enviar",
+      submitting: "Enviando...",
+      tyHeading: "Obrigado!",
+      tyBody: "Suas informacoes foram recebidas.",
+      errGeneral: "Erro ao enviar. Tente novamente.",
+    },
+    EN: {
+      heading: "Ministry Leader Form",
+      lblMinistry: "Your Ministry",
+      ministryOtherPlaceholder: "What is your ministry?",
+      lblPreferred: "What should we call you?",
+      lblFull: "Full name",
+      lblWhatsapp: "Your WhatsApp number",
+      lblActual: "How many people are currently serving in your ministry?",
+      lblMin: "What is the minimum number of people needed for your ministry to function well?",
+      lblIdeal: "What would be the ideal number of volunteers in your ministry?",
+      submit: "Submit",
+      submitting: "Submitting...",
+      tyHeading: "Thank you!",
+      tyBody: "Your information has been received.",
+      errGeneral: "Submission error. Please try again.",
+    }
+  };
+
+  function setLang(l) {
+    lang = l;
+    var s = strings[l];
+    var ministries = l === 'PT' ? MINISTRIES_PT : MINISTRIES_EN;
+    var currentVal = document.getElementById('fieldMinistry').value;
+
+    document.getElementById('heading').textContent = s.heading;
+    document.getElementById('lblMinistry').textContent = s.lblMinistry;
+    document.getElementById('lblPreferred').textContent = s.lblPreferred;
+    document.getElementById('lblFull').textContent = s.lblFull;
+    document.getElementById('lblWhatsapp').textContent = s.lblWhatsapp;
+    document.getElementById('lblActual').textContent = s.lblActual;
+    document.getElementById('lblMin').textContent = s.lblMin;
+    document.getElementById('lblIdeal').textContent = s.lblIdeal;
+    document.getElementById('submitBtn').textContent = s.submit;
+    document.getElementById('fieldMinistryOther').placeholder = s.ministryOtherPlaceholder;
+    document.getElementById('tyHeading').textContent = s.tyHeading;
+    document.getElementById('tyBody').textContent = s.tyBody;
+
+    var sel = document.getElementById('fieldMinistry');
+    var prevIdx = sel.selectedIndex;
+    sel.innerHTML = '<option value="" disabled selected></option>';
+    ministries.forEach(function(m, i) {
+      var opt = document.createElement('option');
+      opt.value = MINISTRY_VALUES[i];
+      opt.textContent = m;
+      sel.appendChild(opt);
+    });
+    if (prevIdx > 0 && prevIdx <= ministries.length) {
+      sel.selectedIndex = prevIdx;
+    }
+
+    document.getElementById('btnPT').classList.toggle('active', l === 'PT');
+    document.getElementById('btnEN').classList.toggle('active', l === 'EN');
+  }
+
+  document.getElementById('btnPT').addEventListener('click', function() { setLang('PT'); });
+  document.getElementById('btnEN').addEventListener('click', function() { setLang('EN'); });
+
+  document.getElementById('fieldMinistry').addEventListener('change', function() {
+    var otherInput = document.getElementById('fieldMinistryOther');
+    if (this.value === 'Other') {
+      otherInput.style.display = 'block';
+      otherInput.required = true;
+    } else {
+      otherInput.style.display = 'none';
+      otherInput.required = false;
+      otherInput.value = '';
+    }
+  });
+
+  document.getElementById('leaderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var s = strings[lang];
+    var ministryVal = document.getElementById('fieldMinistry').value;
+    var ministryOther = document.getElementById('fieldMinistryOther').value.trim();
+    var preferred = document.getElementById('fieldPreferred').value.trim();
+    var full = document.getElementById('fieldFull').value.trim();
+    var whatsapp = document.getElementById('fieldWhatsapp').value.trim();
+    var actual = parseInt(document.getElementById('fieldActual').value, 10);
+    var min = parseInt(document.getElementById('fieldMin').value, 10);
+    var ideal = parseInt(document.getElementById('fieldIdeal').value, 10);
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = s.submitting;
+
+    var payload = {
+      ministry_name: ministryVal,
+      ministry_other: ministryVal === 'Other' ? ministryOther : null,
+      preferred_name: preferred,
+      full_name: full,
+      whatsapp: whatsapp,
+      actual_count: isNaN(actual) ? null : actual,
+      min_count: isNaN(min) ? null : min,
+      ideal_count: isNaN(ideal) ? null : ideal,
+    };
+
+    fetch(WORKER_URL + '/ministry-leader-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(function(r) {
+        if (!r.ok) throw new Error('not ok');
+        return r.json();
+      })
+      .then(function() {
+        document.getElementById('leaderForm').style.display = 'none';
+        document.getElementById('heading').style.display = 'none';
+        var ty = document.getElementById('thankYou');
+        ty.classList.add('visible');
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = s.submit;
+        alert(s.errGeneral);
+      });
+  });
+
+  setLang('PT');
+})();
+</script>
+</body>
+</html>
