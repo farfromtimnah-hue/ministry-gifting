@@ -1972,7 +1972,8 @@ function submitShareMore(){
     photo:sharePhotoBase64||null,
     carisma_completed:shareCarisma.length>0?shareCarisma:null,
     group_attendance:shareSelectedGroupAttendance.length>0?shareSelectedGroupAttendance:null,
-    group_roles:grFlat.length>0?grFlat:null
+    group_roles:grFlat.length>0?grFlat:null,
+    gc_connected:shareGcConnected
   };
   fetch('https://ltc-api.farfromtimnah.workers.dev/person/'+lastSubmissionId+'/connection',{
     method:'PUT',
