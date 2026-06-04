@@ -288,3 +288,31 @@ _Last updated: 2026-06-01 — Session 9 (calibration signal + new CA questions) 
 - **4D** Sunday Pool (Section B) now collapsible by default; each ministry row collapses/expands independently; only one ministry open at a time via expandedMinistry state
 
 _Last updated: 2026-06-01 — Session 10 (Person Modal UX + Group Leader View) complete._
+
+---
+
+## Session 11 (2026-06-03) — Missing Ministries + Groups + iPad Nav Fix
+
+### Assessment (ministry-gifting/index.html) — commit b16fe08
+
+- **MINISTRY_LIST**: added Art Factory, Decoracao, Diaconia, Eventos, Lakestore (5 new Sunday ministry chips, same style, D1 canonical English values)
+- **ATTENDANCE_GROUPS**: added Esportes with PT/EN descriptions
+- **GROUP_ROLE_MAP**: added Esportes with roles: Welcome, Set Up, Photo & Video, Social Media, Intercession
+
+### Dashboard (ltc-dashboard/src/App.jsx) — commit 1e09e13
+
+- **MH_MINISTRIES**: added Art Factory, Decoracao, Diaconia, Esportes, Eventos, Geracoes, Lakestore
+- **MH_DEFAULT_LEADERS**: all 7 new ministries set to null (not yet assigned)
+- **MH_GIFTING_MAP**: added mappings -- Lakestore: ["Gift of Helps","Administration"], Decoracao: "Creativity", Diaconia: ["Gift of Helps","Hospitality"], Eventos: "Administration"; Art Factory/Esportes/Geracoes: null (intentional, group-based or unmapped)
+- **MH_MINISTRY_PT**: added all 7 new ministries (proper names, same in PT and EN)
+- **ATTENDANCE_GROUPS_DASH**: added Esportes
+- **GROUP_ROLE_MAP_DASH**: added Esportes with roles: Welcome, Set Up, Photo & Video, Social Media, Intercession
+- **GL_GROUPS**: added Esportes (group leader dropdown)
+- **iPad nav breakpoints**: changed `navW >= 800 ? 1 : navW >= 600 ? 2 : 3` to `navW >= 1024 ? 1 : navW >= 820 ? 2 : 3` -- tabs now collapse into More at 768px (iPad portrait); tabs visible at 1024px (iPad landscape)
+- **.pp-item**: added min-height:44px for 44px touch targets in More dropdown
+
+### Worker — no changes
+- actual_count_assessed is computed from connections.current_ministries (ministry name match), not from giftings
+- Gifting pool mappings live in MH_GIFTING_MAP in App.jsx only; no worker deploy needed
+
+_Last updated: 2026-06-03 — Session 11 (missing ministries + groups + iPad nav fix) complete._
