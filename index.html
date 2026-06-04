@@ -255,6 +255,15 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 /* ─── GC CONNECTION CHIPS ────────────────────────────────── */
 .gc-chip{display:inline-flex;align-items:center;padding:9px 18px;border-radius:3px;border:1px solid #444444;background:#2A2A2A;color:#CCCCCC;font-family:'Barlow',sans-serif;font-size:.88rem;cursor:pointer;touch-action:manipulation;margin:4px 4px 4px 0;min-height:40px}
 .gc-chip.sel{border-color:#2ABFBF;background:#0d2e2e;color:#FFFFFF}
+/* ─── BREAKDOWN TOGGLE ────────────────────────────────── */
+.breakdown-toggle-btn{background:none;border:1.5px solid #2ABFBF;color:#2ABFBF;padding:9px 24px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;min-height:40px}
+/* ─── SHARE TEXT INPUT + SELECT ──────────────────────── */
+.share-text-input{width:100%;padding:12px 14px;background-color:#242424;border:1px solid #444444;border-radius:3px;font-size:16px;color:#FFFFFF;outline:none;font-family:'Barlow',sans-serif}
+.share-text-input::placeholder{color:#666666}
+.share-text-input:focus{border-color:#2ABFBF}
+.share-select{width:100%;padding:12px 14px;background-color:#242424;border:1px solid #444444;border-radius:3px;font-size:15px;color:#FFFFFF;outline:none;font-family:'Barlow',sans-serif;-webkit-appearance:none;appearance:none;margin-top:8px}
+.share-select:focus{border-color:#2ABFBF}
+.share-select option{background-color:#242424;color:#FFFFFF}
 </style>
 </head>
 <body>
@@ -377,49 +386,70 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         <p id="rSubtitle">Estas sao as areas onde voce e naturalmente mais forte para causar impacto.</p>
       </div>
 
-      <!-- 1. Top 3 -->
+      <!-- SECTION 1: Top 3 (unchanged) -->
       <div class="sec-lbl" id="topLabel">Seus Principais Dons</div>
       <div class="top3" id="top3"></div>
 
-      <div class="divider"></div>
-
-      <!-- 2. Full breakdown -->
-      <div style="margin-bottom:32px">
+      <!-- SECTION 2: Full Gifting Breakdown (collapsed by default) -->
+      <div style="margin:20px 0;text-align:center">
+        <button type="button" class="breakdown-toggle-btn" id="breakdownToggleBtn"><span id="breakdownToggleText">Ver todos os dons</span></button>
+      </div>
+      <div id="allBarsWrap" style="display:none;margin-bottom:32px">
         <div class="sec-lbl" id="allLabel">Perfil Completo</div>
         <div id="allBars"></div>
       </div>
 
-      <div class="divider"></div>
+      <!-- SECTION 3: Church Connection (always visible) -->
+      <div class="already-section" id="sectionChurchConnection">
+        <div class="share-section-hd" id="sectionAHd">Conexao com a Igreja</div>
+        <span class="share-field-label" id="groupAttendLabel">Voce participa de algum grupo?</span>
+        <div class="chip-wrap" id="groupAttendChips"></div>
+        <div style="margin-top:14px">
+          <span class="share-field-label" id="gcLabel">Voce esta em um GC (Grupo de Crescimento)?</span>
+          <div id="gcChips">
+            <button type="button" class="gc-chip" id="gcYes"><span id="gcYesText">Sim</span></button>
+            <button type="button" class="gc-chip" id="gcNo"><span id="gcNoText">Nao</span></button>
+          </div>
+        </div>
+        <div id="gcNameWrap" style="display:none;margin-top:14px">
+          <span class="share-field-label" id="gcNameLabel">Qual e o seu GC?</span>
+          <input type="text" id="gcNameInput" class="share-text-input" placeholder="Nome do GC" autocomplete="off">
+        </div>
+      </div>
 
-      <!-- 2.5. DISC Profile -->
-      <div id="discSection"></div>
+      <!-- SECTION 4: About You (always visible) -->
+      <div class="already-section" id="sectionAboutYou">
+        <div class="share-section-hd" id="aboutYouHd">Sobre voce</div>
+        <span class="share-field-label" id="langSpokenLabel">Quais idiomas voce fala?</span>
+        <div class="chip-wrap" id="langChips"></div>
+        <div id="countryWrap" style="display:none;margin-top:14px;margin-bottom:4px">
+          <span class="share-field-label" id="countryLabel">De qual pais voce e?</span>
+          <select id="countrySelect" class="share-select"></select>
+        </div>
+        <div class="share-photo-wrap" style="margin-top:18px">
+          <span class="share-field-label" id="photoLabel">Uma foto sua (opcional)</span>
+          <label class="photo-label-box" for="photoInput">
+            <img id="photoPreview" class="photo-preview" src="" alt="preview">
+            <div class="photo-icon" id="photoIcon">&#128248;</div>
+            <div class="photo-label-text">
+              <strong id="photoTitle">Adicionar foto</strong>
+              <span id="photoDesc">Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.</span>
+            </div>
+          </label>
+          <input type="file" id="photoInput" accept="image/jpeg,image/png,image/heic,image/heif,image/*">
+        </div>
+        <div class="carisma-section-wrap" id="carismaSection" style="margin-top:20px;padding-top:20px">
+          <span class="share-field-label" id="carismaLabel">Voce completou o Carisma?</span>
+          <div class="carisma-btns" id="carismaChips"></div>
+        </div>
+      </div>
 
-      <div class="divider"></div>
-
-      <!-- 3. Share More -->
+      <!-- SECTION 5: Serving Gate -->
       <div class="already-section" id="shareMoreSection">
         <div class="already-eyebrow" id="shareEyebrow">Para os Pastores</div>
         <div class="already-title" id="shareTitle">Ajude-nos a te conhecer melhor</div>
         <p class="already-sub" id="shareSub">Essas informacoes ajudam os pastores a te conectar com o lugar certo. Leva menos de um minuto e e completamente opcional.</p>
-
-        <!-- SECTION A — Church Connection (always shown) -->
-        <div id="sectionChurchConnection">
-          <div class="share-section-hd" id="sectionAHd">Conexao com a Igreja</div>
-
-          <span class="share-field-label" id="groupAttendLabel">Voce participa de algum grupo?</span>
-          <div class="chip-wrap" id="groupAttendChips"></div>
-
-          <div style="margin-top:14px">
-            <span class="share-field-label" id="gcLabel">Voce esta em um GC (Grupo de Crescimento)?</span>
-            <div id="gcChips">
-              <button type="button" class="gc-chip" id="gcYes"><span id="gcYesText">Sim</span></button>
-              <button type="button" class="gc-chip" id="gcNo"><span id="gcNoText">Nao</span></button>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION B — Serving gate -->
-        <div id="sectionServingGate" style="margin-top:18px">
+        <div id="sectionServingGate">
           <div class="path-btns">
             <button type="button" class="share-path-btn" id="pathServing">
               <span id="pathServingText">Ja sirvo em algum ministerio</span>
@@ -430,48 +460,26 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
           </div>
         </div>
 
-        <!-- SECTION C + D + photo + carisma + submit (shown when serving=yes) -->
-        <div class="share-form" id="shareForm">
+        <!-- Not yet serving submit -->
+        <div id="pathNewForm" style="display:none;margin-top:20px">
+          <button type="button" class="share-submit-btn" id="shareSubmitBtnNew">
+            <span id="shareSubmitNewText">Compartilhar com os Pastores</span>
+          </button>
+        </div>
 
-          <!-- SECTION C — Sunday ministries -->
+        <!-- SECTIONS 6+7: Serving form -->
+        <div class="share-form" id="shareForm">
+          <!-- SECTION 6 — Sunday ministries -->
           <div id="ministrySection" style="margin-top:18px">
             <span class="share-field-label" id="ministryLabel">Eu sirvo nessas areas nos domingos</span>
             <div class="share-sublabel" id="ministrySubLabel">(Apenas culto de domingo — nao inclui funcoes em Legacy, SHINE ou outros grupos)</div>
             <div class="chip-wrap" id="ministryChips"></div>
           </div>
-
-          <!-- SECTION D — Group Roles -->
+          <!-- SECTION 7 — Group Roles -->
           <div style="margin-top:18px">
             <span class="share-field-label" id="groupRolesLabel">Eu tambem sirvo nesses grupos</span>
             <div id="groupRolesChips"></div>
           </div>
-
-          <!-- Languages -->
-          <div style="margin-top:14px">
-            <span class="share-field-label" id="langSpokenLabel">Quais idiomas voce fala?</span>
-            <div class="chip-wrap" id="langChips"></div>
-          </div>
-
-          <!-- Photo upload -->
-          <div class="share-photo-wrap">
-            <span class="share-field-label" id="photoLabel">Uma foto sua (opcional)</span>
-            <label class="photo-label-box" for="photoInput">
-              <img id="photoPreview" class="photo-preview" src="" alt="preview">
-              <div class="photo-icon" id="photoIcon">&#128248;</div>
-              <div class="photo-label-text">
-                <strong id="photoTitle">Adicionar foto</strong>
-                <span id="photoDesc">Para que os pastores possam te reconhecer com um sorriso quando for o momento do encontro.</span>
-              </div>
-            </label>
-            <input type="file" id="photoInput" accept="image/jpeg,image/png,image/heic,image/heif,image/*">
-          </div>
-
-          <!-- Carisma -->
-          <div class="carisma-section-wrap" id="carismaSection" style="display:none">
-            <span class="share-field-label" id="carismaLabel">Voce completou o Carisma?</span>
-            <div class="carisma-btns" id="carismaChips"></div>
-          </div>
-
           <button type="button" class="share-submit-btn" id="shareSubmitBtn">
             <span id="shareSubmitText">Compartilhar com os Pastores</span>
           </button>
@@ -489,9 +497,15 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         <button type="button" class="group-info-popup-close" id="groupInfoClose"><span id="groupInfoCloseText">Fechar</span></button>
       </div>
 
+      <!-- SECTION 8: Ministry Suggestions (moved to bottom) -->
+      <div style="margin-top:32px;margin-bottom:40px">
+        <div class="sec-lbl" id="minLabel">Onde Voce Pode Servir</div>
+        <div id="ministriesOut"></div>
+      </div>
+
       <div class="divider"></div>
 
-      <!-- 4. Save / Share results -->
+      <!-- Save / Share results -->
       <div style="margin-bottom:32px">
         <div class="sec-lbl" id="saveLabel">Guardar Resultados</div>
         <div class="share-actions">
@@ -503,14 +517,6 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
             <button type="button" class="share-action-btn copy-btn" id="copyTextBtn">&#128203; <span id="copyTextText">Copiar Texto</span></button>
           </div>
         </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- 5. Curious Where Your Gifting Could Fit -->
-      <div style="margin-bottom:40px">
-        <div class="sec-lbl" id="minLabel">Onde Voce Pode Servir</div>
-        <div id="ministriesOut"></div>
       </div>
 
       <div class="divider"></div>
@@ -597,16 +603,19 @@ window.addEventListener('resize',setAppHeight);
 if(window.visualViewport){window.visualViewport.addEventListener('resize',setAppHeight)}
 var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubmissionId=null;
 var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
-var shareSelectedGroupAttendance=[],shareGroupRoles={},shareGcConnected=null;
+var shareSelectedGroupAttendance=[],shareGroupRoles={},shareGcConnected=null,shareGcName=null,shareCountryOfOrigin=null;
 var preferredName="",resumeToken=null;
 
 var MINISTRY_LIST=["Worship Team","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Translation","Lagoinha Kids","Intercession","Volunteer Coffee","Hospitality - Welcome","Parking","Setup & Teardown","GC Leader","Legacy","English Service","WE CARE"];
 var GROUP_LIST_PT=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","CRIE","Gerações","Equipe Carisma","Outro"];
 var GROUP_LIST_EN=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","CRIE","Gerações","Carisma Serve Team","Other"];
 var GROUP_VALS=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","CRIE","Gerações","Carisma Serve Team","Other"];
-var LANG_LIST_PT=["Portugues","Ingles","Ambos"];
-var LANG_LIST_EN=["Portugues","English","Both"];
-var LANG_VALS=["Portugues","English","Both"];
+var LANG_LIST_PT=["Portugues","Ingles","Espanol"];
+var LANG_LIST_EN=["Portugues","English","Espanol"];
+var LANG_VALS=["Portugues","English","Espanol"];
+var SPANISH_COUNTRIES_VAL=["Argentina","Bolivia","Chile","Colombia","Costa Rica","Cuba","Ecuador","El Salvador","Spain","Guatemala","Honduras","Mexico","Nicaragua","Panama","Paraguay","Peru","Puerto Rico","Dominican Republic","Uruguay","Venezuela","Equatorial Guinea"];
+var SPANISH_COUNTRIES_PT=["Argentina","Bolivia","Chile","Colombia","Costa Rica","Cuba","Equador","El Salvador","Espanha","Guatemala","Honduras","Mexico","Nicaragua","Panama","Paraguai","Peru","Porto Rico","Republica Dominicana","Uruguai","Venezuela","Guine Equatorial"];
+var SPANISH_COUNTRIES_EN=["Argentina","Bolivia","Chile","Colombia","Costa Rica","Cuba","Ecuador","El Salvador","Spain","Guatemala","Honduras","Mexico","Nicaragua","Panama","Paraguay","Peru","Puerto Rico","Dominican Republic","Uruguay","Venezuela","Equatorial Guinea"];
 
 var ATTENDANCE_GROUPS=[
   {val:"Legacy",   descPT:"Grupo de jovens adultos para universitarios e profissionais — sextas-feiras", descEN:"Young adults group for college students and professionals — meets Fridays"},
@@ -702,6 +711,10 @@ var T={
     groupAttendLabel:"Voce participa de algum grupo?",
     gcLabel:"Voce esta em um GC (Grupo de Crescimento)?",
     gcYes:"Sim",gcNo:"Nao",
+    gcNameLabel:"Qual e o seu GC?",gcNamePh:"Nome do GC",
+    aboutYouHd:"Sobre voce",
+    breakdownShow:"Ver todos os dons",breakdownHide:"Ocultar",
+    countryLabel:"De qual pais voce e?",countryPh:"Selecionar pais",
     pathServing:"Ja sirvo em algum ministerio",
     pathNew:"Ainda nao sirvo",
     ministryLabel:"Eu sirvo nessas areas nos domingos",
@@ -799,6 +812,10 @@ var T={
     groupAttendLabel:"Do you attend any of these groups?",
     gcLabel:"Are you connected to a GC (Growth Group)?",
     gcYes:"Yes",gcNo:"No",
+    gcNameLabel:"What is your GC?",gcNamePh:"GC name",
+    aboutYouHd:"About You",
+    breakdownShow:"View full breakdown",breakdownHide:"Hide",
+    countryLabel:"Which country are you from?",countryPh:"Select country",
     pathServing:"I'm already serving somewhere",
     pathNew:"I'm not serving yet",
     ministryLabel:"I serve in these areas on Sundays",
@@ -1210,10 +1227,14 @@ function applyLang(){
   document.getElementById('pathServingText').textContent=t.pathServing;
   document.getElementById('pathNewText').textContent=t.pathNew;
   document.getElementById('sectionAHd').textContent=t.sectionAHd;
+  document.getElementById('aboutYouHd').textContent=t.aboutYouHd;
   document.getElementById('groupAttendLabel').textContent=t.groupAttendLabel;
   document.getElementById('gcLabel').textContent=t.gcLabel;
   document.getElementById('gcYesText').textContent=t.gcYes;
   document.getElementById('gcNoText').textContent=t.gcNo;
+  document.getElementById('gcNameLabel').textContent=t.gcNameLabel;
+  document.getElementById('gcNameInput').placeholder=t.gcNamePh;
+  document.getElementById('countryLabel').textContent=t.countryLabel;
   document.getElementById('ministryLabel').textContent=t.ministryLabel;
   document.getElementById('ministrySubLabel').textContent=t.ministrySubLabel;
   document.getElementById('groupRolesLabel').textContent=t.groupRolesLabel;
@@ -1223,6 +1244,7 @@ function applyLang(){
   document.getElementById('photoTitle').textContent=t.photoTitle;
   document.getElementById('photoDesc').textContent=t.photoDesc;
   document.getElementById('shareSubmitText').textContent=t.shareSubmit;
+  document.getElementById('shareSubmitNewText').textContent=t.shareSubmit;
   document.getElementById('shareSuccessText').textContent=t.shareSuccess;
   document.getElementById('carismaLabel').textContent=t.carismaLabel;
   document.getElementById('downloadCard1Text').textContent=t.downloadCard1;
@@ -1770,17 +1792,75 @@ function flashCopied(){
 /* ─── SHARE MORE / ALREADY SERVING ──────────────────────────────── */
 function resetShareMore(){
   shareSelectedPath=null;shareSelectedMinistries=[];shareSelectedGroups=[];shareSelectedLangs=[];sharePhotoBase64=null;shareCarisma=[];
-  shareSelectedGroupAttendance=[];shareGroupRoles={};shareGcConnected=null;
+  shareSelectedGroupAttendance=[];shareGroupRoles={};shareGcConnected=null;shareGcName=null;shareCountryOfOrigin=null;
   var ps=document.getElementById('pathServing'),pn=document.getElementById('pathNew');
   if(ps)ps.classList.remove('active');
   if(pn)pn.classList.remove('active');
   var sf=document.getElementById('shareForm');if(sf)sf.classList.remove('visible');
   var ss=document.getElementById('shareSuccess');if(ss)ss.style.display='none';
   var sb=document.getElementById('shareSubmitBtn');if(sb)sb.disabled=false;
+  var sbn=document.getElementById('shareSubmitBtnNew');if(sbn)sbn.disabled=false;
   var prev=document.getElementById('photoPreview');if(prev){prev.style.display='none';prev.src='';}
   var pi=document.getElementById('photoIcon');if(pi)pi.style.display='block';
   var ps2=document.getElementById('pathServing');var pn2=document.getElementById('pathNew');
   if(ps2)ps2.style.display='';if(pn2)pn2.style.display='';
+  var pnf=document.getElementById('pathNewForm');if(pnf)pnf.style.display='none';
+  var gnw=document.getElementById('gcNameWrap');if(gnw)gnw.style.display='none';
+  var gni=document.getElementById('gcNameInput');if(gni)gni.value='';
+  var cw=document.getElementById('countryWrap');if(cw)cw.style.display='none';
+  var cs=document.getElementById('countrySelect');if(cs)cs.value='';
+  var bw=document.getElementById('allBarsWrap');if(bw)bw.style.display='none';
+  var bt=document.getElementById('breakdownToggleText');if(bt)bt.textContent=T[lang].breakdownShow;
+}
+
+function toggleBreakdown(){
+  var wrap=document.getElementById('allBarsWrap');
+  var btn=document.getElementById('breakdownToggleText');
+  var t=T[lang];
+  if(wrap.style.display==='none'){
+    wrap.style.display='block';
+    btn.textContent=t.breakdownHide;
+  } else {
+    wrap.style.display='none';
+    btn.textContent=t.breakdownShow;
+  }
+}
+
+function toggleLangChip(val,chipBtn){
+  var idx=shareSelectedLangs.indexOf(val);
+  if(idx>-1){shareSelectedLangs.splice(idx,1);chipBtn.classList.remove('sel')}
+  else{shareSelectedLangs.push(val);chipBtn.classList.add('sel')}
+  var showCountry=shareSelectedLangs.indexOf('Espanol')>-1;
+  document.getElementById('countryWrap').style.display=showCountry?'block':'none';
+  if(!showCountry){shareCountryOfOrigin=null;document.getElementById('countrySelect').value='';}
+  updateTranslationVisibility();
+}
+
+function populateCountrySelect(){
+  var cs=document.getElementById('countrySelect');
+  if(!cs)return;
+  var t=T[lang];
+  var countryList=lang==='pt'?SPANISH_COUNTRIES_PT:SPANISH_COUNTRIES_EN;
+  cs.innerHTML='';
+  var defOpt=document.createElement('option');defOpt.value='';defOpt.textContent=t.countryPh;
+  cs.appendChild(defOpt);
+  countryList.forEach(function(c,i){
+    var opt=document.createElement('option');
+    opt.value=SPANISH_COUNTRIES_VAL[i];
+    opt.textContent=c;
+    if(SPANISH_COUNTRIES_VAL[i]===shareCountryOfOrigin)opt.selected=true;
+    cs.appendChild(opt);
+  });
+}
+
+function updateTranslationVisibility(){
+  var isMultilingual=shareSelectedLangs.indexOf('Portugues')>-1&&shareSelectedLangs.length>=2;
+  document.querySelectorAll('.min-tag').forEach(function(el){
+    var txt=el.textContent.trim();
+    if(txt==='Translation'||txt==='Traducao'){
+      el.style.display=isMultilingual?'':'none';
+    }
+  });
 }
 
 function renderCarismaChips(){
@@ -1812,8 +1892,6 @@ function renderCarismaChips(){
 }
 
 function renderShareChips(){
-  var langList=lang==='pt'?LANG_LIST_PT:LANG_LIST_EN;
-
   // SECTION A — Group Attendance chips (with info icon)
   var ac=document.getElementById('groupAttendChips');ac.innerHTML='';
   ATTENDANCE_GROUPS.forEach(function(g){
@@ -1888,13 +1966,26 @@ function renderShareChips(){
     grc.appendChild(block);
   });
 
-  // Languages
+  // Languages — multi-select with flags
   var lc=document.getElementById('langChips');lc.innerHTML='';
-  langList.forEach(function(l,i){
-    var val=LANG_VALS[i];
-    var c=document.createElement('button');c.type='button';c.className='chip'+(shareSelectedLangs.indexOf(val)>-1?' sel':'');c.textContent=l;
-    c.addEventListener('click',function(){toggleChip(shareSelectedLangs,val,lc,c)});lc.appendChild(c);
+  var langDefs=[
+    {val:'Portugues',label:'&#127463;&#127479; Portugues'},
+    {val:'English',label:'&#127482;&#127480; English'},
+    {val:'Espanol',label:'&#127758; Espanol'}
+  ];
+  langDefs.forEach(function(ld){
+    var c=document.createElement('button');c.type='button';
+    c.className='chip'+(shareSelectedLangs.indexOf(ld.val)>-1?' sel':'');
+    c.innerHTML=ld.label;
+    (function(v,btn){
+      btn.addEventListener('touchstart',function(e){e.preventDefault();toggleLangChip(v,btn)},{passive:false});
+      btn.addEventListener('click',function(){toggleLangChip(v,btn)});
+    })(ld.val,c);
+    lc.appendChild(c);
   });
+
+  // Populate country dropdown
+  populateCountrySelect();
 
   renderCarismaChips();
 }
@@ -1949,17 +2040,24 @@ function selectPath(path){
   document.getElementById('pathServing').classList.toggle('active',path==='serving');
   document.getElementById('pathNew').classList.toggle('active',path==='new');
   if(path==='new'){
-    openCtaWhatsApp();
+    document.getElementById('pathNewForm').style.display='block';
+    document.getElementById('shareForm').classList.remove('visible');
     return;
   }
+  document.getElementById('pathNewForm').style.display='none';
   document.getElementById('shareForm').classList.add('visible');
-  document.getElementById('carismaSection').style.display='block';
 }
 
 function submitShareMore(){
   if(!lastSubmissionId)return;
   var btn=document.getElementById('shareSubmitBtn');
-  btn.disabled=true;
+  var btnNew=document.getElementById('shareSubmitBtnNew');
+  if(btn)btn.disabled=true;
+  if(btnNew)btnNew.disabled=true;
+  // Read gc_name from input
+  var gcNameVal=document.getElementById('gcNameInput').value.trim()||null;
+  // Read country from select
+  var countryVal=document.getElementById('countrySelect').value||null;
   // Build group_roles flat array from shareGroupRoles map
   var grFlat=[];
   Object.keys(shareGroupRoles).forEach(function(gn){
@@ -1968,12 +2066,14 @@ function submitShareMore(){
   var payload={
     current_ministries:shareSelectedMinistries,
     special_groups:shareSelectedGroups,
-    languages_spoken:shareSelectedLangs,
+    languages_spoken:JSON.stringify(shareSelectedLangs),
     photo:sharePhotoBase64||null,
     carisma_completed:shareCarisma.length>0?shareCarisma:null,
     group_attendance:shareSelectedGroupAttendance.length>0?shareSelectedGroupAttendance:null,
     group_roles:grFlat.length>0?grFlat:null,
-    gc_connected:shareGcConnected
+    gc_connected:shareGcConnected,
+    gc_name:gcNameVal,
+    country_of_origin:countryVal
   };
   fetch('https://ltc-api.farfromtimnah.workers.dev/person/'+lastSubmissionId+'/connection',{
     method:'PUT',
@@ -1985,8 +2085,9 @@ function submitShareMore(){
     document.getElementById('shareForm').classList.remove('visible');
     document.getElementById('pathServing').style.display='none';
     document.getElementById('pathNew').style.display='none';
+    document.getElementById('pathNewForm').style.display='none';
   })
-  .catch(function(){btn.disabled=false});
+  .catch(function(){if(btn)btn.disabled=false;if(btnNew)btnNew.disabled=false});
 }
 
 document.getElementById('photoInput').addEventListener('change',function(e){
@@ -2055,10 +2156,18 @@ document.getElementById('inputName').addEventListener('input',checkForm);
 document.getElementById('inputFullName').addEventListener('input',checkForm);
 document.getElementById('inputEmail').addEventListener('input',checkForm);
 document.getElementById('inputWhatsapp').addEventListener('input',checkForm);
-document.getElementById('gcYes').addEventListener('touchstart',function(e){e.preventDefault();shareGcConnected=1;document.getElementById('gcYes').classList.add('sel');document.getElementById('gcNo').classList.remove('sel')},{passive:false});
-document.getElementById('gcYes').addEventListener('click',function(){shareGcConnected=1;document.getElementById('gcYes').classList.add('sel');document.getElementById('gcNo').classList.remove('sel')});
-document.getElementById('gcNo').addEventListener('touchstart',function(e){e.preventDefault();shareGcConnected=0;document.getElementById('gcNo').classList.add('sel');document.getElementById('gcYes').classList.remove('sel')},{passive:false});
-document.getElementById('gcNo').addEventListener('click',function(){shareGcConnected=0;document.getElementById('gcNo').classList.add('sel');document.getElementById('gcYes').classList.remove('sel')});
+function selectGcYes(){shareGcConnected=1;document.getElementById('gcYes').classList.add('sel');document.getElementById('gcNo').classList.remove('sel');document.getElementById('gcNameWrap').style.display='block';}
+function selectGcNo(){shareGcConnected=0;document.getElementById('gcNo').classList.add('sel');document.getElementById('gcYes').classList.remove('sel');document.getElementById('gcNameWrap').style.display='none';document.getElementById('gcNameInput').value='';shareGcName=null;}
+document.getElementById('gcYes').addEventListener('touchstart',function(e){e.preventDefault();selectGcYes();},{passive:false});
+document.getElementById('gcYes').addEventListener('click',selectGcYes);
+document.getElementById('gcNo').addEventListener('touchstart',function(e){e.preventDefault();selectGcNo();},{passive:false});
+document.getElementById('gcNo').addEventListener('click',selectGcNo);
+document.getElementById('gcNameInput').addEventListener('input',function(){shareGcName=this.value.trim()||null;});
+document.getElementById('countrySelect').addEventListener('change',function(){shareCountryOfOrigin=this.value||null;});
+document.getElementById('breakdownToggleBtn').addEventListener('touchstart',function(e){e.preventDefault();toggleBreakdown();},{passive:false});
+document.getElementById('breakdownToggleBtn').addEventListener('click',toggleBreakdown);
+document.getElementById('shareSubmitBtnNew').addEventListener('touchstart',function(e){e.preventDefault();submitShareMore();},{passive:false});
+document.getElementById('shareSubmitBtnNew').addEventListener('click',submitShareMore);
 document.getElementById('groupInfoClose').addEventListener('touchstart',function(e){e.preventDefault();closeGroupInfo()},{passive:false});
 document.getElementById('groupInfoClose').addEventListener('click',closeGroupInfo);
 document.getElementById('groupInfoBackdrop').addEventListener('touchstart',function(e){e.preventDefault();closeGroupInfo()},{passive:false});
