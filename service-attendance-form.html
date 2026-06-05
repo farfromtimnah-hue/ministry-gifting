@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Attendance | Lagoinha Tampa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;background:#0a0a0f;color:#e6f1f0;font-family:'Inter',sans-serif;font-size:15px;line-height:1.5;display:flex;flex-direction:column;align-items:center;padding:32px 16px 64px}
+.wrap{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:28px}
+.logo-row{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.logo-img{height:48px;width:auto;display:block}
+.lang-toggle{display:flex;gap:6px;padding:4px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.07)}
+.lang-btn{padding:5px 14px;border:none;background:transparent;color:#6b7a82;cursor:pointer;border-radius:6px;font-size:13px;font-weight:600;font-family:inherit;transition:all 0.15s}
+.lang-btn.active{background:rgba(42,191,191,0.15);color:#2ABFBF;border:1px solid rgba(42,191,191,0.25)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#e6f1f0;text-align:center;letter-spacing:-0.01em}
+form{width:100%;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;font-weight:600;color:#aebac0}
+input,select,textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#e6f1f0;font-size:15px;font-family:inherit;padding:12px 14px;outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#2ABFBF}
+input::placeholder{color:#475a64}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a82' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+select option{background:#0c1a24;color:#e6f1f0}
+.total-display{width:100%;background:rgba(42,191,191,0.07);border:1px solid rgba(42,191,191,0.2);border-radius:9px;color:#2ABFBF;font-size:22px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:12px 14px;letter-spacing:-0.01em}
+.submit-btn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,#2ABFBF,#0d9488);border:none;color:#fff;font-size:16px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;letter-spacing:0.02em;transition:opacity 0.15s;margin-top:8px}
+.submit-btn:hover{opacity:0.9}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+.thank-you{display:none;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:40px 20px}
+.thank-you.visible{display:flex}
+.thank-you-icon{width:64px;height:64px;border-radius:50%;background:rgba(39,174,96,0.15);border:2px solid rgba(39,174,96,0.4);display:flex;align-items:center;justify-content:center;font-size:28px}
+.thank-you h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e6f1f0}
+.thank-you p{font-size:14px;color:#6b7a82;max-width:320px}
+.err-msg{color:#E74C3C;font-size:12px;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo-row">
+    <img src="LTC1.svg" alt="Lagoinha Tampa" class="logo-img">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnPT" type="button">PT</button>
+      <button class="lang-btn" id="btnEN" type="button">EN</button>
+    </div>
+  </div>
+
+  <h1 id="heading">Frequência do Culto</h1>
+
+  <form id="attendanceForm" autocomplete="off">
+    <!-- Service -->
+    <div class="field">
+      <label id="lblService">Culto</label>
+      <select id="fieldService" required>
+        <option value="" disabled selected></option>
+      </select>
+    </div>
+
+    <!-- Date -->
+    <div class="field">
+      <label id="lblDate">Data</label>
+      <input type="date" id="fieldDate" required>
+    </div>
+
+    <!-- Templo -->
+    <div class="field">
+      <label id="lblTemplo">Templo (sem crianças)</label>
+      <input type="number" id="fieldTemplo" min="0" required>
+    </div>
+
+    <!-- Voluntários -->
+    <div class="field">
+      <label id="lblVolunteers">Voluntários</label>
+      <input type="number" id="fieldVolunteers" min="0" required>
+    </div>
+
+    <!-- Kids -->
+    <div class="field" id="kidsField">
+      <label id="lblKids">Kids</label>
+      <input type="number" id="fieldKids" min="0" required>
+    </div>
+
+    <!-- Total -->
+    <div class="field">
+      <label id="lblTotal">Total</label>
+      <div class="total-display" id="totalDisplay">0</div>
+    </div>
+
+    <!-- Submitted by -->
+    <div class="field">
+      <label id="lblSubmittedBy">Enviado por</label>
+      <input type="text" id="fieldSubmittedBy" required>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Enviar</button>
+  </form>
+
+  <div class="thank-you" id="thankYou">
+    <div class="thank-you-icon">&#10003;</div>
+    <h2 id="tyHeading">Obrigado!</h2>
+    <p id="tyBody">Frequência registrada com sucesso.</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var WORKER_URL = 'https://ltc-api.farfromtimnah.workers.dev';
+
+  var SERVICES_PT = [
+    "Domingo 10h",
+    "Domingo 18h30",
+    "Culto Hope (Terça)",
+    "Culto Fé (Quarta)",
+    "Legacy (Sexta)",
+    "Rocket (Sábado)",
+    "Culto Inglês (Sábado)"
+  ];
+  var SERVICES_EN = [
+    "Sunday 10AM",
+    "Sunday 6:30PM",
+    "Culto Hope (Tuesday)",
+    "Culto Fé (Wednesday)",
+    "Legacy (Friday)",
+    "Rocket (Saturday)",
+    "English Service (Saturday)"
+  ];
+  var SERVICE_VALUES = [
+    "Sunday 10AM",
+    "Sunday 6:30PM",
+    "Culto Hope",
+    "Culto Fe",
+    "Legacy",
+    "Rocket",
+    "English Service"
+  ];
+
+  var lang = 'PT';
+
+  var strings = {
+    PT: {
+      heading: "Frequência do Culto",
+      lblService: "Culto",
+      lblDate: "Data",
+      lblTemplo: "Templo (sem crianças)",
+      lblVolunteers: "Voluntários",
+      lblKids: "Kids",
+      lblTotal: "Total",
+      lblSubmittedBy: "Enviado por",
+      submit: "Enviar",
+      submitting: "Enviando...",
+      tyHeading: "Obrigado!",
+      tyBody: "Frequência registrada com sucesso.",
+      errGeneral: "Erro ao enviar. Tente novamente.",
+    },
+    EN: {
+      heading: "Service Attendance",
+      lblService: "Service",
+      lblDate: "Date",
+      lblTemplo: "Sanctuary (excluding kids)",
+      lblVolunteers: "Volunteers",
+      lblKids: "Kids",
+      lblTotal: "Total",
+      lblSubmittedBy: "Submitted by",
+      submit: "Submit",
+      submitting: "Submitting...",
+      tyHeading: "Thank you!",
+      tyBody: "Attendance has been recorded.",
+      errGeneral: "Submission error. Please try again.",
+    }
+  };
+
+  function isRocket() {
+    return document.getElementById('fieldService').value === 'Rocket';
+  }
+
+  function updateKidsVisibility() {
+    var kidsField = document.getElementById('kidsField');
+    var kidsInput = document.getElementById('fieldKids');
+    if (isRocket()) {
+      kidsField.style.display = 'none';
+      kidsInput.required = false;
+      kidsInput.value = '';
+    } else {
+      kidsField.style.display = 'flex';
+      kidsInput.required = true;
+    }
+    updateTotal();
+  }
+
+  function updateTotal() {
+    var templo = parseInt(document.getElementById('fieldTemplo').value, 10) || 0;
+    var kids = isRocket() ? 0 : (parseInt(document.getElementById('fieldKids').value, 10) || 0);
+    document.getElementById('totalDisplay').textContent = templo + kids;
+  }
+
+  function setLang(l) {
+    lang = l;
+    var s = strings[l];
+    var services = l === 'PT' ? SERVICES_PT : SERVICES_EN;
+    var currentIdx = document.getElementById('fieldService').selectedIndex;
+
+    document.getElementById('heading').textContent = s.heading;
+    document.getElementById('lblService').textContent = s.lblService;
+    document.getElementById('lblDate').textContent = s.lblDate;
+    document.getElementById('lblTemplo').textContent = s.lblTemplo;
+    document.getElementById('lblVolunteers').textContent = s.lblVolunteers;
+    document.getElementById('lblKids').textContent = s.lblKids;
+    document.getElementById('lblTotal').textContent = s.lblTotal;
+    document.getElementById('lblSubmittedBy').textContent = s.lblSubmittedBy;
+    document.getElementById('submitBtn').textContent = s.submit;
+    document.getElementById('tyHeading').textContent = s.tyHeading;
+    document.getElementById('tyBody').textContent = s.tyBody;
+
+    var sel = document.getElementById('fieldService');
+    sel.innerHTML = '<option value="" disabled selected></option>';
+    services.forEach(function(svc, i) {
+      var opt = document.createElement('option');
+      opt.value = SERVICE_VALUES[i];
+      opt.textContent = svc;
+      sel.appendChild(opt);
+    });
+    if (currentIdx > 0 && currentIdx <= services.length) {
+      sel.selectedIndex = currentIdx;
+    }
+
+    document.getElementById('btnPT').classList.toggle('active', l === 'PT');
+    document.getElementById('btnEN').classList.toggle('active', l === 'EN');
+  }
+
+  // Set today's date as default
+  (function() {
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('fieldDate').value = yyyy + '-' + mm + '-' + dd;
+  })();
+
+  document.getElementById('btnPT').addEventListener('click', function() { setLang('PT'); });
+  document.getElementById('btnEN').addEventListener('click', function() { setLang('EN'); });
+
+  document.getElementById('fieldService').addEventListener('change', updateKidsVisibility);
+  document.getElementById('fieldTemplo').addEventListener('input', updateTotal);
+  document.getElementById('fieldKids').addEventListener('input', updateTotal);
+
+  document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var s = strings[lang];
+    var service = document.getElementById('fieldService').value;
+    var date = document.getElementById('fieldDate').value;
+    var templo = parseInt(document.getElementById('fieldTemplo').value, 10);
+    var volunteers = parseInt(document.getElementById('fieldVolunteers').value, 10);
+    var kidsRaw = isRocket() ? null : parseInt(document.getElementById('fieldKids').value, 10);
+    var kids = (kidsRaw === null || isNaN(kidsRaw)) ? null : kidsRaw;
+    var total = isNaN(templo) ? 0 : templo + (kids !== null ? kids : 0);
+    var submitted_by = document.getElementById('fieldSubmittedBy').value.trim();
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = s.submitting;
+
+    var payload = {
+      service: service,
+      date: date,
+      templo: isNaN(templo) ? null : templo,
+      volunteers: isNaN(volunteers) ? null : volunteers,
+      kids: kids,
+      total: total,
+      submitted_by: submitted_by,
+    };
+
+    fetch(WORKER_URL + '/service-attendance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(function(r) {
+        if (!r.ok) throw new Error('not ok');
+        return r.json();
+      })
+      .then(function() {
+        document.getElementById('attendanceForm').style.display = 'none';
+        document.getElementById('heading').style.display = 'none';
+        var ty = document.getElementById('thankYou');
+        ty.classList.add('visible');
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = s.submit;
+        alert(s.errGeneral);
+      });
+  });
+
+  setLang('PT');
+})();
+</script>
+</body>
+</html>
