@@ -316,3 +316,55 @@ _Last updated: 2026-06-01 — Session 10 (Person Modal UX + Group Leader View) c
 - Gifting pool mappings live in MH_GIFTING_MAP in App.jsx only; no worker deploy needed
 
 _Last updated: 2026-06-03 — Session 11 (missing ministries + groups + iPad nav fix) complete._
+
+---
+
+## Session 12 (2026-06-03) — Spanish (ES) Language Addition
+
+### Assessment (ministry-gifting/index.html) — commit f5b497e
+
+**Language toggle:**
+- Single `langBtn` replaced with three-button toggle: `langBtnPT`, `langBtnEN`, `langBtnES`
+- Active button highlighted with `.lang-btn.active` CSS (teal fill)
+- `toggleLang()` replaced with `setLang(code)` — called by each button
+- `applyLang()` updated to toggle `.active` class on all three buttons
+- Event listeners rewired for all three buttons (touchstart + click, iOS-safe)
+
+**Data arrays — es field added:**
+- `CAL_QUESTIONS` (2): es field added
+- `DISC_QUESTIONS` (12): es field added
+- `QUESTIONS` (46): es field added to all
+- `ALL_QUESTIONS` concat: es field passed through in map
+
+**T.es object added** with all UI strings in Neutral LATAM Spanish
+
+**GIFTING_LEARN_MORE** — es description added to all 15 giftings
+
+**GIFTINGS array** — es sub-object added to all 15 giftings (ES name, EN desc, translated ministry chip labels)
+
+**New variables:**
+- `SPANISH_COUNTRIES_ES` — 21 countries in Spanish
+- `GROUP_LIST_ES` — group names with Spanish "Otro"
+
+**Inline ternaries updated for ES:**
+- DISC section pill ("Como funcionas naturalmente")
+- Scale L5 gifting label ("Esto arde dentro de mi")
+- Level 5 confirmation overlay: heading, body, confirm button, back button
+- closeSaibaMais back button text
+- Country dropdown population
+- Attendance group info popup description (falls back to EN if no descES)
+- updateTranslationVisibility: adds "Traduccion" to Translation chip detection
+
+**D1 storage:** `lang.toUpperCase()` already in submit payloads — ES stored as "ES"
+
+_Last updated: 2026-06-03 — Session 12 (Spanish language addition) complete._
+
+---
+
+## Session 13 — 2026-06-05
+
+**Service attendance form** — `service-attendance-form.html` added to ministry-gifting repo. 7 services (PT/EN bilingual), Rocket hides Kids field, auto-calculates Total, POSTs to `https://ltc-api.farfromtimnah.workers.dev/service-attendance` (endpoint pending).
+
+**Service Attendance dashboard tab** — Added to ltc-dashboard `src/App.jsx`. Visible to pastor, senior_pastor, owner. Hardcoded dummy data (20 rows). Sections: header with form link + QR placeholder, 4 metric cards, trend LineChart with service selector, 2 BarCharts (avg attendance + volunteer ratio), full log table with service chips and color-coded Vol%.
+
+**Nav tab overflow fix** — Tab nav gap reduced from 24→8px, collapse threshold updated from 820→960px.
