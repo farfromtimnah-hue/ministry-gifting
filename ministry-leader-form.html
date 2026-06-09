@@ -26,7 +26,6 @@ input:focus,select:focus,textarea:focus{border-color:#2ABFBF}
 input::placeholder{color:#475a64}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a82' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
 select option{background:#0c1a24;color:#e6f1f0}
-.other-input{margin-top:8px}
 .submit-btn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,#2ABFBF,#0d9488);border:none;color:#fff;font-size:16px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;letter-spacing:0.02em;transition:opacity 0.15s;margin-top:8px}
 .submit-btn:hover{opacity:0.9}
 .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
@@ -36,6 +35,16 @@ select option{background:#0c1a24;color:#e6f1f0}
 .thank-you h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e6f1f0}
 .thank-you p{font-size:14px;color:#6b7a82;max-width:320px}
 .err-msg{color:#E74C3C;font-size:12px;margin-top:4px}
+.positions-section{display:none;flex-direction:column;gap:10px}
+.positions-section.visible{display:flex}
+.positions-heading{font-size:13px;font-weight:600;color:#aebac0}
+.pos-row{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px}
+.pos-name{flex:1;font-size:13px;color:#e6f1f0;font-weight:600;min-width:0;padding-right:6px}
+.pos-inputs{display:flex;gap:6px;flex-shrink:0}
+.pos-field{display:flex;flex-direction:column;align-items:center;gap:3px}
+.pos-field label{font-size:11px;color:#6b7a82;font-weight:600;white-space:nowrap}
+.pos-field input{width:58px;padding:8px 4px;text-align:center;border-radius:6px;font-size:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#e6f1f0;outline:none;-webkit-appearance:none;appearance:none;font-family:inherit}
+.pos-field input:focus{border-color:#2ABFBF}
 </style>
 </head>
 <body>
@@ -57,7 +66,6 @@ select option{background:#0c1a24;color:#e6f1f0}
       <select id="fieldMinistry" required>
         <option value="" disabled selected></option>
       </select>
-      <input type="text" id="fieldMinistryOther" class="other-input" style="display:none" placeholder="">
     </div>
 
     <!-- Preferred name -->
@@ -78,22 +86,16 @@ select option{background:#0c1a24;color:#e6f1f0}
       <input type="tel" id="fieldWhatsapp" placeholder="+1 (813) 000-0000" required>
     </div>
 
-    <!-- Actual count -->
-    <div class="field">
-      <label id="lblActual">Quantas pessoas servem atualmente no seu ministerio?</label>
-      <input type="number" id="fieldActual" min="0" required>
+    <!-- Per-position section (shown after ministry selected) -->
+    <div class="field positions-section" id="positionsSection">
+      <span class="positions-heading" id="positionsHeading">Funcoes no seu ministerio</span>
+      <div id="positionRows"></div>
     </div>
 
-    <!-- Min needed -->
-    <div class="field">
-      <label id="lblMin">Qual e o minimo de pessoas necessarias para o ministerio funcionar bem?</label>
-      <input type="number" id="fieldMin" min="0" required>
-    </div>
-
-    <!-- Ideal -->
-    <div class="field">
-      <label id="lblIdeal">Qual seria o numero ideal de voluntarios no seu ministerio?</label>
-      <input type="number" id="fieldIdeal" min="0" required>
+    <!-- Custom positions -->
+    <div class="field" id="customPositionsField" style="display:none">
+      <label id="lblCustomPositions">Sua equipe tem funcoes nao listadas acima? Descreva:</label>
+      <textarea id="fieldCustomPositions" name="custom_positions_notes" rows="3" placeholder=""></textarea>
     </div>
 
     <button type="submit" class="submit-btn" id="submitBtn">Enviar</button>
@@ -110,149 +112,302 @@ select option{background:#0c1a24;color:#e6f1f0}
 (function() {
   var WORKER_URL = 'https://ltc-api.farfromtimnah.workers.dev';
 
-  var MINISTRIES_PT = [
-    "Ministerio de Louvor","Som","Luz","Projecao","Transmissao",
-    "Foto e Video","Midias Sociais","Experiencia do Culto","Consolidacao",
-    "Traducao","Lagoinha Kids","Intercessao","Cafe dos Voluntarios",
-    "Recepcao","Estacionamento","Montagem",
-    "WE CARE - Ajuda Pratica","WE CARE - Evangelismo","Lider de GC",
-    "Outro"
+  var MINISTRY_LIST = [
+    {value: 'Worship Team',      pt: 'Equipe de Louvor',       en: 'Worship Team'},
+    {value: 'Sound',             pt: 'Som',                    en: 'Sound'},
+    {value: 'Lighting',          pt: 'Luz',                    en: 'Lighting'},
+    {value: 'Projection',        pt: 'Projecao',               en: 'Projection'},
+    {value: 'Streaming',         pt: 'Transmissao',            en: 'Streaming'},
+    {value: 'Photo & Video',     pt: 'Foto e Video',           en: 'Photo & Video'},
+    {value: 'Social Media',      pt: 'Midias Sociais',         en: 'Social Media'},
+    {value: 'Stage Crew',        pt: 'Equipe de Palco',        en: 'Stage Crew'},
+    {value: 'Service Experience',pt: 'Experiencia do Culto',   en: 'Service Experience'},
+    {value: 'Consolidation',     pt: 'Consolidacao',           en: 'Consolidation'},
+    {value: 'Translation',       pt: 'Traducao',               en: 'Translation'},
+    {value: 'Lagoinha Kids',     pt: 'Lagoinha Kids',          en: 'Lagoinha Kids'},
+    {value: 'Intercession',      pt: 'Intercessao',            en: 'Intercession'},
+    {value: 'Volunteer Coffee',  pt: 'Cafe dos Voluntarios',   en: 'Volunteer Coffee'},
+    {value: 'Welcome',           pt: 'Recepcao',               en: 'Welcome'},
+    {value: 'Parking',           pt: 'Estacionamento',         en: 'Parking'},
+    {value: 'Setup & Teardown',  pt: 'Montagem',               en: 'Setup & Teardown'},
+    {value: 'WE CARE',           pt: 'WE CARE',                en: 'WE CARE'},
+    {value: 'GC Leader',         pt: 'Lider de GC',            en: 'GC Leader'},
+    {value: 'Art Factory',       pt: 'Art Factory',            en: 'Art Factory'},
+    {value: 'Decoration',        pt: 'Decoracao',              en: 'Decoration'},
+    {value: 'Diaconia',          pt: 'Diaconia',               en: 'Diaconia'},
+    {value: 'Esportes',          pt: 'Esportes',               en: 'Esportes'},
+    {value: 'Eventos',           pt: 'Eventos',                en: 'Eventos'},
+    {value: 'Geracoes',          pt: 'Geracoes',               en: 'Geracoes'},
+    {value: 'Lakestore',         pt: 'Lakestore',              en: 'Lakestore'},
   ];
-  var MINISTRIES_EN = [
-    "Worship Team","Sound","Lighting","Projection","Streaming",
-    "Photo & Video","Social Media","Service Experience","Consolidation",
-    "Translation","Lagoinha Kids","Intercession","Volunteer Coffee",
-    "Hospitality - Welcome","Parking","Setup & Teardown",
-    "WE CARE - Helps","WE CARE - Evangelism","GC Leader",
-    "Other"
-  ];
-  var MINISTRY_VALUES = [
-    "Worship Team","Sound","Lighting","Projection","Streaming",
-    "Photo & Video","Social Media","Service Experience","Consolidation",
-    "Translation","Lagoinha Kids","Intercession","Volunteer Coffee",
-    "Hospitality - Welcome","Parking","Setup & Teardown",
-    "WE CARE - Helps","WE CARE - Evangelism","GC Leader",
-    "Other"
-  ];
+
+  var POSITIONS = {
+    'Worship Team': [
+      {en: 'Worship Leader', pt: 'Lider de Louvor'},
+      {en: 'Music Director', pt: 'Diretor Musical'},
+      {en: 'Acoustic Guitar', pt: 'Violao'},
+      {en: 'Electric Guitar', pt: 'Guitarra'},
+      {en: 'Bass', pt: 'Baixo'},
+      {en: 'Keys', pt: 'Teclado'},
+      {en: 'Drums', pt: 'Bateria'},
+      {en: 'Backup Vocalist (Lead)', pt: 'Backing Vocal (Lider)'},
+      {en: 'Backup Vocalist', pt: 'Backing Vocal'},
+    ],
+    'Sound': [{en: 'Sound Operator', pt: 'Operador de Som'}],
+    'Lighting': [{en: 'Lighting Operator', pt: 'Operador de Luz'}],
+    'Projection': [{en: 'ProPresenter Operator', pt: 'Operador de ProPresenter'}],
+    'Streaming': [
+      {en: 'Switcher Operator', pt: 'Operador de Switcher'},
+      {en: 'Camera 1 Operator', pt: 'Operador Camera 1'},
+      {en: 'Camera 2 Operator', pt: 'Operador Camera 2'},
+      {en: 'Camera 3 Operator', pt: 'Operador Camera 3'},
+      {en: 'B-Roll Camera (Gimbal)', pt: 'Camera B-Roll (Gimbal)'},
+      {en: 'Live Stream Audio Engineer', pt: 'Engenheiro de Audio ao Vivo'},
+    ],
+    'Photo & Video': [{en: 'Photographer', pt: 'Fotografo'}],
+    'Social Media': [{en: 'Social Media Operator', pt: 'Operador de Midias Sociais'}],
+    'Stage Crew': [{en: 'Stage Crew', pt: 'Equipe de Palco'}],
+    'Service Experience': [{en: 'Stage Host', pt: 'Apresentador do Culto'}],
+    'Consolidation': [
+      {en: 'Consolidation Minister - Female', pt: 'Ministro de Consolidacao - Feminino'},
+      {en: 'Consolidation Minister - Male', pt: 'Ministro de Consolidacao - Masculino'},
+    ],
+    'Translation': [
+      {en: 'English Interpreter', pt: 'Interprete de Ingles'},
+      {en: 'Spanish Interpreter', pt: 'Interprete de Espanhol'},
+    ],
+    'Lagoinha Kids': [
+      {en: 'Class 1 Teacher (Ages 2-5)', pt: 'Professor Turma 1 (2-5 anos)'},
+      {en: 'Class 1 Assistant (Ages 2-5)', pt: 'Assistente Turma 1 (2-5 anos)'},
+      {en: 'Class 2 Teacher (Ages 5-6)', pt: 'Professor Turma 2 (5-6 anos)'},
+      {en: 'Class 2 Assistant (Ages 5-6)', pt: 'Assistente Turma 2 (5-6 anos)'},
+      {en: 'Class 3 Teacher (Ages 7-9)', pt: 'Professor Turma 3 (7-9 anos)'},
+      {en: 'Class 3 Assistant (Ages 7-9)', pt: 'Assistente Turma 3 (7-9 anos)'},
+    ],
+    'Intercession': [{en: 'Intercessor', pt: 'Intercessor'}],
+    'Volunteer Coffee': [{en: 'Coffee Volunteer', pt: 'Voluntario do Cafe'}],
+    'Welcome': [{en: 'Welcome Volunteer', pt: 'Voluntario de Recepcao'}],
+    'Parking': [{en: 'Parking Volunteer', pt: 'Voluntario de Estacionamento'}],
+    'Setup & Teardown': [{en: 'Setup/Teardown Volunteer', pt: 'Voluntario de Montagem'}],
+    'WE CARE': [{en: 'Care Volunteer', pt: 'Voluntario de Cuidado'}],
+    'GC Leader': [{en: 'GC Leader', pt: 'Lider de GC'}],
+    'Art Factory': [
+      {en: 'Dancer', pt: 'Dancarina'},
+      {en: 'Theatre Actor', pt: 'Ator de Teatro'},
+    ],
+    'Decoration': [{en: 'Decoration Volunteer', pt: 'Voluntario de Decoracao'}],
+    'Diaconia': [{en: 'Deacon/Diaconisa', pt: 'Diacono/Diaconisa'}],
+    'Esportes': [{en: 'Sports Ministry Volunteer', pt: 'Voluntario de Esportes'}],
+    'Eventos': [{en: 'Events Volunteer', pt: 'Voluntario de Eventos'}],
+    'Geracoes': [{en: 'Teacher', pt: 'Professor'}],
+    'Lakestore': [{en: 'Bookstore Operator', pt: 'Operador da Livraria'}],
+  };
 
   var lang = 'PT';
 
   var strings = {
     PT: {
-      heading: "Formulario do Lider de Ministerio",
-      lblMinistry: "Seu Ministerio",
-      ministryOtherPlaceholder: "Qual e o seu ministerio?",
-      lblPreferred: "Como gostaria de ser chamado(a)?",
-      lblFull: "Nome completo",
-      lblWhatsapp: "Seu WhatsApp",
-      lblActual: "Quantas pessoas servem atualmente no seu ministerio?",
-      lblMin: "Qual e o minimo de pessoas necessarias para o ministerio funcionar bem?",
-      lblIdeal: "Qual seria o numero ideal de voluntarios no seu ministerio?",
-      submit: "Enviar",
-      submitting: "Enviando...",
-      tyHeading: "Obrigado!",
-      tyBody: "Suas informacoes foram recebidas.",
-      errGeneral: "Erro ao enviar. Tente novamente.",
+      heading: 'Formulario do Lider de Ministerio',
+      lblMinistry: 'Seu Ministerio',
+      lblPreferred: 'Como gostaria de ser chamado(a)?',
+      lblFull: 'Nome completo',
+      lblWhatsapp: 'Seu WhatsApp',
+      positionsHeading: 'Funcoes no seu ministerio',
+      lblActual: 'Atuais',
+      lblMin: 'Minimo',
+      lblIdeal: 'Ideal',
+      lblCustomPositions: 'Sua equipe tem funcoes nao listadas acima? Descreva:',
+      submit: 'Enviar',
+      submitting: 'Enviando...',
+      tyHeading: 'Obrigado!',
+      tyBody: 'Suas informacoes foram recebidas.',
+      errGeneral: 'Erro ao enviar. Tente novamente.',
     },
     EN: {
-      heading: "Ministry Leader Form",
-      lblMinistry: "Your Ministry",
-      ministryOtherPlaceholder: "What is your ministry?",
-      lblPreferred: "What should we call you?",
-      lblFull: "Full name",
-      lblWhatsapp: "Your WhatsApp number",
-      lblActual: "How many people are currently serving in your ministry?",
-      lblMin: "What is the minimum number of people needed for your ministry to function well?",
-      lblIdeal: "What would be the ideal number of volunteers in your ministry?",
-      submit: "Submit",
-      submitting: "Submitting...",
-      tyHeading: "Thank you!",
-      tyBody: "Your information has been received.",
-      errGeneral: "Submission error. Please try again.",
+      heading: 'Ministry Leader Form',
+      lblMinistry: 'Your Ministry',
+      lblPreferred: 'What should we call you?',
+      lblFull: 'Full name',
+      lblWhatsapp: 'Your WhatsApp number',
+      positionsHeading: 'Positions in your ministry',
+      lblActual: 'Actual',
+      lblMin: 'Min',
+      lblIdeal: 'Ideal',
+      lblCustomPositions: 'Does your team have roles not listed above? Describe them:',
+      submit: 'Submit',
+      submitting: 'Submitting...',
+      tyHeading: 'Thank you!',
+      tyBody: 'Your information has been received.',
+      errGeneral: 'Submission error. Please try again.',
     }
   };
+
+  function renderPositions(ministry) {
+    var s = strings[lang];
+    var container = document.getElementById('positionRows');
+    var section = document.getElementById('positionsSection');
+    var customField = document.getElementById('customPositionsField');
+    container.innerHTML = '';
+
+    var positions = ministry ? POSITIONS[ministry] : null;
+    if (!positions || positions.length === 0) {
+      section.classList.remove('visible');
+      section.style.display = 'none';
+      customField.style.display = 'none';
+      return;
+    }
+
+    positions.forEach(function(pos, i) {
+      var row = document.createElement('div');
+      row.className = 'pos-row';
+
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'pos-name';
+      nameSpan.textContent = lang === 'PT' ? pos.pt : pos.en;
+      nameSpan.setAttribute('data-pos-index', i);
+      row.appendChild(nameSpan);
+
+      var inputsDiv = document.createElement('div');
+      inputsDiv.className = 'pos-inputs';
+
+      ['actual', 'min', 'ideal'].forEach(function(type) {
+        var fieldDiv = document.createElement('div');
+        fieldDiv.className = 'pos-field';
+
+        var lbl = document.createElement('label');
+        lbl.textContent = type === 'actual' ? s.lblActual : type === 'min' ? s.lblMin : s.lblIdeal;
+        lbl.setAttribute('data-type', type);
+
+        var inp = document.createElement('input');
+        inp.type = 'number';
+        inp.min = '0';
+        inp.required = true;
+        inp.setAttribute('data-ministry', ministry);
+        inp.setAttribute('data-position', pos.en);
+        inp.setAttribute('data-type', type);
+
+        fieldDiv.appendChild(lbl);
+        fieldDiv.appendChild(inp);
+        inputsDiv.appendChild(fieldDiv);
+      });
+
+      row.appendChild(inputsDiv);
+      container.appendChild(row);
+    });
+
+    section.style.display = 'flex';
+    section.classList.add('visible');
+    customField.style.display = 'flex';
+  }
+
+  function updatePositionLabels() {
+    var s = strings[lang];
+    var ministry = document.getElementById('fieldMinistry').value;
+    if (!ministry) return;
+    var positions = POSITIONS[ministry];
+    if (!positions) return;
+
+    var nameSpans = document.querySelectorAll('#positionRows .pos-name');
+    nameSpans.forEach(function(span) {
+      var idx = parseInt(span.getAttribute('data-pos-index'), 10);
+      if (positions[idx]) {
+        span.textContent = lang === 'PT' ? positions[idx].pt : positions[idx].en;
+      }
+    });
+
+    var labels = document.querySelectorAll('#positionRows .pos-field label');
+    labels.forEach(function(lbl) {
+      var t = lbl.getAttribute('data-type');
+      lbl.textContent = t === 'actual' ? s.lblActual : t === 'min' ? s.lblMin : s.lblIdeal;
+    });
+
+    document.getElementById('positionsHeading').textContent = s.positionsHeading;
+    document.getElementById('lblCustomPositions').textContent = s.lblCustomPositions;
+  }
 
   function setLang(l) {
     lang = l;
     var s = strings[l];
-    var ministries = l === 'PT' ? MINISTRIES_PT : MINISTRIES_EN;
     var currentVal = document.getElementById('fieldMinistry').value;
+    var currentIdx = document.getElementById('fieldMinistry').selectedIndex;
 
     document.getElementById('heading').textContent = s.heading;
     document.getElementById('lblMinistry').textContent = s.lblMinistry;
     document.getElementById('lblPreferred').textContent = s.lblPreferred;
     document.getElementById('lblFull').textContent = s.lblFull;
     document.getElementById('lblWhatsapp').textContent = s.lblWhatsapp;
-    document.getElementById('lblActual').textContent = s.lblActual;
-    document.getElementById('lblMin').textContent = s.lblMin;
-    document.getElementById('lblIdeal').textContent = s.lblIdeal;
     document.getElementById('submitBtn').textContent = s.submit;
-    document.getElementById('fieldMinistryOther').placeholder = s.ministryOtherPlaceholder;
     document.getElementById('tyHeading').textContent = s.tyHeading;
     document.getElementById('tyBody').textContent = s.tyBody;
 
     var sel = document.getElementById('fieldMinistry');
-    var prevIdx = sel.selectedIndex;
     sel.innerHTML = '<option value="" disabled selected></option>';
-    ministries.forEach(function(m, i) {
+    MINISTRY_LIST.forEach(function(m) {
       var opt = document.createElement('option');
-      opt.value = MINISTRY_VALUES[i];
-      opt.textContent = m;
+      opt.value = m.value;
+      opt.textContent = l === 'PT' ? m.pt : m.en;
       sel.appendChild(opt);
     });
-    if (prevIdx > 0 && prevIdx <= ministries.length) {
-      sel.selectedIndex = prevIdx;
+    if (currentVal) {
+      sel.value = currentVal;
     }
 
     document.getElementById('btnPT').classList.toggle('active', l === 'PT');
     document.getElementById('btnEN').classList.toggle('active', l === 'EN');
+
+    updatePositionLabels();
   }
 
   document.getElementById('btnPT').addEventListener('click', function() { setLang('PT'); });
   document.getElementById('btnEN').addEventListener('click', function() { setLang('EN'); });
 
   document.getElementById('fieldMinistry').addEventListener('change', function() {
-    var otherInput = document.getElementById('fieldMinistryOther');
-    if (this.value === 'Other') {
-      otherInput.style.display = 'block';
-      otherInput.required = true;
-    } else {
-      otherInput.style.display = 'none';
-      otherInput.required = false;
-      otherInput.value = '';
-    }
+    renderPositions(this.value);
   });
 
   document.getElementById('leaderForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var s = strings[lang];
-    var ministryVal = document.getElementById('fieldMinistry').value;
-    var ministryOther = document.getElementById('fieldMinistryOther').value.trim();
+    var ministry = document.getElementById('fieldMinistry').value;
     var preferred = document.getElementById('fieldPreferred').value.trim();
     var full = document.getElementById('fieldFull').value.trim();
     var whatsapp = document.getElementById('fieldWhatsapp').value.trim();
-    var actual = parseInt(document.getElementById('fieldActual').value, 10);
-    var min = parseInt(document.getElementById('fieldMin').value, 10);
-    var ideal = parseInt(document.getElementById('fieldIdeal').value, 10);
+    var customNotes = document.getElementById('fieldCustomPositions').value.trim();
+
+    var positionInputs = document.querySelectorAll('#positionRows input[data-position]');
+    var posMap = {};
+    positionInputs.forEach(function(inp) {
+      var posName = inp.getAttribute('data-position');
+      var type = inp.getAttribute('data-type');
+      if (!posMap[posName]) posMap[posName] = {};
+      posMap[posName][type] = parseInt(inp.value, 10);
+    });
+
+    var positions = Object.keys(posMap).map(function(posName) {
+      return {
+        position_name: posName,
+        actual: isNaN(posMap[posName].actual) ? 0 : posMap[posName].actual,
+        min: isNaN(posMap[posName].min) ? 0 : posMap[posName].min,
+        ideal: isNaN(posMap[posName].ideal) ? 0 : posMap[posName].ideal,
+      };
+    });
 
     var btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = s.submitting;
 
     var payload = {
-      ministry_name: ministryVal,
-      ministry_other: ministryVal === 'Other' ? ministryOther : null,
       preferred_name: preferred,
       full_name: full,
       whatsapp: whatsapp,
-      actual_count: isNaN(actual) ? null : actual,
-      min_count: isNaN(min) ? null : min,
-      ideal_count: isNaN(ideal) ? null : ideal,
+      ministry: ministry,
+      positions: positions,
+      custom_positions_notes: customNotes || null,
     };
 
     fetch(WORKER_URL + '/ministry-leader-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload),
     })
       .then(function(r) {
@@ -262,8 +417,7 @@ select option{background:#0c1a24;color:#e6f1f0}
       .then(function() {
         document.getElementById('leaderForm').style.display = 'none';
         document.getElementById('heading').style.display = 'none';
-        var ty = document.getElementById('thankYou');
-        ty.classList.add('visible');
+        document.getElementById('thankYou').classList.add('visible');
       })
       .catch(function() {
         btn.disabled = false;

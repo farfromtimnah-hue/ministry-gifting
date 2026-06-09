@@ -368,3 +368,13 @@ _Last updated: 2026-06-03 — Session 12 (Spanish language addition) complete._
 **Service Attendance dashboard tab** — Added to ltc-dashboard `src/App.jsx`. Visible to pastor, senior_pastor, owner. Hardcoded dummy data (20 rows). Sections: header with form link + QR placeholder, 4 metric cards, trend LineChart with service selector, 2 BarCharts (avg attendance + volunteer ratio), full log table with service chips and color-coded Vol%.
 
 **Nav tab overflow fix** — Tab nav gap reduced from 24→8px, collapse threshold updated from 820→960px.
+
+---
+
+## Session: ministry_positions Build (2026-06-09)
+
+- **ministry_positions table created** — SQL output above; Nicole to run in D1 Console (ltc-gifting database). 26 ministries, 46 positions total.
+- **leader_form_submissions table created** — SQL output above; Nicole to run in D1 Console. Logs every full leader form submission including custom_positions_notes.
+- **ministry-leader-form.html updated** — removed single actual/min/ideal fields; replaced with dynamic per-position section keyed by ministry selection. Each position row shows position name (bilingual, live-updates on language toggle) + Actual / Min / Ideal number inputs, all required. Custom positions free-text textarea below rows. Ministry dropdown expanded to all 26 ministries matching D1 ministry column exactly. Payload shape changed to `{preferred_name, full_name, whatsapp, ministry, positions: [{position_name, actual, min, ideal}], custom_positions_notes}`.
+- **Worker POST /ministry-leader-form updated** — now accepts new payload shape. For each position, runs UPDATE ministry_positions SET actual_count_form, min_count, ideal_count. Inserts every submission into leader_form_submissions (including custom_positions_notes). Returns `{ok: true}`.
+- **Worker GET /ministry-positions added** — auth required. Accepts optional `?ministry=` query param. Returns all rows from ministry_positions for that ministry (or all ministries if param omitted). Used by dashboard Ministry Health tab (next session).
