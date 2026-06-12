@@ -45,6 +45,9 @@ select option{background:#0c1a24;color:#e6f1f0}
 /* International number note */
 .info-note{display:none;font-size:13px;color:#2ABFBF;padding:8px 12px;background:rgba(42,191,191,0.08);border:1px solid rgba(42,191,191,0.2);border-radius:8px;margin-top:2px}
 .info-note.visible{display:block}
+/* Inline field error message */
+.inline-err{display:none;font-size:13px;color:#E74C3C;margin-top:2px}
+.inline-err.visible{display:block}
 /* Family members */
 .family-section{display:none;flex-direction:column;gap:10px}
 .family-section.visible{display:flex}
@@ -94,10 +97,12 @@ select option{background:#0c1a24;color:#e6f1f0}
       <div class="field">
         <label id="lblFirstName">Nome</label>
         <input type="text" id="fieldFirstName">
+        <div class="inline-err" id="firstNameErr"></div>
       </div>
       <div class="field">
         <label id="lblLastName">Sobrenome</label>
         <input type="text" id="fieldLastName">
+        <div class="inline-err" id="lastNameErr"></div>
       </div>
     </div>
 
@@ -105,12 +110,14 @@ select option{background:#0c1a24;color:#e6f1f0}
     <div class="field">
       <label id="lblEmail">E-mail</label>
       <input type="email" id="fieldEmail" placeholder="exemplo@exemplo.com">
+      <div class="inline-err" id="emailErr"></div>
     </div>
 
     <!-- Phone -->
     <div class="field">
       <label id="lblPhone">Telefone</label>
       <input type="tel" id="fieldPhone" placeholder="(000) 000-0000">
+      <div class="inline-err" id="phoneErr"></div>
       <div class="info-note" id="intlNote">Parece um numero internacional.</div>
     </div>
 
@@ -128,7 +135,17 @@ select option{background:#0c1a24;color:#e6f1f0}
     <!-- Date of Birth -->
     <div class="field">
       <label id="lblDob">Data de nascimento</label>
-      <input type="date" id="fieldDob">
+      <div class="row-2">
+        <select id="fieldDobMonth">
+          <option value="" disabled selected id="optDobMonth">Mes</option>
+        </select>
+        <select id="fieldDobDay">
+          <option value="" disabled selected id="optDobDay">Dia</option>
+        </select>
+        <select id="fieldDobYear">
+          <option value="" disabled selected id="optDobYear">Ano</option>
+        </select>
+      </div>
     </div>
 
     <div class="divider"></div>
@@ -151,16 +168,22 @@ select option{background:#0c1a24;color:#e6f1f0}
     <div class="field">
       <label id="lblCity">Cidade</label>
       <input type="text" id="fieldCity">
+      <div class="inline-err" id="cityErr"></div>
     </div>
 
     <div class="row-2">
       <div class="field">
         <label id="lblState">Estado</label>
-        <input type="text" id="fieldState">
+        <select id="fieldState">
+          <option value="" disabled selected id="optStateDefault">Estado</option>
+          <optgroup id="optgrpUS" label="Estados Unidos"></optgroup>
+          <optgroup id="optgrpBR" label="Brasil"></optgroup>
+        </select>
       </div>
       <div class="field field-wide">
         <label id="lblZip">CEP/Codigo postal</label>
         <input type="text" id="fieldZip">
+        <div class="inline-err" id="zipErr"></div>
       </div>
     </div>
 
@@ -238,18 +261,30 @@ select option{background:#0c1a24;color:#e6f1f0}
       lblEmail: 'E-mail',
       lblPhone: 'Telefone',
       intlNote: 'Parece um numero internacional.',
+      errPhone: 'Numero de telefone invalido. Digite pelo menos 8 digitos.',
+      errEmail: 'Por favor, insira um e-mail valido. Exemplo: nome@email.com',
       lblPhoneType: 'Tipo de telefone',
       phoneTypeDefault: 'Selecionar',
       optMobile: 'Celular',
       optHome: 'Residencial',
       optWork: 'Trabalho',
       lblDob: 'Data de nascimento',
+      dobMonth: 'Mes',
+      dobDay: 'Dia',
+      dobYear: 'Ano',
+      months: ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
       lblAddressSection: 'Endereco completo',
       lblStreet: 'Endereco',
       lblLine2: 'Endereco (cont.)',
       lblCity: 'Cidade',
       lblState: 'Estado',
+      stateDefault: 'Estado',
+      usGroup: 'Estados Unidos',
+      brGroup: 'Brasil',
       lblZip: 'CEP/Codigo postal',
+      errZip: 'CEP/Codigo postal invalido.',
+      errNameShort: 'Nome muito curto.',
+      errAge: 'Idade invalida.',
       lblMaritalStatus: 'Estado civil',
       maritalDefault: 'Selecionar',
       optSingle: 'Solteiro(a)',
@@ -286,18 +321,30 @@ select option{background:#0c1a24;color:#e6f1f0}
       lblEmail: 'Email',
       lblPhone: 'Phone',
       intlNote: 'Looks like an international number.',
+      errPhone: 'Invalid phone number. Please enter at least 8 digits.',
+      errEmail: 'Please enter a valid email. Example: name@email.com',
       lblPhoneType: 'Phone type',
       phoneTypeDefault: 'Select',
       optMobile: 'Mobile',
       optHome: 'Home',
       optWork: 'Work',
       lblDob: 'Date of birth',
+      dobMonth: 'Month',
+      dobDay: 'Day',
+      dobYear: 'Year',
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       lblAddressSection: 'Full address',
       lblStreet: 'Street',
       lblLine2: 'Address (cont.)',
       lblCity: 'City',
       lblState: 'State',
+      stateDefault: 'State',
+      usGroup: 'United States',
+      brGroup: 'Brazil',
       lblZip: 'ZIP / Postal code',
+      errZip: 'Invalid ZIP / postal code.',
+      errNameShort: 'Name is too short.',
+      errAge: 'Invalid age.',
       lblMaritalStatus: 'Marital status',
       maritalDefault: 'Select',
       optSingle: 'Single',
@@ -334,18 +381,30 @@ select option{background:#0c1a24;color:#e6f1f0}
       lblEmail: 'Correo electronico',
       lblPhone: 'Telefono',
       intlNote: 'Parece un numero internacional.',
+      errPhone: 'Numero de telefono invalido. Ingresa al menos 8 digitos.',
+      errEmail: 'Por favor, ingresa un correo valido. Ejemplo: nombre@correo.com',
       lblPhoneType: 'Tipo de telefono',
       phoneTypeDefault: 'Seleccionar',
       optMobile: 'Movil',
       optHome: 'Casa',
       optWork: 'Trabajo',
       lblDob: 'Fecha de nacimiento',
+      dobMonth: 'Mes',
+      dobDay: 'Dia',
+      dobYear: 'Ano',
+      months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
       lblAddressSection: 'Direccion completa',
       lblStreet: 'Calle',
       lblLine2: 'Direccion (cont.)',
       lblCity: 'Ciudad',
       lblState: 'Estado',
+      stateDefault: 'Estado',
+      usGroup: 'Estados Unidos',
+      brGroup: 'Brasil',
       lblZip: 'Codigo postal',
+      errZip: 'Codigo postal invalido.',
+      errNameShort: 'Nombre muy corto.',
+      errAge: 'Edad invalida.',
       lblMaritalStatus: 'Estado civil',
       maritalDefault: 'Seleccionar',
       optSingle: 'Soltero/a',
@@ -376,6 +435,169 @@ select option{background:#0c1a24;color:#e6f1f0}
     }
   };
 
+  var US_STATES = [
+    ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],
+    ['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['FL','Florida'],['GA','Georgia'],
+    ['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],
+    ['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],
+    ['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],
+    ['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],
+    ['NM','New Mexico'],['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],
+    ['OK','Oklahoma'],['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],
+    ['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],
+    ['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
+  ];
+  var BR_STATES = [
+    ['SP','Sao Paulo'],['RJ','Rio de Janeiro'],['MG','Minas Gerais'],['BA','Bahia'],['PR','Parana'],
+    ['RS','Rio Grande do Sul'],['PE','Pernambuco'],['CE','Ceara'],['PA','Para'],['MA','Maranhao'],
+    ['GO','Goias'],['AM','Amazonas'],['ES','Espirito Santo'],['PB','Paraiba'],['RN','Rio Grande do Norte'],
+    ['MT','Mato Grosso'],['AL','Alagoas'],['PI','Piaui'],['MS','Mato Grosso do Sul'],['DF','Distrito Federal'],
+    ['SE','Sergipe'],['RO','Rondonia'],['TO','Tocantins'],['AC','Acre'],['AP','Amapa'],['RR','Roraima']
+  ];
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function rebuildMonthOptions() {
+    var s = S[lang];
+    var sel = document.getElementById('fieldDobMonth');
+    var current = sel.value;
+    sel.innerHTML = '';
+    var def = document.createElement('option');
+    def.value = ''; def.disabled = true; def.id = 'optDobMonth';
+    def.textContent = s.dobMonth;
+    if (!current) def.selected = true;
+    sel.appendChild(def);
+    for (var i = 0; i < 12; i++) {
+      var opt = document.createElement('option');
+      opt.value = pad2(i + 1);
+      opt.textContent = s.months[i];
+      if (opt.value === current) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateDayOptions() {
+    var sel = document.getElementById('fieldDobDay');
+    for (var d = 1; d <= 31; d++) {
+      var opt = document.createElement('option');
+      opt.value = pad2(d);
+      opt.textContent = pad2(d);
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateYearOptions() {
+    var sel = document.getElementById('fieldDobYear');
+    var nowYear = new Date().getFullYear();
+    for (var y = nowYear; y >= 1920; y--) {
+      var opt = document.createElement('option');
+      opt.value = '' + y;
+      opt.textContent = '' + y;
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateStateOptions() {
+    var us = document.getElementById('optgrpUS');
+    var br = document.getElementById('optgrpBR');
+    for (var i = 0; i < US_STATES.length; i++) {
+      var o = document.createElement('option');
+      o.value = US_STATES[i][0];
+      o.textContent = US_STATES[i][0] + ' - ' + US_STATES[i][1];
+      us.appendChild(o);
+    }
+    for (var j = 0; j < BR_STATES.length; j++) {
+      var o2 = document.createElement('option');
+      o2.value = BR_STATES[j][0];
+      o2.textContent = BR_STATES[j][0] + ' - ' + BR_STATES[j][1];
+      br.appendChild(o2);
+    }
+  }
+
+  function showInlineErr(inputEl, errId, msg) {
+    if (inputEl) inputEl.classList.add('err');
+    var e = document.getElementById(errId);
+    e.textContent = msg;
+    e.classList.add('visible');
+  }
+
+  function clearInlineErr(inputEl, errId) {
+    if (inputEl) inputEl.classList.remove('err');
+    var e = document.getElementById(errId);
+    e.textContent = '';
+    e.classList.remove('visible');
+  }
+
+  function isValidEmail(val) {
+    if (/\s/.test(val)) return false;
+    if ((val.match(/@/g) || []).length !== 1) return false;
+    var parts = val.split('@');
+    if (parts[0].length < 1) return false;
+    var domain = parts[1];
+    if (domain.indexOf('.') === -1) return false;
+    var afterDot = domain.substring(domain.lastIndexOf('.') + 1);
+    if (afterDot.length < 2) return false;
+    return true;
+  }
+
+  function validateEmailField() {
+    var em = document.getElementById('fieldEmail');
+    var val = em.value.trim();
+    if (val && !isValidEmail(val)) {
+      showInlineErr(em, 'emailErr', S[lang].errEmail);
+      return false;
+    }
+    clearInlineErr(em, 'emailErr');
+    return true;
+  }
+
+  function validatePhoneField() {
+    var ph = document.getElementById('fieldPhone');
+    var note = document.getElementById('intlNote');
+    var digits = ph.value.replace(/\D/g, '');
+    clearInlineErr(ph, 'phoneErr');
+    note.classList.remove('visible');
+    if (digits.length === 0) return true;
+    if (digits.length < 8) {
+      showInlineErr(ph, 'phoneErr', S[lang].errPhone);
+      return false;
+    }
+    var brMobile = digits.length === 11 && digits.charAt(2) === '9';
+    if (digits.length >= 11 && !brMobile) {
+      note.classList.add('visible');
+    }
+    return true;
+  }
+
+  function validateNameField(inputEl, errId) {
+    var val = inputEl.value.trim();
+    if (val.length > 0 && val.length < 2) {
+      showInlineErr(inputEl, errId, S[lang].errNameShort);
+      return false;
+    }
+    clearInlineErr(inputEl, errId);
+    return true;
+  }
+
+  function isValidZip(val) {
+    var v = val.trim();
+    if (/^\d{5}(-\d{4})?$/.test(v)) return true;        // US ZIP or ZIP+4
+    if (/^\d{8}$/.test(v)) return true;                 // BR CEP no dash
+    if (/^\d{5}-\d{3}$/.test(v)) return true;           // BR CEP with dash
+    return false;
+  }
+
+  function validateZipField() {
+    var zip = document.getElementById('fieldZip');
+    var val = zip.value.trim();
+    if (val && !isValidZip(val)) {
+      showInlineErr(zip, 'zipErr', S[lang].errZip);
+      return false;
+    }
+    clearInlineErr(zip, 'zipErr');
+    return true;
+  }
+
   function setLang(l) {
     lang = l;
     var s = S[l];
@@ -393,11 +615,18 @@ select option{background:#0c1a24;color:#e6f1f0}
     document.getElementById('optHome').textContent = s.optHome;
     document.getElementById('optWork').textContent = s.optWork;
     document.getElementById('lblDob').textContent = s.lblDob;
+    document.getElementById('optDobMonth').textContent = s.dobMonth;
+    document.getElementById('optDobDay').textContent = s.dobDay;
+    document.getElementById('optDobYear').textContent = s.dobYear;
+    rebuildMonthOptions();
     document.getElementById('lblAddressSection').textContent = s.lblAddressSection;
     document.getElementById('lblStreet').textContent = s.lblStreet;
     document.getElementById('lblLine2').textContent = s.lblLine2;
     document.getElementById('lblCity').textContent = s.lblCity;
     document.getElementById('lblState').textContent = s.lblState;
+    document.getElementById('optStateDefault').textContent = s.stateDefault;
+    document.getElementById('optgrpUS').label = s.usGroup;
+    document.getElementById('optgrpBR').label = s.brGroup;
     document.getElementById('lblZip').textContent = s.lblZip;
     document.getElementById('lblMaritalStatus').textContent = s.lblMaritalStatus;
     document.getElementById('optMaritalDefault').textContent = s.maritalDefault;
@@ -481,8 +710,26 @@ select option{background:#0c1a24;color:#e6f1f0}
     var nameInp = document.createElement('input');
     nameInp.type = 'text';
     nameInp.className = 'fam-name-inp';
+    var nameErr = document.createElement('div');
+    nameErr.className = 'inline-err fam-name-err';
     nameField.appendChild(nameLbl);
     nameField.appendChild(nameInp);
+    nameField.appendChild(nameErr);
+    nameInp.addEventListener('blur', function() {
+      var v = nameInp.value.trim();
+      if (v.length > 0 && v.length < 2) {
+        nameInp.classList.add('err');
+        nameErr.textContent = S[lang].errNameShort;
+        nameErr.classList.add('visible');
+      } else {
+        nameInp.classList.remove('err');
+        nameErr.classList.remove('visible');
+      }
+    });
+    nameInp.addEventListener('input', function() {
+      nameInp.classList.remove('err');
+      nameErr.classList.remove('visible');
+    });
 
     // Age + Relationship row
     var inner = document.createElement('div');
@@ -496,9 +743,31 @@ select option{background:#0c1a24;color:#e6f1f0}
     var ageInp = document.createElement('input');
     ageInp.type = 'number';
     ageInp.min = '0';
+    ageInp.max = '120';
     ageInp.className = 'fam-age-inp';
+    var ageErr = document.createElement('div');
+    ageErr.className = 'inline-err fam-age-err';
     ageField.appendChild(ageLbl);
     ageField.appendChild(ageInp);
+    ageField.appendChild(ageErr);
+    ageInp.addEventListener('blur', function() {
+      var raw = ageInp.value.trim();
+      if (raw !== '') {
+        var n = parseInt(raw, 10);
+        if (isNaN(n) || n < 0 || n > 120) {
+          ageInp.classList.add('err');
+          ageErr.textContent = S[lang].errAge;
+          ageErr.classList.add('visible');
+          return;
+        }
+      }
+      ageInp.classList.remove('err');
+      ageErr.classList.remove('visible');
+    });
+    ageInp.addEventListener('input', function() {
+      ageInp.classList.remove('err');
+      ageErr.classList.remove('visible');
+    });
 
     var relField = document.createElement('div');
     relField.className = 'field';
@@ -602,6 +871,10 @@ select option{background:#0c1a24;color:#e6f1f0}
     for (var i = 0; i < errEls.length; i++) {
       errEls[i].classList.remove('err');
     }
+    var inlineEls = document.querySelectorAll('.inline-err');
+    for (var j = 0; j < inlineEls.length; j++) {
+      inlineEls[j].classList.remove('visible');
+    }
     document.getElementById('formErr').classList.remove('visible');
   }
 
@@ -615,35 +888,97 @@ select option{background:#0c1a24;color:#e6f1f0}
     }
 
     var fn = document.getElementById('fieldFirstName');
-    if (!fn.value.trim()) flagErr(fn);
+    if (!fn.value.trim()) {
+      flagErr(fn);
+    } else if (fn.value.trim().length < 2) {
+      showInlineErr(fn, 'firstNameErr', s.errNameShort);
+      hasErr = true;
+    }
 
     var ln = document.getElementById('fieldLastName');
-    if (!ln.value.trim()) flagErr(ln);
+    if (!ln.value.trim()) {
+      flagErr(ln);
+    } else if (ln.value.trim().length < 2) {
+      showInlineErr(ln, 'lastNameErr', s.errNameShort);
+      hasErr = true;
+    }
 
     var em = document.getElementById('fieldEmail');
-    if (!em.value.trim()) flagErr(em);
+    if (!em.value.trim()) {
+      flagErr(em);
+    } else if (!isValidEmail(em.value.trim())) {
+      showInlineErr(em, 'emailErr', s.errEmail);
+      hasErr = true;
+    }
 
     var ph = document.getElementById('fieldPhone');
     var digits = ph.value.replace(/\D/g, '');
-    if (digits.length < 8) flagErr(ph);
+    if (digits.length === 0) {
+      flagErr(ph);
+    } else if (digits.length < 8) {
+      showInlineErr(ph, 'phoneErr', s.errPhone);
+      hasErr = true;
+    } else {
+      validatePhoneField();
+    }
 
-    var dob = document.getElementById('fieldDob');
-    if (!dob.value) flagErr(dob);
+    var dobMonth = document.getElementById('fieldDobMonth');
+    var dobDay = document.getElementById('fieldDobDay');
+    var dobYear = document.getElementById('fieldDobYear');
+    if (!dobMonth.value) flagErr(dobMonth);
+    if (!dobDay.value) flagErr(dobDay);
+    if (!dobYear.value) flagErr(dobYear);
 
     var st = document.getElementById('fieldStreet');
     if (!st.value.trim()) flagErr(st);
 
     var ci = document.getElementById('fieldCity');
-    if (!ci.value.trim()) flagErr(ci);
+    if (!ci.value.trim()) {
+      flagErr(ci);
+    } else if (ci.value.trim().length < 2) {
+      showInlineErr(ci, 'cityErr', s.errNameShort);
+      hasErr = true;
+    }
 
     var sta = document.getElementById('fieldState');
-    if (!sta.value.trim()) flagErr(sta);
+    if (!sta.value) flagErr(sta);
 
     var zip = document.getElementById('fieldZip');
-    if (!zip.value.trim()) flagErr(zip);
+    if (!zip.value.trim()) {
+      flagErr(zip);
+    } else if (!isValidZip(zip.value.trim())) {
+      showInlineErr(zip, 'zipErr', s.errZip);
+      hasErr = true;
+    }
 
     var ms = document.getElementById('fieldMaritalStatus');
     if (!ms.value) flagErr(ms);
+
+    // Family members: validate any entered names / ages
+    var famRows = document.querySelectorAll('#familyRows .family-row');
+    for (var fi = 0; fi < famRows.length; fi++) {
+      var famName = famRows[fi].querySelector('.fam-name-inp');
+      var famNameErr = famRows[fi].querySelector('.fam-name-err');
+      var nv = famName.value.trim();
+      if (nv.length > 0 && nv.length < 2) {
+        famName.classList.add('err');
+        famNameErr.textContent = s.errNameShort;
+        famNameErr.classList.add('visible');
+        hasErr = true;
+      }
+      var famAge = famRows[fi].querySelector('.fam-age-inp');
+      var famAgeErr = famRows[fi].querySelector('.fam-age-err');
+      var av = famAge.value.trim();
+      if (av !== '') {
+        var an = parseInt(av, 10);
+        if (isNaN(an) || an < 0 || an > 120) {
+          famAge.classList.add('err');
+          famAgeErr.textContent = s.errAge;
+          famAgeErr.classList.add('visible');
+          hasErr = true;
+        }
+      }
+    }
 
     if (getChildrenSelection() === null) {
       document.getElementById('radioYes').classList.add('err');
@@ -676,7 +1011,32 @@ select option{background:#0c1a24;color:#e6f1f0}
   document.getElementById('radioYes').addEventListener('click', function() { selectChildren('yes'); });
   document.getElementById('radioNo').addEventListener('click', function() { selectChildren('no'); });
 
-  document.getElementById('fieldPhone').addEventListener('input', checkIntlPhone);
+  document.getElementById('fieldPhone').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldPhone'), 'phoneErr');
+    document.getElementById('intlNote').classList.remove('visible');
+  });
+  document.getElementById('fieldPhone').addEventListener('blur', validatePhoneField);
+
+  document.getElementById('fieldEmail').addEventListener('blur', validateEmailField);
+  document.getElementById('fieldEmail').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldEmail'), 'emailErr');
+  });
+
+  var fnEl = document.getElementById('fieldFirstName');
+  fnEl.addEventListener('blur', function() { validateNameField(fnEl, 'firstNameErr'); });
+  fnEl.addEventListener('input', function() { clearInlineErr(fnEl, 'firstNameErr'); });
+
+  var lnEl = document.getElementById('fieldLastName');
+  lnEl.addEventListener('blur', function() { validateNameField(lnEl, 'lastNameErr'); });
+  lnEl.addEventListener('input', function() { clearInlineErr(lnEl, 'lastNameErr'); });
+
+  var ciEl = document.getElementById('fieldCity');
+  ciEl.addEventListener('input', function() { clearInlineErr(ciEl, 'cityErr'); });
+
+  document.getElementById('fieldZip').addEventListener('blur', validateZipField);
+  document.getElementById('fieldZip').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldZip'), 'zipErr');
+  });
 
   document.getElementById('addFamilyBtn').addEventListener('click', function() { addFamilyRow(); });
 
@@ -700,11 +1060,14 @@ select option{background:#0c1a24;color:#e6f1f0}
     var phone = document.getElementById('fieldPhone').value.trim();
     var phoneTypeVal = document.getElementById('fieldPhoneType').value;
     var phoneType = phoneTypeVal ? phoneTypeVal : null;
-    var dateOfBirth = document.getElementById('fieldDob').value;
+    var dobMonthVal = document.getElementById('fieldDobMonth').value;
+    var dobDayVal = document.getElementById('fieldDobDay').value;
+    var dobYearVal = document.getElementById('fieldDobYear').value;
+    var dateOfBirth = dobYearVal + '-' + dobMonthVal + '-' + dobDayVal;
     var street = document.getElementById('fieldStreet').value.trim();
     var line2 = document.getElementById('fieldLine2').value.trim();
     var city = document.getElementById('fieldCity').value.trim();
-    var state = document.getElementById('fieldState').value.trim();
+    var state = document.getElementById('fieldState').value;
     var zip = document.getElementById('fieldZip').value.trim();
     var maritalStatus = document.getElementById('fieldMaritalStatus').value;
     var hasChildren = getChildrenSelection();
@@ -757,6 +1120,9 @@ select option{background:#0c1a24;color:#e6f1f0}
       });
   });
 
+  populateDayOptions();
+  populateYearOptions();
+  populateStateOptions();
   setLang('PT');
 })();
 </script>
