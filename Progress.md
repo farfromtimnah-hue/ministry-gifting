@@ -378,3 +378,25 @@ _Last updated: 2026-06-03 — Session 12 (Spanish language addition) complete._
 - **ministry-leader-form.html updated** — removed single actual/min/ideal fields; replaced with dynamic per-position section keyed by ministry selection. Each position row shows position name (bilingual, live-updates on language toggle) + Actual / Min / Ideal number inputs, all required. Custom positions free-text textarea below rows. Ministry dropdown expanded to all 26 ministries matching D1 ministry column exactly. Payload shape changed to `{preferred_name, full_name, whatsapp, ministry, positions: [{position_name, actual, min, ideal}], custom_positions_notes}`.
 - **Worker POST /ministry-leader-form updated** — now accepts new payload shape. For each position, runs UPDATE ministry_positions SET actual_count_form, min_count, ideal_count. Inserts every submission into leader_form_submissions (including custom_positions_notes). Returns `{ok: true}`.
 - **Worker GET /ministry-positions added** — auth required. Accepts optional `?ministry=` query param. Returns all rows from ministry_positions for that ministry (or all ministries if param omitted). Used by dashboard Ministry Health tab (next session).
+
+---
+
+## Session: Ministry Health Per-Position Redesign (2026-06-09)
+
+- **GET /ministry-health endpoint replaced** — now reads from ministry_positions table grouped by ministry. Leader name and WhatsApp pulled from ministry_health table. Per-position status computed (critical/needs_volunteers/healthy/no_data based on actual_count_form + actual_count_system vs min/ideal). Card-level status = worst position status. Array sorted by health severity. Worker deployed: Version ID 182721c0-2430-4145-8da3-76c6a08da875.
+- **GET /ministry-positions-alert endpoint added** — auth required. Returns all leader_form_submissions where custom_positions_notes is not null/empty. Used by owner to see amber alerts on expanded cards.
+- **Ministry Health tab redesigned** — per-position expand/collapse cards. Collapsed: ministry name, colored status badge, leader + WhatsApp, "X / Y positions healthy" summary, coaching notes textarea. Expanded: per-position rows each with bilingual name, 6px progress bar (color-coded), actual/min/ideal count label, status dot. Custom positions notes alert shown to owner only in expanded state. Cards sorted by health severity (critical first). Language toggle updates all labels in real time.
+- **MH_MINISTRY_PT updated** — corrected keys to match D1 seed data: "Welcome" (was "Hospitality - Welcome"), "Decoration" (was "Decoracao"), added "Stage Crew":"Palco".
+- **Dashboard commit:** f4af395 pushed to main. GitHub Actions will deploy.
+
+---
+
+## Session: New Believer Form Validation Fixes (2026-06-12)
+
+- **new-believer-form.html overhauled** — DOB date input replaced with three side-by-side dropdowns (Month/Day/Year), all required, combined into ISO `YYYY-MM-DD` on submit. Month names + placeholders translated PT/EN/ES; year range current→1920 descending; days 01–31.
+- **State text input → dropdown** — 50 US states + 26 Brazil states, displayed as "FL - Florida" / "SP - Sao Paulo", stored as 2-letter abbreviation, split into optgroups (Estados Unidos / Brasil) with translated labels and placeholder.
+- **Email validation** — exactly one @, ≥1 char before, domain with a dot, ≥2 chars after final dot, no spaces. Inline red error on blur (tri-lingual), cleared on input.
+- **Phone validation** — strips non-digits; <8 digits = red error; US 10-digit / BR mobile 11-digit (3rd digit 9) / BR landline 10-digit accepted; 11+ non-BR-mobile shows teal intl info note (non-blocking). Validates on blur + submit.
+- **Field audit** — First/Last name + City min 2 chars ("Name too short" message), trimmed on submit. ZIP/CEP format check (US 5 / 5+4, BR 8 / 5-3). Family member name min 2 if entered; family age must be 0–120 ("Invalid age"). All messages tri-lingual with inline red error styling (`.inline-err`).
+- **Validation logic verified** via node for email/zip/phone cases. JS parses clean.
+- **Commit:** 709b729 pushed to main.
