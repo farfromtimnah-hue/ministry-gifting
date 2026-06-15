@@ -400,3 +400,34 @@ _Last updated: 2026-06-03 — Session 12 (Spanish language addition) complete._
 - **Field audit** — First/Last name + City min 2 chars ("Name too short" message), trimmed on submit. ZIP/CEP format check (US 5 / 5+4, BR 8 / 5-3). Family member name min 2 if entered; family age must be 0–120 ("Invalid age"). All messages tri-lingual with inline red error styling (`.inline-err`).
 - **Validation logic verified** via node for email/zip/phone cases. JS parses clean.
 - **Commit:** 709b729 pushed to main.
+
+---
+
+## Session: Cafe Form + Per-Tab Toolbar Redesign (2026-06-15)
+
+### Cafe Form (ministry-gifting/cafe-form.html) — commit cd9fc94
+- Clone of new-believer-form.html with tri-lingual titles/subtitles for New Members Cafe
+- POSTs to `/cafe-intake`, sets `entryStage: "New Members Cafe"`
+- Success message: "Em breve voce recebera o link do grupo do WhatsApp do Cafe de Novos Membros" (PT/EN/ES)
+- All 11 fields, DOB dropdowns, email/phone/ZIP/state validation, family section, language chips identical to new-believer-form.html
+
+### Worker POST /cafe-intake — deployed f85539ff-fdf0-40fc-a33b-6dfa896d5d93
+- Sets `discipleship_stage = "New Members Cafe"` and `entry_stage = "New Members Cafe"` on connections
+- Does NOT set `connections.stage` (leave null — stage is volunteer pipeline only)
+- `stage_history = [{stage:"New Members Cafe", date:submittedAt, moved_by:"form"}]`
+- Returns `{ok:true, submissionId}` on success
+
+### Dashboard Per-Tab Toolbar Redesign (ltc-dashboard/src/App.jsx) — commit d76de0e
+Tabs 1+2 (New Believer, Start Class): Share Baptism Form + QR, Share Cafe Form + QR, search, language tally chips
+Tab 3 (Baptism): Share Cafe Form + QR, Share Assessment + QR, search, language tally chips
+Tab 4 (New Members Cafe): Share Assessment + QR, search, language tally chips
+Tab 5 (Volunteers/Active): UNCHANGED — all original buttons + 5 dropdowns + Type chips
+Tab 6 (Placed): search + Giftings + Languages + Groups dropdowns only
+Language tally chips: flag Portugues / flag English / flag Espanol — single-select toggle per tab, resets on tab change
+QR modal now dynamic: shows label and URL matching whichever link was opened
+
+### Placeholder — Baptism Form
+- Share Baptism Form button on Tabs 1+2 points to `baptism-form.html` (will 404 until built)
+- No dashboard changes needed when baptism-form.html is eventually built — button already points to correct URL
+
+_Last updated: 2026-06-15 — Session: Cafe Form + Per-Tab Toolbar Redesign complete._
