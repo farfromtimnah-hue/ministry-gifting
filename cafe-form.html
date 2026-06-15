@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Membros - Cafe de Novos Membros | Lagoinha Tampa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;background:#0a0a0f;color:#e6f1f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;line-height:1.5;display:flex;flex-direction:column;align-items:center;padding:32px 16px 64px}
+.wrap{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:24px}
+.logo-row{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.logo-img{height:52px;width:auto;display:block}
+.lang-toggle{display:flex;gap:6px;padding:4px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.07)}
+.lang-btn{padding:5px 14px;border:none;background:transparent;color:#6b7a82;cursor:pointer;border-radius:6px;font-size:13px;font-weight:600;font-family:inherit;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+.lang-btn.active{background:rgba(42,191,191,0.15);color:#2ABFBF;border:1px solid rgba(42,191,191,0.25)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;color:#e6f1f0;text-align:center;letter-spacing:-0.01em}
+.subtitle{font-size:15px;color:#6b7a82;text-align:center;max-width:380px;font-family:'Barlow Condensed',sans-serif}
+form{width:100%;display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:5px}
+label{font-size:13px;font-weight:600;color:#aebac0;letter-spacing:0.01em;text-transform:uppercase}
+.section-label{font-size:13px;font-weight:700;color:#2ABFBF;letter-spacing:0.04em;text-transform:uppercase;padding-top:4px}
+input,select,textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#e6f1f0;font-size:16px;font-family:'Barlow Condensed',sans-serif;padding:12px 14px;outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#2ABFBF}
+input::placeholder{color:#475a64}
+input.err,select.err{border-color:#E74C3C !important}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a82' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+select option{background:#0c1a24;color:#e6f1f0}
+.row-2{display:flex;gap:10px}
+.row-2 .field{flex:1}
+.row-2 .field-wide{flex:1.4}
+/* Radio buttons */
+.radio-group{display:flex;gap:10px}
+.radio-opt{display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;padding:11px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;flex:1;transition:all 0.15s;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;font-size:16px;font-family:'Barlow Condensed',sans-serif;color:#e6f1f0;font-weight:600}
+.radio-opt.selected{background:rgba(42,191,191,0.12);border-color:rgba(42,191,191,0.45);color:#2ABFBF}
+.radio-opt.err{border-color:#E74C3C}
+/* Preferred language chips */
+.chip-group{display:flex;gap:8px;flex-wrap:wrap}
+.lang-chip{padding:9px 22px;background:transparent;border:1.5px solid rgba(255,255,255,0.12);border-radius:24px;color:#aebac0;font-size:15px;font-weight:600;font-family:'Barlow Condensed',sans-serif;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+.lang-chip.active{background:rgba(42,191,191,0.15);border-color:#2ABFBF;color:#2ABFBF}
+.lang-chip.err{border-color:#E74C3C}
+/* International number note */
+.info-note{display:none;font-size:13px;color:#2ABFBF;padding:8px 12px;background:rgba(42,191,191,0.08);border:1px solid rgba(42,191,191,0.2);border-radius:8px;margin-top:2px}
+.info-note.visible{display:block}
+/* Inline field error message */
+.inline-err{display:none;font-size:13px;color:#E74C3C;margin-top:2px}
+.inline-err.visible{display:block}
+/* Family members */
+.family-section{display:none;flex-direction:column;gap:10px}
+.family-section.visible{display:flex}
+.family-heading{font-size:13px;font-weight:600;color:#aebac0;letter-spacing:0.01em;text-transform:uppercase}
+.family-row{display:flex;gap:8px;align-items:flex-end;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:9px}
+.family-fields{flex:1;display:flex;flex-direction:column;gap:8px}
+.family-inner{display:flex;gap:8px}
+.family-inner .field{flex:1}
+.remove-btn{flex-shrink:0;width:32px;height:32px;background:rgba(231,76,60,0.12);border:1px solid rgba(231,76,60,0.25);border-radius:7px;color:#E74C3C;font-size:15px;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;align-self:flex-end;padding:0;line-height:1}
+.add-family-btn{width:100%;padding:11px;border-radius:9px;background:transparent;border:1.5px solid #2ABFBF;color:#2ABFBF;font-size:15px;font-weight:700;font-family:'Barlow Condensed',sans-serif;cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+.add-family-btn:hover{background:rgba(42,191,191,0.07)}
+/* Submit */
+.submit-btn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,#2ABFBF,#0d9488);border:none;color:#fff;font-size:18px;font-weight:700;font-family:'Barlow Condensed',sans-serif;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.15s;margin-top:6px}
+.submit-btn:hover{opacity:0.9}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+.form-err{color:#E74C3C;font-size:14px;text-align:center;padding:8px 0;display:none}
+.form-err.visible{display:block}
+/* Divider */
+.divider{height:1px;background:rgba(255,255,255,0.06);width:100%;margin:2px 0}
+/* Success */
+.thank-you{display:none;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:40px 20px}
+.thank-you.visible{display:flex}
+.ty-icon{width:68px;height:68px;border-radius:50%;background:rgba(42,191,191,0.12);border:2px solid rgba(42,191,191,0.4);display:flex;align-items:center;justify-content:center;font-size:30px;color:#2ABFBF}
+.thank-you h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e6f1f0}
+.thank-you p{font-size:16px;color:#6b7a82;max-width:320px;font-family:'Barlow Condensed',sans-serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo-row">
+    <img src="LTC1.svg" alt="Lagoinha Tampa" class="logo-img">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnPT" type="button">PT</button>
+      <button class="lang-btn" id="btnEN" type="button">EN</button>
+      <button class="lang-btn" id="btnES" type="button">ES</button>
+    </div>
+  </div>
+
+  <h1 id="formHeading">Cadastro de Membros - Cafe de Novos Membros</h1>
+  <p class="subtitle" id="formSubtitle">Preencha o formulario para se cadastrar no Cafe de Novos Membros.</p>
+
+  <form id="nbForm" autocomplete="off">
+
+    <!-- Name row -->
+    <div class="row-2">
+      <div class="field">
+        <label id="lblFirstName">Nome</label>
+        <input type="text" id="fieldFirstName">
+        <div class="inline-err" id="firstNameErr"></div>
+      </div>
+      <div class="field">
+        <label id="lblLastName">Sobrenome</label>
+        <input type="text" id="fieldLastName">
+        <div class="inline-err" id="lastNameErr"></div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+      <label id="lblEmail">E-mail</label>
+      <input type="email" id="fieldEmail" placeholder="exemplo@exemplo.com">
+      <div class="inline-err" id="emailErr"></div>
+    </div>
+
+    <!-- Phone -->
+    <div class="field">
+      <label id="lblPhone">Telefone</label>
+      <input type="tel" id="fieldPhone" placeholder="(000) 000-0000">
+      <div class="inline-err" id="phoneErr"></div>
+      <div class="info-note" id="intlNote">Parece um numero internacional.</div>
+    </div>
+
+    <!-- Phone Type -->
+    <div class="field">
+      <label id="lblPhoneType">Tipo de telefone</label>
+      <select id="fieldPhoneType">
+        <option value="" disabled selected id="optPhoneTypeDefault">Selecionar</option>
+        <option value="Mobile" id="optMobile">Celular</option>
+        <option value="Home" id="optHome">Residencial</option>
+        <option value="Work" id="optWork">Trabalho</option>
+      </select>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="field">
+      <label id="lblDob">Data de nascimento</label>
+      <div class="row-2">
+        <select id="fieldDobMonth">
+          <option value="" disabled selected id="optDobMonth">Mes</option>
+        </select>
+        <select id="fieldDobDay">
+          <option value="" disabled selected id="optDobDay">Dia</option>
+        </select>
+        <select id="fieldDobYear">
+          <option value="" disabled selected id="optDobYear">Ano</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Address heading -->
+    <div class="field">
+      <span class="section-label" id="lblAddressSection">Endereco completo</span>
+    </div>
+
+    <div class="field">
+      <label id="lblStreet">Endereco</label>
+      <input type="text" id="fieldStreet">
+    </div>
+
+    <div class="field">
+      <label id="lblLine2">Endereco (cont.)</label>
+      <input type="text" id="fieldLine2">
+    </div>
+
+    <div class="field">
+      <label id="lblCity">Cidade</label>
+      <input type="text" id="fieldCity">
+      <div class="inline-err" id="cityErr"></div>
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <label id="lblState">Estado</label>
+        <select id="fieldState">
+          <option value="" disabled selected id="optStateDefault">Estado</option>
+          <optgroup id="optgrpUS" label="Estados Unidos"></optgroup>
+          <optgroup id="optgrpBR" label="Brasil"></optgroup>
+        </select>
+      </div>
+      <div class="field field-wide">
+        <label id="lblZip">CEP/Codigo postal</label>
+        <input type="text" id="fieldZip">
+        <div class="inline-err" id="zipErr"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Marital Status -->
+    <div class="field">
+      <label id="lblMaritalStatus">Estado civil</label>
+      <select id="fieldMaritalStatus">
+        <option value="" disabled selected id="optMaritalDefault">Selecionar</option>
+        <option value="Single" id="optSingle">Solteiro(a)</option>
+        <option value="Married" id="optMarried">Casado(a)</option>
+        <option value="Divorced" id="optDivorced">Divorciado(a)</option>
+        <option value="Widowed" id="optWidowed">Viuvo(a)</option>
+      </select>
+    </div>
+
+    <!-- Has Children -->
+    <div class="field">
+      <label id="lblChildren">Tem filhos?</label>
+      <div class="radio-group">
+        <div class="radio-opt" id="radioYes">
+          <span id="lblYes">Sim</span>
+        </div>
+        <div class="radio-opt" id="radioNo">
+          <span id="lblNo">Nao</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Family Members (shown when Yes) -->
+    <div class="family-section" id="familySection">
+      <span class="family-heading" id="familyHeading">Adicione os membros da familia (adultos e criancas)</span>
+      <div id="familyRows"></div>
+      <button type="button" class="add-family-btn" id="addFamilyBtn">+ Adicionar membro da familia</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Preferred Language chips -->
+    <div class="field">
+      <label id="lblPrefLang">Idioma preferido</label>
+      <div class="chip-group">
+        <button type="button" class="lang-chip" id="chipPortugues" data-value="Portugues">Portugues</button>
+        <button type="button" class="lang-chip" id="chipEnglish" data-value="English">English</button>
+        <button type="button" class="lang-chip" id="chipEspanol" data-value="Espanol">Espanol</button>
+      </div>
+    </div>
+
+    <div class="form-err" id="formErr">Por favor, preencha todos os campos obrigatorios.</div>
+    <button type="submit" class="submit-btn" id="submitBtn">Enviar</button>
+
+  </form>
+
+  <div class="thank-you" id="thankYou">
+    <div class="ty-icon">&#10003;</div>
+    <h2 id="tyHeading">Obrigado!</h2>
+    <p id="tyBody">Em breve voce recebera o link do grupo do WhatsApp do Cafe de Novos Membros.</p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var WORKER_URL = 'https://ltc-api.farfromtimnah.workers.dev';
+  var lang = 'PT';
+  var selectedLangs = [];
+
+  var S = {
+    PT: {
+      formHeading: 'Cadastro de Membros - Cafe de Novos Membros',
+      formSubtitle: 'Preencha o formulario para se cadastrar no Cafe de Novos Membros.',
+      lblFirstName: 'Nome',
+      lblLastName: 'Sobrenome',
+      lblEmail: 'E-mail',
+      lblPhone: 'Telefone',
+      intlNote: 'Parece um numero internacional.',
+      errPhone: 'Numero de telefone invalido. Digite pelo menos 8 digitos.',
+      errEmail: 'Por favor, insira um e-mail valido. Exemplo: nome@email.com',
+      lblPhoneType: 'Tipo de telefone',
+      phoneTypeDefault: 'Selecionar',
+      optMobile: 'Celular',
+      optHome: 'Residencial',
+      optWork: 'Trabalho',
+      lblDob: 'Data de nascimento',
+      dobMonth: 'Mes',
+      dobDay: 'Dia',
+      dobYear: 'Ano',
+      months: ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+      lblAddressSection: 'Endereco completo',
+      lblStreet: 'Endereco',
+      lblLine2: 'Endereco (cont.)',
+      lblCity: 'Cidade',
+      lblState: 'Estado',
+      stateDefault: 'Estado',
+      usGroup: 'Estados Unidos',
+      brGroup: 'Brasil',
+      lblZip: 'CEP/Codigo postal',
+      errZip: 'CEP/Codigo postal invalido.',
+      errNameShort: 'Nome muito curto.',
+      errAge: 'Idade invalida.',
+      lblMaritalStatus: 'Estado civil',
+      maritalDefault: 'Selecionar',
+      optSingle: 'Solteiro(a)',
+      optMarried: 'Casado(a)',
+      optDivorced: 'Divorciado(a)',
+      optWidowed: 'Viuvo(a)',
+      lblChildren: 'Tem filhos?',
+      lblYes: 'Sim',
+      lblNo: 'Nao',
+      familyHeading: 'Adicione os membros da familia (adultos e criancas)',
+      famName: 'Nome',
+      famAge: 'Idade',
+      famRel: 'Relacionamento',
+      relDefault: 'Selecionar',
+      relSpouse: 'Conjuge',
+      relChild: 'Filho(a)',
+      relParent: 'Pai/Mae',
+      relSibling: 'Irmao/Irma',
+      relOther: 'Outro',
+      addFamilyBtn: '+ Adicionar membro da familia',
+      lblPrefLang: 'Idioma preferido',
+      submit: 'Enviar',
+      submitting: 'Enviando...',
+      errRequired: 'Por favor, preencha todos os campos obrigatorios.',
+      errGeneral: 'Erro ao enviar. Tente novamente.',
+      tyHeading: 'Obrigado!',
+      tyBody: 'Em breve voce recebera o link do grupo do WhatsApp do Cafe de Novos Membros.'
+    },
+    EN: {
+      formHeading: 'Member Registration - New Members Cafe',
+      formSubtitle: 'Fill out the form to register for the New Members Cafe.',
+      lblFirstName: 'First Name',
+      lblLastName: 'Last Name',
+      lblEmail: 'Email',
+      lblPhone: 'Phone',
+      intlNote: 'Looks like an international number.',
+      errPhone: 'Invalid phone number. Please enter at least 8 digits.',
+      errEmail: 'Please enter a valid email. Example: name@email.com',
+      lblPhoneType: 'Phone type',
+      phoneTypeDefault: 'Select',
+      optMobile: 'Mobile',
+      optHome: 'Home',
+      optWork: 'Work',
+      lblDob: 'Date of birth',
+      dobMonth: 'Month',
+      dobDay: 'Day',
+      dobYear: 'Year',
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      lblAddressSection: 'Full address',
+      lblStreet: 'Street',
+      lblLine2: 'Address (cont.)',
+      lblCity: 'City',
+      lblState: 'State',
+      stateDefault: 'State',
+      usGroup: 'United States',
+      brGroup: 'Brazil',
+      lblZip: 'ZIP / Postal code',
+      errZip: 'Invalid ZIP / postal code.',
+      errNameShort: 'Name is too short.',
+      errAge: 'Invalid age.',
+      lblMaritalStatus: 'Marital status',
+      maritalDefault: 'Select',
+      optSingle: 'Single',
+      optMarried: 'Married',
+      optDivorced: 'Divorced',
+      optWidowed: 'Widowed',
+      lblChildren: 'Do you have children?',
+      lblYes: 'Yes',
+      lblNo: 'No',
+      familyHeading: 'Add family members (adults and children)',
+      famName: 'Name',
+      famAge: 'Age',
+      famRel: 'Relationship',
+      relDefault: 'Select',
+      relSpouse: 'Spouse',
+      relChild: 'Child',
+      relParent: 'Parent',
+      relSibling: 'Sibling',
+      relOther: 'Other',
+      addFamilyBtn: '+ Add family member',
+      lblPrefLang: 'Preferred language',
+      submit: 'Submit',
+      submitting: 'Submitting...',
+      errRequired: 'Please fill out all required fields.',
+      errGeneral: 'Submission error. Please try again.',
+      tyHeading: 'Thank you!',
+      tyBody: 'You will soon receive the WhatsApp group link for the New Members Cafe.'
+    },
+    ES: {
+      formHeading: 'Registro de Miembros - Cafe de Nuevos Miembros',
+      formSubtitle: 'Completa el formulario para registrarte en el Cafe de Nuevos Miembros.',
+      lblFirstName: 'Nombre',
+      lblLastName: 'Apellido',
+      lblEmail: 'Correo electronico',
+      lblPhone: 'Telefono',
+      intlNote: 'Parece un numero internacional.',
+      errPhone: 'Numero de telefono invalido. Ingresa al menos 8 digitos.',
+      errEmail: 'Por favor, ingresa un correo valido. Ejemplo: nombre@correo.com',
+      lblPhoneType: 'Tipo de telefono',
+      phoneTypeDefault: 'Seleccionar',
+      optMobile: 'Movil',
+      optHome: 'Casa',
+      optWork: 'Trabajo',
+      lblDob: 'Fecha de nacimiento',
+      dobMonth: 'Mes',
+      dobDay: 'Dia',
+      dobYear: 'Ano',
+      months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+      lblAddressSection: 'Direccion completa',
+      lblStreet: 'Calle',
+      lblLine2: 'Direccion (cont.)',
+      lblCity: 'Ciudad',
+      lblState: 'Estado',
+      stateDefault: 'Estado',
+      usGroup: 'Estados Unidos',
+      brGroup: 'Brasil',
+      lblZip: 'Codigo postal',
+      errZip: 'Codigo postal invalido.',
+      errNameShort: 'Nombre muy corto.',
+      errAge: 'Edad invalida.',
+      lblMaritalStatus: 'Estado civil',
+      maritalDefault: 'Seleccionar',
+      optSingle: 'Soltero/a',
+      optMarried: 'Casado/a',
+      optDivorced: 'Divorciado/a',
+      optWidowed: 'Viudo/a',
+      lblChildren: 'Tiene hijos?',
+      lblYes: 'Si',
+      lblNo: 'No',
+      familyHeading: 'Agregue los miembros de la familia (adultos y ninos)',
+      famName: 'Nombre',
+      famAge: 'Edad',
+      famRel: 'Relacion',
+      relDefault: 'Seleccionar',
+      relSpouse: 'Conyuge',
+      relChild: 'Hijo/a',
+      relParent: 'Padre/Madre',
+      relSibling: 'Hermano/a',
+      relOther: 'Otro',
+      addFamilyBtn: '+ Agregar miembro',
+      lblPrefLang: 'Idioma preferido',
+      submit: 'Enviar',
+      submitting: 'Enviando...',
+      errRequired: 'Por favor, completa todos los campos requeridos.',
+      errGeneral: 'Error al enviar. Intenta de nuevo.',
+      tyHeading: 'Gracias!',
+      tyBody: 'Pronto recibiras el enlace del grupo de WhatsApp del Cafe de Nuevos Miembros.'
+    }
+  };
+
+  var US_STATES = [
+    ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],
+    ['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['FL','Florida'],['GA','Georgia'],
+    ['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],
+    ['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],
+    ['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],
+    ['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],
+    ['NM','New Mexico'],['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],
+    ['OK','Oklahoma'],['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],
+    ['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],
+    ['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
+  ];
+  var BR_STATES = [
+    ['SP','Sao Paulo'],['RJ','Rio de Janeiro'],['MG','Minas Gerais'],['BA','Bahia'],['PR','Parana'],
+    ['RS','Rio Grande do Sul'],['PE','Pernambuco'],['CE','Ceara'],['PA','Para'],['MA','Maranhao'],
+    ['GO','Goias'],['AM','Amazonas'],['ES','Espirito Santo'],['PB','Paraiba'],['RN','Rio Grande do Norte'],
+    ['MT','Mato Grosso'],['AL','Alagoas'],['PI','Piaui'],['MS','Mato Grosso do Sul'],['DF','Distrito Federal'],
+    ['SE','Sergipe'],['RO','Rondonia'],['TO','Tocantins'],['AC','Acre'],['AP','Amapa'],['RR','Roraima']
+  ];
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function rebuildMonthOptions() {
+    var s = S[lang];
+    var sel = document.getElementById('fieldDobMonth');
+    var current = sel.value;
+    sel.innerHTML = '';
+    var def = document.createElement('option');
+    def.value = ''; def.disabled = true; def.id = 'optDobMonth';
+    def.textContent = s.dobMonth;
+    if (!current) def.selected = true;
+    sel.appendChild(def);
+    for (var i = 0; i < 12; i++) {
+      var opt = document.createElement('option');
+      opt.value = pad2(i + 1);
+      opt.textContent = s.months[i];
+      if (opt.value === current) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateDayOptions() {
+    var sel = document.getElementById('fieldDobDay');
+    for (var d = 1; d <= 31; d++) {
+      var opt = document.createElement('option');
+      opt.value = pad2(d);
+      opt.textContent = pad2(d);
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateYearOptions() {
+    var sel = document.getElementById('fieldDobYear');
+    var nowYear = new Date().getFullYear();
+    for (var y = nowYear; y >= 1920; y--) {
+      var opt = document.createElement('option');
+      opt.value = '' + y;
+      opt.textContent = '' + y;
+      sel.appendChild(opt);
+    }
+  }
+
+  function populateStateOptions() {
+    var us = document.getElementById('optgrpUS');
+    var br = document.getElementById('optgrpBR');
+    for (var i = 0; i < US_STATES.length; i++) {
+      var o = document.createElement('option');
+      o.value = US_STATES[i][0];
+      o.textContent = US_STATES[i][0] + ' - ' + US_STATES[i][1];
+      us.appendChild(o);
+    }
+    for (var j = 0; j < BR_STATES.length; j++) {
+      var o2 = document.createElement('option');
+      o2.value = BR_STATES[j][0];
+      o2.textContent = BR_STATES[j][0] + ' - ' + BR_STATES[j][1];
+      br.appendChild(o2);
+    }
+  }
+
+  function showInlineErr(inputEl, errId, msg) {
+    if (inputEl) inputEl.classList.add('err');
+    var e = document.getElementById(errId);
+    e.textContent = msg;
+    e.classList.add('visible');
+  }
+
+  function clearInlineErr(inputEl, errId) {
+    if (inputEl) inputEl.classList.remove('err');
+    var e = document.getElementById(errId);
+    e.textContent = '';
+    e.classList.remove('visible');
+  }
+
+  function isValidEmail(val) {
+    if (/\s/.test(val)) return false;
+    if ((val.match(/@/g) || []).length !== 1) return false;
+    var parts = val.split('@');
+    if (parts[0].length < 1) return false;
+    var domain = parts[1];
+    if (domain.indexOf('.') === -1) return false;
+    var afterDot = domain.substring(domain.lastIndexOf('.') + 1);
+    if (afterDot.length < 2) return false;
+    return true;
+  }
+
+  function validateEmailField() {
+    var em = document.getElementById('fieldEmail');
+    var val = em.value.trim();
+    if (val && !isValidEmail(val)) {
+      showInlineErr(em, 'emailErr', S[lang].errEmail);
+      return false;
+    }
+    clearInlineErr(em, 'emailErr');
+    return true;
+  }
+
+  function validatePhoneField() {
+    var ph = document.getElementById('fieldPhone');
+    var note = document.getElementById('intlNote');
+    var digits = ph.value.replace(/\D/g, '');
+    clearInlineErr(ph, 'phoneErr');
+    note.classList.remove('visible');
+    if (digits.length === 0) return true;
+    if (digits.length < 8) {
+      showInlineErr(ph, 'phoneErr', S[lang].errPhone);
+      return false;
+    }
+    var brMobile = digits.length === 11 && digits.charAt(2) === '9';
+    if (digits.length >= 11 && !brMobile) {
+      note.classList.add('visible');
+    }
+    return true;
+  }
+
+  function validateNameField(inputEl, errId) {
+    var val = inputEl.value.trim();
+    if (val.length > 0 && val.length < 2) {
+      showInlineErr(inputEl, errId, S[lang].errNameShort);
+      return false;
+    }
+    clearInlineErr(inputEl, errId);
+    return true;
+  }
+
+  function isValidZip(val) {
+    var v = val.trim();
+    if (/^\d{5}(-\d{4})?$/.test(v)) return true;        // US ZIP or ZIP+4
+    if (/^\d{8}$/.test(v)) return true;                 // BR CEP no dash
+    if (/^\d{5}-\d{3}$/.test(v)) return true;           // BR CEP with dash
+    return false;
+  }
+
+  function validateZipField() {
+    var zip = document.getElementById('fieldZip');
+    var val = zip.value.trim();
+    if (val && !isValidZip(val)) {
+      showInlineErr(zip, 'zipErr', S[lang].errZip);
+      return false;
+    }
+    clearInlineErr(zip, 'zipErr');
+    return true;
+  }
+
+  function setLang(l) {
+    lang = l;
+    var s = S[l];
+
+    document.getElementById('formHeading').textContent = s.formHeading;
+    document.getElementById('formSubtitle').textContent = s.formSubtitle;
+    document.getElementById('lblFirstName').textContent = s.lblFirstName;
+    document.getElementById('lblLastName').textContent = s.lblLastName;
+    document.getElementById('lblEmail').textContent = s.lblEmail;
+    document.getElementById('lblPhone').textContent = s.lblPhone;
+    document.getElementById('intlNote').textContent = s.intlNote;
+    document.getElementById('lblPhoneType').textContent = s.lblPhoneType;
+    document.getElementById('optPhoneTypeDefault').textContent = s.phoneTypeDefault;
+    document.getElementById('optMobile').textContent = s.optMobile;
+    document.getElementById('optHome').textContent = s.optHome;
+    document.getElementById('optWork').textContent = s.optWork;
+    document.getElementById('lblDob').textContent = s.lblDob;
+    document.getElementById('optDobMonth').textContent = s.dobMonth;
+    document.getElementById('optDobDay').textContent = s.dobDay;
+    document.getElementById('optDobYear').textContent = s.dobYear;
+    rebuildMonthOptions();
+    document.getElementById('lblAddressSection').textContent = s.lblAddressSection;
+    document.getElementById('lblStreet').textContent = s.lblStreet;
+    document.getElementById('lblLine2').textContent = s.lblLine2;
+    document.getElementById('lblCity').textContent = s.lblCity;
+    document.getElementById('lblState').textContent = s.lblState;
+    document.getElementById('optStateDefault').textContent = s.stateDefault;
+    document.getElementById('optgrpUS').label = s.usGroup;
+    document.getElementById('optgrpBR').label = s.brGroup;
+    document.getElementById('lblZip').textContent = s.lblZip;
+    document.getElementById('lblMaritalStatus').textContent = s.lblMaritalStatus;
+    document.getElementById('optMaritalDefault').textContent = s.maritalDefault;
+    document.getElementById('optSingle').textContent = s.optSingle;
+    document.getElementById('optMarried').textContent = s.optMarried;
+    document.getElementById('optDivorced').textContent = s.optDivorced;
+    document.getElementById('optWidowed').textContent = s.optWidowed;
+    document.getElementById('lblChildren').textContent = s.lblChildren;
+    document.getElementById('lblYes').textContent = s.lblYes;
+    document.getElementById('lblNo').textContent = s.lblNo;
+    document.getElementById('familyHeading').textContent = s.familyHeading;
+    document.getElementById('addFamilyBtn').textContent = s.addFamilyBtn;
+    document.getElementById('lblPrefLang').textContent = s.lblPrefLang;
+    document.getElementById('submitBtn').textContent = s.submit;
+    document.getElementById('tyHeading').textContent = s.tyHeading;
+    document.getElementById('tyBody').textContent = s.tyBody;
+
+    // Update existing family row labels and relationship dropdowns
+    var famNameLabels = document.querySelectorAll('.fam-name-lbl');
+    for (var i = 0; i < famNameLabels.length; i++) {
+      famNameLabels[i].textContent = s.famName;
+    }
+    var famAgeLabels = document.querySelectorAll('.fam-age-lbl');
+    for (var i = 0; i < famAgeLabels.length; i++) {
+      famAgeLabels[i].textContent = s.famAge;
+    }
+    var famRelLabels = document.querySelectorAll('.fam-rel-lbl');
+    for (var i = 0; i < famRelLabels.length; i++) {
+      famRelLabels[i].textContent = s.famRel;
+    }
+    var relSelects = document.querySelectorAll('.fam-rel-select');
+    for (var i = 0; i < relSelects.length; i++) {
+      rebuildRelSelect(relSelects[i]);
+    }
+
+    document.getElementById('btnPT').classList.toggle('active', l === 'PT');
+    document.getElementById('btnEN').classList.toggle('active', l === 'EN');
+    document.getElementById('btnES').classList.toggle('active', l === 'ES');
+  }
+
+  function rebuildRelSelect(sel) {
+    var s = S[lang];
+    var currentVal = sel.value;
+    sel.innerHTML = '';
+    var opts = [
+      {value: '', label: s.relDefault, disabled: true},
+      {value: 'Spouse', label: s.relSpouse},
+      {value: 'Child', label: s.relChild},
+      {value: 'Parent', label: s.relParent},
+      {value: 'Sibling', label: s.relSibling},
+      {value: 'Other', label: s.relOther}
+    ];
+    for (var i = 0; i < opts.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = opts[i].value;
+      opt.textContent = opts[i].label;
+      if (opts[i].disabled) {
+        opt.disabled = true;
+        if (!currentVal) opt.selected = true;
+      }
+      if (opts[i].value === currentVal) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  }
+
+  function addFamilyRow() {
+    var s = S[lang];
+    var container = document.getElementById('familyRows');
+    var row = document.createElement('div');
+    row.className = 'family-row';
+
+    var fields = document.createElement('div');
+    fields.className = 'family-fields';
+
+    // Name
+    var nameField = document.createElement('div');
+    nameField.className = 'field';
+    var nameLbl = document.createElement('label');
+    nameLbl.className = 'fam-name-lbl';
+    nameLbl.textContent = s.famName;
+    var nameInp = document.createElement('input');
+    nameInp.type = 'text';
+    nameInp.className = 'fam-name-inp';
+    var nameErr = document.createElement('div');
+    nameErr.className = 'inline-err fam-name-err';
+    nameField.appendChild(nameLbl);
+    nameField.appendChild(nameInp);
+    nameField.appendChild(nameErr);
+    nameInp.addEventListener('blur', function() {
+      var v = nameInp.value.trim();
+      if (v.length > 0 && v.length < 2) {
+        nameInp.classList.add('err');
+        nameErr.textContent = S[lang].errNameShort;
+        nameErr.classList.add('visible');
+      } else {
+        nameInp.classList.remove('err');
+        nameErr.classList.remove('visible');
+      }
+    });
+    nameInp.addEventListener('input', function() {
+      nameInp.classList.remove('err');
+      nameErr.classList.remove('visible');
+    });
+
+    // Age + Relationship row
+    var inner = document.createElement('div');
+    inner.className = 'family-inner';
+
+    var ageField = document.createElement('div');
+    ageField.className = 'field';
+    var ageLbl = document.createElement('label');
+    ageLbl.className = 'fam-age-lbl';
+    ageLbl.textContent = s.famAge;
+    var ageInp = document.createElement('input');
+    ageInp.type = 'number';
+    ageInp.min = '0';
+    ageInp.max = '120';
+    ageInp.className = 'fam-age-inp';
+    var ageErr = document.createElement('div');
+    ageErr.className = 'inline-err fam-age-err';
+    ageField.appendChild(ageLbl);
+    ageField.appendChild(ageInp);
+    ageField.appendChild(ageErr);
+    ageInp.addEventListener('blur', function() {
+      var raw = ageInp.value.trim();
+      if (raw !== '') {
+        var n = parseInt(raw, 10);
+        if (isNaN(n) || n < 0 || n > 120) {
+          ageInp.classList.add('err');
+          ageErr.textContent = S[lang].errAge;
+          ageErr.classList.add('visible');
+          return;
+        }
+      }
+      ageInp.classList.remove('err');
+      ageErr.classList.remove('visible');
+    });
+    ageInp.addEventListener('input', function() {
+      ageInp.classList.remove('err');
+      ageErr.classList.remove('visible');
+    });
+
+    var relField = document.createElement('div');
+    relField.className = 'field';
+    var relLbl = document.createElement('label');
+    relLbl.className = 'fam-rel-lbl';
+    relLbl.textContent = s.famRel;
+    var relSel = document.createElement('select');
+    relSel.className = 'fam-rel-select';
+    rebuildRelSelect(relSel);
+    relField.appendChild(relLbl);
+    relField.appendChild(relSel);
+
+    inner.appendChild(ageField);
+    inner.appendChild(relField);
+    fields.appendChild(nameField);
+    fields.appendChild(inner);
+
+    var removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-btn';
+    removeBtn.textContent = 'x';
+
+    row.appendChild(fields);
+    row.appendChild(removeBtn);
+    container.appendChild(row);
+
+    removeBtn.addEventListener('click', function() {
+      container.removeChild(row);
+    });
+  }
+
+  function collectFamilyData() {
+    var rows = document.querySelectorAll('#familyRows .family-row');
+    var result = [];
+    for (var i = 0; i < rows.length; i++) {
+      var nameVal = rows[i].querySelector('.fam-name-inp').value.trim();
+      var ageRaw = rows[i].querySelector('.fam-age-inp').value.trim();
+      var relVal = rows[i].querySelector('.fam-rel-select').value;
+      result.push({
+        name: nameVal,
+        age: ageRaw !== '' ? parseInt(ageRaw, 10) : 0,
+        relationship: relVal
+      });
+    }
+    return result;
+  }
+
+  function getChildrenSelection() {
+    if (document.getElementById('radioYes').classList.contains('selected')) return true;
+    if (document.getElementById('radioNo').classList.contains('selected')) return false;
+    return null;
+  }
+
+  function selectChildren(val) {
+    var yesEl = document.getElementById('radioYes');
+    var noEl = document.getElementById('radioNo');
+    yesEl.classList.remove('err');
+    noEl.classList.remove('err');
+    yesEl.classList.toggle('selected', val === 'yes');
+    noEl.classList.toggle('selected', val === 'no');
+    var sec = document.getElementById('familySection');
+    if (val === 'yes') {
+      sec.classList.add('visible');
+    } else {
+      sec.classList.remove('visible');
+    }
+  }
+
+  function togglePrefLang(chipId) {
+    var chip = document.getElementById(chipId);
+    var value = chip.getAttribute('data-value');
+    // Clear err state on all chips when user interacts
+    document.getElementById('chipPortugues').classList.remove('err');
+    document.getElementById('chipEnglish').classList.remove('err');
+    document.getElementById('chipEspanol').classList.remove('err');
+    if (chip.classList.contains('active')) {
+      chip.classList.remove('active');
+      var newArr = [];
+      for (var i = 0; i < selectedLangs.length; i++) {
+        if (selectedLangs[i] !== value) newArr.push(selectedLangs[i]);
+      }
+      selectedLangs = newArr;
+    } else {
+      chip.classList.add('active');
+      selectedLangs.push(value);
+    }
+  }
+
+  function clearValidation() {
+    var errEls = document.querySelectorAll('.err');
+    for (var i = 0; i < errEls.length; i++) {
+      errEls[i].classList.remove('err');
+    }
+    var inlineEls = document.querySelectorAll('.inline-err');
+    for (var j = 0; j < inlineEls.length; j++) {
+      inlineEls[j].classList.remove('visible');
+    }
+    document.getElementById('formErr').classList.remove('visible');
+  }
+
+  function validateForm() {
+    var s = S[lang];
+    var hasErr = false;
+
+    function flagErr(el) {
+      el.classList.add('err');
+      hasErr = true;
+    }
+
+    var fn = document.getElementById('fieldFirstName');
+    if (!fn.value.trim()) {
+      flagErr(fn);
+    } else if (fn.value.trim().length < 2) {
+      showInlineErr(fn, 'firstNameErr', s.errNameShort);
+      hasErr = true;
+    }
+
+    var ln = document.getElementById('fieldLastName');
+    if (!ln.value.trim()) {
+      flagErr(ln);
+    } else if (ln.value.trim().length < 2) {
+      showInlineErr(ln, 'lastNameErr', s.errNameShort);
+      hasErr = true;
+    }
+
+    var em = document.getElementById('fieldEmail');
+    if (!em.value.trim()) {
+      flagErr(em);
+    } else if (!isValidEmail(em.value.trim())) {
+      showInlineErr(em, 'emailErr', s.errEmail);
+      hasErr = true;
+    }
+
+    var ph = document.getElementById('fieldPhone');
+    var digits = ph.value.replace(/\D/g, '');
+    if (digits.length === 0) {
+      flagErr(ph);
+    } else if (digits.length < 8) {
+      showInlineErr(ph, 'phoneErr', s.errPhone);
+      hasErr = true;
+    } else {
+      validatePhoneField();
+    }
+
+    var dobMonth = document.getElementById('fieldDobMonth');
+    var dobDay = document.getElementById('fieldDobDay');
+    var dobYear = document.getElementById('fieldDobYear');
+    if (!dobMonth.value) flagErr(dobMonth);
+    if (!dobDay.value) flagErr(dobDay);
+    if (!dobYear.value) flagErr(dobYear);
+
+    var st = document.getElementById('fieldStreet');
+    if (!st.value.trim()) flagErr(st);
+
+    var ci = document.getElementById('fieldCity');
+    if (!ci.value.trim()) {
+      flagErr(ci);
+    } else if (ci.value.trim().length < 2) {
+      showInlineErr(ci, 'cityErr', s.errNameShort);
+      hasErr = true;
+    }
+
+    var sta = document.getElementById('fieldState');
+    if (!sta.value) flagErr(sta);
+
+    var zip = document.getElementById('fieldZip');
+    if (!zip.value.trim()) {
+      flagErr(zip);
+    } else if (!isValidZip(zip.value.trim())) {
+      showInlineErr(zip, 'zipErr', s.errZip);
+      hasErr = true;
+    }
+
+    var ms = document.getElementById('fieldMaritalStatus');
+    if (!ms.value) flagErr(ms);
+
+    // Family members: validate any entered names / ages
+    var famRows = document.querySelectorAll('#familyRows .family-row');
+    for (var fi = 0; fi < famRows.length; fi++) {
+      var famName = famRows[fi].querySelector('.fam-name-inp');
+      var famNameErr = famRows[fi].querySelector('.fam-name-err');
+      var nv = famName.value.trim();
+      if (nv.length > 0 && nv.length < 2) {
+        famName.classList.add('err');
+        famNameErr.textContent = s.errNameShort;
+        famNameErr.classList.add('visible');
+        hasErr = true;
+      }
+      var famAge = famRows[fi].querySelector('.fam-age-inp');
+      var famAgeErr = famRows[fi].querySelector('.fam-age-err');
+      var av = famAge.value.trim();
+      if (av !== '') {
+        var an = parseInt(av, 10);
+        if (isNaN(an) || an < 0 || an > 120) {
+          famAge.classList.add('err');
+          famAgeErr.textContent = s.errAge;
+          famAgeErr.classList.add('visible');
+          hasErr = true;
+        }
+      }
+    }
+
+    if (getChildrenSelection() === null) {
+      document.getElementById('radioYes').classList.add('err');
+      document.getElementById('radioNo').classList.add('err');
+      hasErr = true;
+    }
+
+    if (selectedLangs.length === 0) {
+      document.getElementById('chipPortugues').classList.add('err');
+      document.getElementById('chipEnglish').classList.add('err');
+      document.getElementById('chipEspanol').classList.add('err');
+      hasErr = true;
+    }
+
+    if (hasErr) {
+      var errEl = document.getElementById('formErr');
+      errEl.textContent = s.errRequired;
+      errEl.classList.add('visible');
+    }
+
+    return !hasErr;
+  }
+
+  // ---- Event listeners ----
+
+  document.getElementById('btnPT').addEventListener('click', function() { setLang('PT'); });
+  document.getElementById('btnEN').addEventListener('click', function() { setLang('EN'); });
+  document.getElementById('btnES').addEventListener('click', function() { setLang('ES'); });
+
+  document.getElementById('radioYes').addEventListener('click', function() { selectChildren('yes'); });
+  document.getElementById('radioNo').addEventListener('click', function() { selectChildren('no'); });
+
+  document.getElementById('fieldPhone').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldPhone'), 'phoneErr');
+    document.getElementById('intlNote').classList.remove('visible');
+  });
+  document.getElementById('fieldPhone').addEventListener('blur', validatePhoneField);
+
+  document.getElementById('fieldEmail').addEventListener('blur', validateEmailField);
+  document.getElementById('fieldEmail').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldEmail'), 'emailErr');
+  });
+
+  var fnEl = document.getElementById('fieldFirstName');
+  fnEl.addEventListener('blur', function() { validateNameField(fnEl, 'firstNameErr'); });
+  fnEl.addEventListener('input', function() { clearInlineErr(fnEl, 'firstNameErr'); });
+
+  var lnEl = document.getElementById('fieldLastName');
+  lnEl.addEventListener('blur', function() { validateNameField(lnEl, 'lastNameErr'); });
+  lnEl.addEventListener('input', function() { clearInlineErr(lnEl, 'lastNameErr'); });
+
+  var ciEl = document.getElementById('fieldCity');
+  ciEl.addEventListener('input', function() { clearInlineErr(ciEl, 'cityErr'); });
+
+  document.getElementById('fieldZip').addEventListener('blur', validateZipField);
+  document.getElementById('fieldZip').addEventListener('input', function() {
+    clearInlineErr(document.getElementById('fieldZip'), 'zipErr');
+  });
+
+  document.getElementById('addFamilyBtn').addEventListener('click', function() { addFamilyRow(); });
+
+  document.getElementById('chipPortugues').addEventListener('click', function() { togglePrefLang('chipPortugues'); });
+  document.getElementById('chipEnglish').addEventListener('click', function() { togglePrefLang('chipEnglish'); });
+  document.getElementById('chipEspanol').addEventListener('click', function() { togglePrefLang('chipEspanol'); });
+
+  document.getElementById('nbForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearValidation();
+    if (!validateForm()) return;
+
+    var s = S[lang];
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = s.submitting;
+
+    var firstName = document.getElementById('fieldFirstName').value.trim();
+    var lastName = document.getElementById('fieldLastName').value.trim();
+    var email = document.getElementById('fieldEmail').value.trim();
+    var phone = document.getElementById('fieldPhone').value.trim();
+    var phoneTypeVal = document.getElementById('fieldPhoneType').value;
+    var phoneType = phoneTypeVal ? phoneTypeVal : null;
+    var dobMonthVal = document.getElementById('fieldDobMonth').value;
+    var dobDayVal = document.getElementById('fieldDobDay').value;
+    var dobYearVal = document.getElementById('fieldDobYear').value;
+    var dateOfBirth = dobYearVal + '-' + dobMonthVal + '-' + dobDayVal;
+    var street = document.getElementById('fieldStreet').value.trim();
+    var line2 = document.getElementById('fieldLine2').value.trim();
+    var city = document.getElementById('fieldCity').value.trim();
+    var state = document.getElementById('fieldState').value;
+    var zip = document.getElementById('fieldZip').value.trim();
+    var maritalStatus = document.getElementById('fieldMaritalStatus').value;
+    var hasChildren = getChildrenSelection();
+    var familyData = collectFamilyData();
+    var submittedAt = new Date().toISOString();
+
+    var addrParts = [street];
+    if (line2) addrParts.push(line2);
+    addrParts.push(city, state, zip);
+    var address = addrParts.join(', ');
+
+    var payload = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      phoneType: phoneType,
+      dateOfBirth: dateOfBirth,
+      address: address,
+      maritalStatus: maritalStatus,
+      hasChildren: hasChildren,
+      familyMembers: JSON.stringify(familyData),
+      preferredLanguage: JSON.stringify(selectedLangs),
+      entryStage: 'New Members Cafe',
+      formLanguage: lang,
+      submittedAt: submittedAt
+    };
+
+    fetch(WORKER_URL + '/cafe-intake', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    })
+      .then(function(r) {
+        if (!r.ok) throw new Error('response not ok');
+        return r.json();
+      })
+      .then(function() {
+        document.getElementById('nbForm').style.display = 'none';
+        document.getElementById('formHeading').style.display = 'none';
+        document.getElementById('formSubtitle').style.display = 'none';
+        document.getElementById('thankYou').classList.add('visible');
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = s.submit;
+        var errEl = document.getElementById('formErr');
+        errEl.textContent = s.errGeneral;
+        errEl.classList.add('visible');
+      });
+  });
+
+  populateDayOptions();
+  populateYearOptions();
+  populateStateOptions();
+  setLang('PT');
+})();
+</script>
+</body>
+</html>
