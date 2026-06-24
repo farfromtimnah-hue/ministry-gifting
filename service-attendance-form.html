@@ -192,8 +192,9 @@ select option{background:#0c1a24;color:#e6f1f0}
 
   function updateTotal() {
     var templo = parseInt(document.getElementById('fieldTemplo').value, 10) || 0;
+    var volunteers = parseInt(document.getElementById('fieldVolunteers').value, 10) || 0;
     var kids = isRocket() ? 0 : (parseInt(document.getElementById('fieldKids').value, 10) || 0);
-    document.getElementById('totalDisplay').textContent = templo + kids;
+    document.getElementById('totalDisplay').textContent = templo + volunteers + kids;
   }
 
   function setLang(l) {
@@ -244,6 +245,7 @@ select option{background:#0c1a24;color:#e6f1f0}
 
   document.getElementById('fieldService').addEventListener('change', updateKidsVisibility);
   document.getElementById('fieldTemplo').addEventListener('input', updateTotal);
+  document.getElementById('fieldVolunteers').addEventListener('input', updateTotal);
   document.getElementById('fieldKids').addEventListener('input', updateTotal);
 
   document.getElementById('attendanceForm').addEventListener('submit', function(e) {
@@ -255,7 +257,7 @@ select option{background:#0c1a24;color:#e6f1f0}
     var volunteers = parseInt(document.getElementById('fieldVolunteers').value, 10);
     var kidsRaw = isRocket() ? null : parseInt(document.getElementById('fieldKids').value, 10);
     var kids = (kidsRaw === null || isNaN(kidsRaw)) ? null : kidsRaw;
-    var total = isNaN(templo) ? 0 : templo + (kids !== null ? kids : 0);
+    var total = isNaN(templo) ? 0 : templo + (isNaN(volunteers) ? 0 : volunteers) + (kids !== null ? kids : 0);
     var submitted_by = document.getElementById('fieldSubmittedBy').value.trim();
 
     var btn = document.getElementById('submitBtn');
