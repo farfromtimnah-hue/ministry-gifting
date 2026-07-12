@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmar Escala | Lagoinha Tampa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;background:#0a0a0f;color:#e6f1f0;font-family:'Inter',sans-serif;font-size:15px;line-height:1.5;display:flex;flex-direction:column;align-items:center;padding:32px 16px 64px}
+.wrap{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:28px}
+.logo-row{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.logo-img{height:48px;width:auto;display:block}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#e6f1f0;text-align:center;letter-spacing:-0.01em}
+.card{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px 22px;display:flex;flex-direction:column;gap:18px}
+.greeting{font-size:15px;color:#aebac0;text-align:center}
+.detail-list{display:flex;flex-direction:column;gap:10px}
+.detail-row{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px}
+.detail-label{font-size:11px;font-weight:600;color:#6b7a82;text-transform:uppercase;letter-spacing:0.05em}
+.detail-value{font-size:15px;font-weight:600;color:#e6f1f0}
+.detail-value.highlight{color:#2ABFBF}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.confirm-btn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,#2ABFBF,#0d9488);border:none;color:#fff;font-size:16px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;letter-spacing:0.02em;transition:opacity 0.15s}
+.confirm-btn:hover{opacity:0.9}
+.confirm-btn:disabled{opacity:0.5;cursor:not-allowed}
+.reschedule-btn{width:100%;padding:14px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(42,191,191,0.35);color:#2ABFBF;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.15s}
+.reschedule-btn:hover{background:rgba(42,191,191,0.1)}
+.reschedule-btn:disabled{opacity:0.5;cursor:not-allowed}
+.state{display:none;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:40px 20px}
+.state.visible{display:flex}
+.state-icon{width:64px;height:64px;border-radius:50%;background:rgba(39,174,96,0.15);border:2px solid rgba(39,174,96,0.4);display:flex;align-items:center;justify-content:center;font-size:28px}
+.state-icon.info{background:rgba(42,191,191,0.12);border-color:rgba(42,191,191,0.35)}
+.state-icon.warn{background:rgba(231,76,60,0.12);border-color:rgba(231,76,60,0.35)}
+.state h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e6f1f0}
+.state p{font-size:14px;color:#aebac0;max-width:340px}
+.loading{color:#6b7a82;font-size:14px;text-align:center;padding:40px 20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo-row">
+    <img src="LTC1.svg" alt="Lagoinha Tampa" class="logo-img">
+  </div>
+
+  <div class="loading" id="loading">Carregando...</div>
+
+  <h1 id="heading" style="display:none"></h1>
+
+  <div class="card" id="card" style="display:none">
+    <div class="greeting" id="greeting"></div>
+    <div class="detail-list">
+      <div class="detail-row">
+        <span class="detail-label" id="lblPosition"></span>
+        <span class="detail-value highlight" id="valPosition"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label" id="lblMinistry"></span>
+        <span class="detail-value" id="valMinistry"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label" id="lblService"></span>
+        <span class="detail-value" id="valService"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label" id="lblDate"></span>
+        <span class="detail-value" id="valDate"></span>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="confirm-btn" id="btnConfirm" type="button"></button>
+      <button class="reschedule-btn" id="btnReschedule" type="button"></button>
+    </div>
+  </div>
+
+  <div class="state" id="stateThanks">
+    <div class="state-icon" id="thanksIcon">&#10003;</div>
+    <h2 id="thanksHeading"></h2>
+    <p id="thanksBody"></p>
+  </div>
+
+  <div class="state" id="stateError">
+    <div class="state-icon warn">!</div>
+    <h2 id="errorHeading"></h2>
+    <p id="errorBody"></p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var WORKER_URL = 'https://ltc-api.farfromtimnah.workers.dev';
+
+  // Language comes from the API (submissions.language). PT is only the
+  // fallback before language is known or when the token is not found.
+  var lang = 'PT';
+
+  var strings = {
+    PT: {
+      heading: 'Sua Escala para Servir',
+      greeting: 'Que bom ter voce com a gente! Aqui estao os detalhes da sua escala:',
+      lblPosition: 'Funcao',
+      lblMinistry: 'Ministerio',
+      lblService: 'Culto',
+      lblDate: 'Data',
+      btnConfirm: 'Sim, posso servir!',
+      btnReschedule: 'Adoraria servir, só em outro dia',
+      confirmThanksHeading: 'Confirmado!',
+      confirmThanksBody: 'Que alegria! Podemos contar com você. Agradecemos por você servir!',
+      rescheduleThanksHeading: 'Recebido!',
+      rescheduleThanksBody: 'Perfeito! Seu líder vai saber que você topa servir, só precisa de outra data.',
+      alreadyHeading: 'Resposta ja recebida',
+      alreadyBody: 'Voce ja respondeu a este convite. Obrigado!',
+      notFoundHeading: 'Link nao encontrado',
+      notFoundBody: 'Este link de confirmacao nao foi encontrado ou nao esta mais ativo. Fale com seu lider para receber um novo link.',
+      errorHeading: 'Algo deu errado',
+      errorBody: 'Nao foi possivel enviar sua resposta. Tente novamente em instantes.',
+      sending: 'Enviando...'
+    },
+    EN: {
+      heading: 'Your Serving Schedule',
+      greeting: 'So glad to have you with us! Here are the details of your schedule:',
+      lblPosition: 'Position',
+      lblMinistry: 'Ministry',
+      lblService: 'Service',
+      lblDate: 'Date',
+      btnConfirm: "Yes, I'll be there!",
+      btnReschedule: 'Would love to serve, just on a different day',
+      confirmThanksHeading: 'Confirmed!',
+      confirmThanksBody: "Wonderful! We're so glad to have you serving with us. Thank you!",
+      rescheduleThanksHeading: 'Got it!',
+      rescheduleThanksBody: 'Perfect! Your leader will know you are glad to serve, just need a different date.',
+      alreadyHeading: 'Response already received',
+      alreadyBody: 'You have already responded to this invitation. Thank you!',
+      notFoundHeading: 'Link not found',
+      notFoundBody: 'This confirmation link was not found or is no longer active. Please ask your leader for a new link.',
+      errorHeading: 'Something went wrong',
+      errorBody: 'We could not send your response. Please try again in a moment.',
+      sending: 'Sending...'
+    }
+  };
+
+  function s() { return strings[lang] || strings.PT; }
+
+  var token = new URLSearchParams(window.location.search).get('token') || '';
+
+  function hideAll() {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('heading').style.display = 'none';
+    document.getElementById('card').style.display = 'none';
+    document.getElementById('stateThanks').classList.remove('visible');
+    document.getElementById('stateError').classList.remove('visible');
+  }
+
+  function showError(heading, body) {
+    hideAll();
+    document.getElementById('errorHeading').textContent = heading;
+    document.getElementById('errorBody').textContent = body;
+    document.getElementById('stateError').classList.add('visible');
+  }
+
+  function showThanks(heading, body, iconClass) {
+    hideAll();
+    var icon = document.getElementById('thanksIcon');
+    icon.className = 'state-icon' + (iconClass ? ' ' + iconClass : '');
+    document.getElementById('thanksHeading').textContent = heading;
+    document.getElementById('thanksBody').textContent = body;
+    document.getElementById('stateThanks').classList.add('visible');
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    var d = new Date(dateStr + 'T00:00:00');
+    if (isNaN(d.getTime())) return dateStr;
+    var locale = lang === 'EN' ? 'en-US' : 'pt-BR';
+    return d.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderCard(data) {
+    hideAll();
+    var t = s();
+    document.getElementById('heading').textContent = t.heading;
+    document.getElementById('heading').style.display = 'block';
+    document.getElementById('greeting').textContent = t.greeting;
+    document.getElementById('lblPosition').textContent = t.lblPosition;
+    document.getElementById('lblMinistry').textContent = t.lblMinistry;
+    document.getElementById('lblService').textContent = t.lblService;
+    document.getElementById('lblDate').textContent = t.lblDate;
+    document.getElementById('valPosition').textContent = data.position_name || '';
+    document.getElementById('valMinistry').textContent = data.ministry || '';
+    document.getElementById('valService').textContent = data.service_name || '';
+    document.getElementById('valDate').textContent = formatDate(data.service_date);
+    document.getElementById('btnConfirm').textContent = t.btnConfirm;
+    document.getElementById('btnReschedule').textContent = t.btnReschedule;
+    document.getElementById('card').style.display = 'flex';
+  }
+
+  function respond(action) {
+    var t = s();
+    var btnC = document.getElementById('btnConfirm');
+    var btnR = document.getElementById('btnReschedule');
+    btnC.disabled = true;
+    btnR.disabled = true;
+    if (action === 'confirm') { btnC.textContent = t.sending; } else { btnR.textContent = t.sending; }
+
+    fetch(WORKER_URL + '/confirm/' + encodeURIComponent(token), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: action })
+    })
+      .then(function(r) {
+        if (r.status === 404) { showError(s().notFoundHeading, s().notFoundBody); return null; }
+        if (!r.ok) throw new Error('not ok');
+        return r.json();
+      })
+      .then(function(data) {
+        if (!data) return;
+        if (data.language === 'EN' || data.language === 'PT') lang = data.language;
+        var t2 = s();
+        if (data.already_responded) {
+          showThanks(t2.alreadyHeading, t2.alreadyBody, 'info');
+          return;
+        }
+        if (data.action === 'confirmed') {
+          showThanks(t2.confirmThanksHeading, t2.confirmThanksBody);
+        } else {
+          showThanks(t2.rescheduleThanksHeading, t2.rescheduleThanksBody, 'info');
+        }
+      })
+      .catch(function() {
+        var t3 = s();
+        btnC.disabled = false;
+        btnR.disabled = false;
+        btnC.textContent = t3.btnConfirm;
+        btnR.textContent = t3.btnReschedule;
+        showError(t3.errorHeading, t3.errorBody);
+      });
+  }
+
+  document.getElementById('btnConfirm').addEventListener('click', function() { respond('confirm'); });
+  document.getElementById('btnReschedule').addEventListener('click', function() { respond('wants_reschedule'); });
+
+  if (!token) {
+    showError(strings.PT.notFoundHeading, strings.PT.notFoundBody);
+    return;
+  }
+
+  fetch(WORKER_URL + '/confirm/' + encodeURIComponent(token))
+    .then(function(r) {
+      if (r.status === 404) { showError(strings.PT.notFoundHeading, strings.PT.notFoundBody); return null; }
+      if (!r.ok) throw new Error('not ok');
+      return r.json();
+    })
+    .then(function(data) {
+      if (!data) return;
+      if (data.language === 'EN' || data.language === 'PT') lang = data.language;
+      if (data.status === 'confirmed' || data.status === 'wants_reschedule') {
+        var t = s();
+        showThanks(t.alreadyHeading, t.alreadyBody, 'info');
+        return;
+      }
+      renderCard(data);
+    })
+    .catch(function() {
+      // Language unknown when the load itself fails, so PT is the default.
+      showError(strings.PT.errorHeading, strings.PT.errorBody);
+    });
+})();
+</script>
+</body>
+</html>
