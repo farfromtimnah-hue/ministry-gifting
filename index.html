@@ -1564,6 +1564,21 @@ function showDraftToast(){
   setTimeout(function(){toast.style.display='none'},3000);
 }
 
+/* Invite link: ?t=<resume_token> attaches this assessment to an existing
+   person row instead of creating a new one. Takes priority over any draft
+   left in localStorage — an invite is always for a specific person, and a
+   stale draft on a shared device must never ride along on someone's token. */
+function applyInviteToken(){
+  var t=null;
+  try{t=new URLSearchParams(window.location.search).get('t')}catch(e){}
+  if(!t)return false;
+  resumeToken=t;
+  try{localStorage.removeItem('ltc_draft')}catch(e){}
+  var banner=document.getElementById('resumeBanner');
+  if(banner)banner.style.display='none';
+  return true;
+}
+
 function checkResumeToken(){
   var raw=null;
   try{raw=localStorage.getItem('ltc_draft')}catch(e){}
@@ -2254,7 +2269,7 @@ function openCtaWhatsApp(){
 
 /* ─── INIT ───────────────────────────────────────────────────────── */
 applyLang();
-checkResumeToken();
+if(!applyInviteToken())checkResumeToken();
 
 /* ─── EVENT WIRING (iOS-safe: touchstart + click, bottom of body) ── */
 document.getElementById('langBtnPT').addEventListener('touchstart',function(e){e.preventDefault();setLang('pt')},{passive:false});
