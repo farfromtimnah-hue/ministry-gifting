@@ -1218,13 +1218,27 @@ var DISC_MINISTRY_FIT={
 function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c,calibration_a,calibration_b){
   // SIGNAL 1: Direct processing style from calibration questions
   // CA1 = expressive signal (talk it out), CA2 = steady signal (time alone)
-  var ca1=calibration_a||0;
-  var ca2=calibration_b||0;
-  var caDiff=ca1-ca2;
-  // Strong expressive signal: CA1 clearly higher than CA2
-  if(caDiff>=2){return 'Expressive Processor';}
-  // Strong steady signal: CA2 clearly higher than CA1
-  if(caDiff<=-2){return 'Steady Carrier';}
+  //
+  // These two items are the ONLY direct evidence of how someone processes.
+  // The DISC fallback below infers it from the letters, which is exactly what
+  // this pair was added (2026-06-01) to replace — a verbal processor whose
+  // top two land S/C gets called a Steady Carrier by that fallback, which is
+  // the opposite of true. So trust any real difference here, not just a gap
+  // of 2 or more, and only fall through when the person genuinely answered
+  // these two the same.
+  //
+  // Missing answers must NOT be coerced to 0: that produced caDiff === 0 for
+  // anyone who took the assessment before this pair existed, silently routing
+  // them to the DISC guess. Absent data is absent, not neutral.
+  var hasCal=(typeof calibration_a==='number'&&calibration_a>0&&
+              typeof calibration_b==='number'&&calibration_b>0);
+  if(hasCal){
+    var caDiff=calibration_a-calibration_b;
+    if(caDiff>0){return 'Expressive Processor';}
+    if(caDiff<0){return 'Steady Carrier';}
+    /* answered both identically — the difference carries no signal, so fall
+       through to the DISC-based derivation below rather than guessing */
+  }
   // SIGNAL 2: Calibration neutral or ambiguous -- use gap-based DISC derivation
   var scores={D:disc_d,I:disc_i,S:disc_s,C:disc_c};
   var sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
