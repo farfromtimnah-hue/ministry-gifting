@@ -1073,7 +1073,26 @@ var DISC_QUESTIONS=[
   {type:"disc",dim:"D",en:"When something is stuck and no one is leading, I step in and make the practical decisions so the work can move forward.",pt:"Quando algo esta parado e ninguem esta a frente, eu assumo e tomo as decisoes praticas para o trabalho andar.",es:"Cuando algo esta detenido y nadie esta al frente, yo asumo y tomo las decisiones practicas para que el trabajo avance."},
   {type:"disc",dim:"I",en:"In social settings, I am usually the one who starts conversations and makes the environment more lively and welcoming.",pt:"Em ambientes sociais, costumo ser quem puxa conversa e torna o ambiente mais animado e acolhedor.",es:"En ambientes sociales, suelo ser quien inicia las conversaciones y hace el ambiente mas animado y acogedor."},
   {type:"disc",dim:"S",en:"I would rather keep doing something the way I already know works than change to a new way that might be better.",pt:"Prefiro continuar fazendo do jeito que ja sei que funciona do que mudar para um jeito novo que talvez seja melhor.",es:"Prefiero seguir haciendo algo de la manera que ya se que funciona que cambiar a una forma nueva que tal vez sea mejor."},
-  {type:"disc",dim:"C",en:"I prefer to base my decisions on facts and logic rather than intuition or feelings.",pt:"Prefiro basear minhas decisoes em fatos e logica do que em intuicao ou sentimentos.",es:"Prefiero basar mis decisiones en hechos y logica antes que en intuicion o sentimientos."}
+  {type:"disc",dim:"C",en:"I prefer to base my decisions on facts and logic rather than intuition or feelings.",pt:"Prefiro basear minhas decisoes em fatos e logica do que em intuicao ou sentimentos.",es:"Prefiero basar mis decisiones en hechos y logica antes que en intuicion o sentimientos."},
+  /* Second set, added 2026-09-12. Three items per dimension is below what a
+     score can carry, so each dimension gets three more. These are written on
+     the facets the research identified as least exposed to social desirability:
+     pace, process, and what a person DOES rather than what they claim to be.
+     No virtue adjectives (patient, loyal, caring, humble) and no items about
+     willingness to cause discomfort — both read as culturally loaded in
+     Brazilian Portuguese and distorted the original set. */
+  {type:"disc",dim:"D",en:"When a group is talking in circles, I am usually the one who says let us pick something and move.",pt:"Quando um grupo fica dando voltas na conversa, normalmente sou eu quem diz vamos escolher algo e seguir.",es:"Cuando un grupo da vueltas en la conversacion, normalmente soy yo quien dice elijamos algo y sigamos."},
+  {type:"disc",dim:"D",en:"I would rather get something started and fix it along the way than wait until the plan is complete.",pt:"Prefiro comecar algo e ir ajustando no caminho do que esperar o plano ficar pronto.",es:"Prefiero empezar algo e ir ajustando en el camino que esperar a que el plan este completo."},
+  {type:"disc",dim:"D",en:"When a task has no clear owner, I tend to pick it up rather than wait to see who will.",pt:"Quando uma tarefa nao tem responsavel definido, costumo assumir em vez de esperar para ver quem vai fazer.",es:"Cuando una tarea no tiene responsable definido, suelo asumirla en vez de esperar a ver quien lo hara."},
+  {type:"disc",dim:"I",en:"I think out loud, and talking something through helps me more than working it out on my own first.",pt:"Penso em voz alta, e conversar sobre algo me ajuda mais do que resolver sozinho primeiro.",es:"Pienso en voz alta, y conversar sobre algo me ayuda mas que resolverlo solo primero."},
+  {type:"disc",dim:"I",en:"After a long day with a lot of people, I usually feel more charged up than worn out.",pt:"Depois de um dia longo com muita gente, geralmente me sinto mais animado do que cansado.",es:"Despues de un dia largo con mucha gente, generalmente me siento mas animado que cansado."},
+  {type:"disc",dim:"I",en:"When I walk into a room where I know no one, I start talking to people rather than wait to be approached.",pt:"Quando entro num lugar onde nao conheco ninguem, eu puxo conversa em vez de esperar que venham falar comigo.",es:"Cuando entro a un lugar donde no conozco a nadie, empiezo a hablar con la gente en vez de esperar a que se acerquen."},
+  {type:"disc",dim:"S",en:"I would rather serve in the same role every week than rotate through different ones.",pt:"Prefiro servir na mesma funcao toda semana do que ficar mudando de funcao.",es:"Prefiero servir en la misma funcion todas las semanas que ir rotando entre distintas."},
+  {type:"disc",dim:"S",en:"When several things need attention at once, I finish them one at a time instead of moving between them.",pt:"Quando varias coisas precisam de atencao ao mesmo tempo, resolvo uma de cada vez em vez de ficar alternando.",es:"Cuando varias cosas necesitan atencion a la vez, las resuelvo una por una en vez de ir alternando."},
+  {type:"disc",dim:"S",en:"I like to know well in advance what will be expected of me, and short notice makes things harder for me.",pt:"Gosto de saber com antecedencia o que vao esperar de mim, e ser avisado em cima da hora dificulta as coisas para mim.",es:"Me gusta saber con anticipacion lo que esperaran de mi, y avisarme a ultima hora me dificulta las cosas."},
+  {type:"disc",dim:"C",en:"I would rather deliver something late and correct than on time with mistakes in it.",pt:"Prefiro entregar algo atrasado e correto do que no prazo com erros.",es:"Prefiero entregar algo tarde y correcto que a tiempo con errores."},
+  {type:"disc",dim:"C",en:"I check my own work more than once, even when no one asked me to.",pt:"Eu confiro meu proprio trabalho mais de uma vez, mesmo quando ninguem pediu.",es:"Reviso mi propio trabajo mas de una vez, incluso cuando nadie me lo pidio."},
+  {type:"disc",dim:"C",en:"Before I agree to something, I want to know exactly how it will work in practice.",pt:"Antes de concordar com algo, quero saber exatamente como aquilo vai funcionar na pratica.",es:"Antes de aceptar algo, quiero saber exactamente como va a funcionar en la practica."}
 ];
 
 /* ─── GIFTING QUESTIONS (46) ────────────────────────────────────── */
@@ -1212,7 +1231,10 @@ function deriveEmotionalProfile(disc_d,disc_i,disc_s,disc_c,calibration_a,calibr
   var primary=sorted[0][0];
   var secondary=sorted[1][0];
   var gap=sorted[0][1]-sorted[1][1];
-  if(gap<=2){
+  /* 4 not 2: DISC went from 3 to 6 items per dimension (2026-09-12), so the
+     range doubled from 3-15 to 6-30 and this gap threshold had to scale with
+     it or it would stop catching the near-ties it exists to catch. */
+  if(gap<=4){
     if((primary==='S'&&secondary==='I')||(primary==='I'&&secondary==='S')){
       return 'Expressive Processor';
     }
@@ -1791,7 +1813,7 @@ function renderDiscSection(discData,container){
   var t=T[lang];
   var discRaw=calcDisc();
   var dims=["D","I","S","C"];
-  var maxScore=15;
+  var maxScore=30;
   var primaryLabel=lang==='pt'?discData._primary_label_pt:discData._primary_label_en;
   var secondaryLabel=lang==='pt'?discData._secondary_label_pt:discData._secondary_label_en;
   var naturalStr=lang==='pt'?discData._natural_str_pt:discData._natural_str_en;
