@@ -611,6 +611,10 @@ var lang="pt",current=0,answers={},lastScores=null,lastSubmittedName="",lastSubm
 var shareSelectedPath=null,shareSelectedMinistries=[],shareSelectedGroups=[],shareSelectedLangs=[],sharePhotoBase64=null,shareCarisma=[];
 var shareSelectedGroupAttendance=[],shareGroupRoles={},shareGcConnected=null,shareGcName=null,shareCountryOfOrigin=null;
 var preferredName="",resumeToken=null;
+/* Top-box friction counters. Selecting the highest option opens a confirm
+   modal; these record how often it was honoured vs backed down from, which is
+   the only way to tell a real 4 from a declined 5 after the fact. */
+var top5Confirmed=0,top5Declined=0;
 
 var MINISTRY_LIST=["Worship Team","Sound","Lighting","Projection","Streaming","Photo & Video","Social Media","Service Experience","Consolidation","Translation","Lagoinha Kids","Intercession","Volunteer Coffee","Hospitality - Welcome","Parking","Setup & Teardown","GC Leader","Legacy","English Service","WE CARE","Art Factory","Decoracao","Diaconia","Eventos","Lakestore"];
 var GROUP_LIST_PT=["Rocket","Link","Legacy","Shine","Hero","Culto Hope","Culto Fe","English Service","CRIE","Gerações","Equipe Carisma","Outro"];
@@ -1540,10 +1544,16 @@ function showLevel5Confirm(){
   backBtn.style.cssText="background-color:#1C1C1C;border:1px solid #444444;color:#AAAAAA;padding:13px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;min-height:48px;cursor:pointer;touch-action:manipulation;width:100%";
   backBtn.textContent=lang==='pt'?'Na verdade, mais um 4':lang==='es'?'En realidad, mas bien un 4':'Actually, more like a 4';
   (function(ov,cb,bb){
-    cb.addEventListener('click',function(){document.body.removeChild(ov);recordAnswer(4)});
-    cb.addEventListener('touchstart',function(e){e.preventDefault();document.body.removeChild(ov);recordAnswer(4)},{passive:false});
-    bb.addEventListener('click',function(){document.body.removeChild(ov);recordAnswer(3)});
-    bb.addEventListener('touchstart',function(e){e.preventDefault();document.body.removeChild(ov);recordAnswer(3)},{passive:false});
+    /* Two kinds of 4 exist in this data and they look identical afterwards:
+       a 4 chosen directly, and a 4 that is really a declined 5. Counting the
+       declines is what makes the difference visible later — it says how hard
+       the top-box friction is working, per person, without an A/B test. */
+    function confirmed(){document.body.removeChild(ov);top5Confirmed++;recordAnswer(4);}
+    function backedDown(){document.body.removeChild(ov);top5Declined++;recordAnswer(3);}
+    cb.addEventListener('click',confirmed);
+    cb.addEventListener('touchstart',function(e){e.preventDefault();confirmed();},{passive:false});
+    bb.addEventListener('click',backedDown);
+    bb.addEventListener('touchstart',function(e){e.preventDefault();backedDown();},{passive:false});
   })(overlay,confirmBtn,backBtn);
   btnWrap.appendChild(confirmBtn);
   btnWrap.appendChild(backBtn);
@@ -1696,50 +1706,25 @@ function calcDisc(){
   return raw;
 }
 
-/* Response-style correction (2026-09-12).
+/* Response-style correction: REMOVED 2026-09-12, same day it was added.
 
-   The problem this solves: someone who marks 4 or 5 on nearly everything gets
-   all four dimensions inflated, and the ranking between them comes down to
-   whichever items they happened to push hardest — not to who they are. In
-   Brazilian responses this is common enough to distort the whole profile,
-   and because DISC is ipsative (suppress one dimension and the others rise
-   arithmetically) it lands hardest on S.
+   It computed each person's mean across the DISC items and expressed each
+   dimension as its distance from that mean. The algebra defeats it: with an
+   equal number of items per dimension, that mean IS the mean of the four
+   dimension scores, so subtracting it shifts all four by the same amount.
+   Ranking, gaps, ties and therefore the type label are all unchanged. It also
+   rounded and clamped before the type decision, which could only invent ties
+   at the boundaries.
 
-   The fix is to score each person against THEIR OWN baseline instead of an
-   absolute scale. Take their mean response across all 24 DISC items and
-   express each dimension as its distance from that mean, then shift back onto
-   the original 6-30 range so nothing downstream has to change.
+   Do not rebuild it. The real problem is not overall elevation, which this
+   removed; it is low DIFFERENTIATION — a profile clustered at 4 with almost no
+   spread between dimensions. No arithmetic recovers signal that was never
+   given. The honest output for such a profile is "no clear primary style",
+   which is what the blended-profile handling on the dashboard reports.
 
-   Someone who marks 5 on everything has no distance from their own mean, so
-   the four dimensions flatten toward a tie — which is the honest answer, and
-   the blended-profile handling on the dashboard reports it as such rather than
-   inventing a winner. Someone with genuine peaks keeps them.
+   Note also that this instrument is NOT formally ipsative: 24 independent
+   Likert ratings let someone score high on all four dimensions at once. */
 
-   This is deliberately NOT ipsatizing across the four DISC scales against each
-   other, which compounds the problem because they are interdependent. It
-   centres on the person's own response style, which is a separate thing. */
-function adjustDiscForResponseStyle(raw){
-  var dims=['D','I','S','C'];
-  var itemsPerDim=0;
-  ALL_QUESTIONS.forEach(function(q){ if(q.type==='disc'&&q.dim==='D')itemsPerDim++; });
-  if(!itemsPerDim)return raw;
-  var answered=0,total=0;
-  ALL_QUESTIONS.forEach(function(q,i){
-    if(q.type==='disc'&&answers[i]!==undefined){total+=(answers[i]+1);answered++;}
-  });
-  if(answered===0)return raw;
-  var personMean=total/answered;          /* this person's own 1-5 baseline */
-  var dimBaseline=personMean*itemsPerDim; /* what a flat responder would score */
-  var midpoint=3*itemsPerDim;             /* centre of the 6-30 range */
-  var out={};
-  dims.forEach(function(d){
-    /* distance from their own baseline, re-centred on the scale midpoint */
-    var v=Math.round((raw[d]-dimBaseline)+midpoint);
-    var min=itemsPerDim, max=itemsPerDim*5;
-    out[d]=Math.max(min,Math.min(max,v));
-  });
-  return out;
-}
 
 /* ─── SUBMIT ─────────────────────────────────────────────────────── */
 function handleSubmit(){
@@ -1756,14 +1741,16 @@ function handleSubmit(){
   var calA=answers[0]!==undefined?answers[0]+1:0;
   var calB=answers[1]!==undefined?answers[1]+1:0;
   var discRaw=calcDisc();
-  var discAdj=adjustDiscForResponseStyle(discRaw);
   var g1=lastScores[0]?lastScores[0].en.name:'';
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
   var leadershipScore=scores["Influence & Servant Leadership"]||0;
-  var discData=deriveDISC(discAdj.D,discAdj.I,discAdj.S,discAdj.C,g1,g2,g3,leadershipScore,calA,calB);
+  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3,leadershipScore,calA,calB);
   var reliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var reliability_flag=reliabilityAnswer>=4?1:0;
+  /* Carried inside the existing scores JSON so this needs no schema change and
+     no worker deploy. _meta is namespaced to stay clear of gifting names. */
+  scores._meta={top5_confirmed:top5Confirmed,top5_declined:top5Declined,disc_items:24};
   var payload={
     name:n,
     preferred_name:preferredName||null,
