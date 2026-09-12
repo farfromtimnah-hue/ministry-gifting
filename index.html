@@ -1682,6 +1682,51 @@ function calcDisc(){
   return raw;
 }
 
+/* Response-style correction (2026-09-12).
+
+   The problem this solves: someone who marks 4 or 5 on nearly everything gets
+   all four dimensions inflated, and the ranking between them comes down to
+   whichever items they happened to push hardest — not to who they are. In
+   Brazilian responses this is common enough to distort the whole profile,
+   and because DISC is ipsative (suppress one dimension and the others rise
+   arithmetically) it lands hardest on S.
+
+   The fix is to score each person against THEIR OWN baseline instead of an
+   absolute scale. Take their mean response across all 24 DISC items and
+   express each dimension as its distance from that mean, then shift back onto
+   the original 6-30 range so nothing downstream has to change.
+
+   Someone who marks 5 on everything has no distance from their own mean, so
+   the four dimensions flatten toward a tie — which is the honest answer, and
+   the blended-profile handling on the dashboard reports it as such rather than
+   inventing a winner. Someone with genuine peaks keeps them.
+
+   This is deliberately NOT ipsatizing across the four DISC scales against each
+   other, which compounds the problem because they are interdependent. It
+   centres on the person's own response style, which is a separate thing. */
+function adjustDiscForResponseStyle(raw){
+  var dims=['D','I','S','C'];
+  var itemsPerDim=0;
+  ALL_QUESTIONS.forEach(function(q){ if(q.type==='disc'&&q.dim==='D')itemsPerDim++; });
+  if(!itemsPerDim)return raw;
+  var answered=0,total=0;
+  ALL_QUESTIONS.forEach(function(q,i){
+    if(q.type==='disc'&&answers[i]!==undefined){total+=(answers[i]+1);answered++;}
+  });
+  if(answered===0)return raw;
+  var personMean=total/answered;          /* this person's own 1-5 baseline */
+  var dimBaseline=personMean*itemsPerDim; /* what a flat responder would score */
+  var midpoint=3*itemsPerDim;             /* centre of the 6-30 range */
+  var out={};
+  dims.forEach(function(d){
+    /* distance from their own baseline, re-centred on the scale midpoint */
+    var v=Math.round((raw[d]-dimBaseline)+midpoint);
+    var min=itemsPerDim, max=itemsPerDim*5;
+    out[d]=Math.max(min,Math.min(max,v));
+  });
+  return out;
+}
+
 /* ─── SUBMIT ─────────────────────────────────────────────────────── */
 function handleSubmit(){
   var n=document.getElementById('inputName').value.trim();
@@ -1697,11 +1742,12 @@ function handleSubmit(){
   var calA=answers[0]!==undefined?answers[0]+1:0;
   var calB=answers[1]!==undefined?answers[1]+1:0;
   var discRaw=calcDisc();
+  var discAdj=adjustDiscForResponseStyle(discRaw);
   var g1=lastScores[0]?lastScores[0].en.name:'';
   var g2=lastScores[1]?lastScores[1].en.name:'';
   var g3=lastScores[2]?lastScores[2].en.name:'';
   var leadershipScore=scores["Influence & Servant Leadership"]||0;
-  var discData=deriveDISC(discRaw.D,discRaw.I,discRaw.S,discRaw.C,g1,g2,g3,leadershipScore,calA,calB);
+  var discData=deriveDISC(discAdj.D,discAdj.I,discAdj.S,discAdj.C,g1,g2,g3,leadershipScore,calA,calB);
   var reliabilityAnswer=answers[8]!==undefined?answers[8]:0;
   var reliability_flag=reliabilityAnswer>=4?1:0;
   var payload={
