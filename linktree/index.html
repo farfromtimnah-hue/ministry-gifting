@@ -69,16 +69,16 @@ body{min-height:100%;background:#1c1c1c;color:#fff;font-family:'Barlow Condensed
 
   <!-- VISIT -->
   <div class="sec-hd" id="hdVisit"></div>
-  <a class="lnk" href="http://www.lagoinhatampa.com/firstvisit" target="_blank" rel="noopener"><span id="tFirst"></span></a>
+  <a class="lnk jf" data-base="http://www.lagoinhatampa.com/firstvisit" href="http://www.lagoinhatampa.com/firstvisit" target="_blank" rel="noopener"><span id="tFirst"></span></a>
   <a class="lnk" href="https://www.google.com/maps/place/Lagoinha+Tampa+Church/@28.0466921,-82.3582401,17z/data=!3m1!4b1!4m6!3m5!1s0x88c2c97569ef6b67:0xcfccc573074dfa2b!8m2!3d28.0466874!4d-82.3536267!16s%2Fg%2F11rb3vr7g4" target="_blank" rel="noopener"><span id="tCampus"></span></a>
   <a class="lnk" href="https://drive.google.com/drive/folders/1ZWHrbR-DD_JpNY4Vb_qjpIKvaLOz-cr-?usp=sharing" target="_blank" rel="noopener"><span id="tCultos"></span></a>
 
   <!-- CONNECT -->
   <div class="sec-hd" id="hdConnect"></div>
   <a class="lnk" href="https://lagoinhatampa.inpeaceapp.com/groups" target="_blank" rel="noopener"><span id="tGroups"></span></a>
-  <a class="lnk" href="http://lagoinhatampa.com/novosmembros" target="_blank" rel="noopener"><span id="tMembros"></span></a>
+  <a class="lnk jf" data-base="http://lagoinhatampa.com/novosmembros" href="http://lagoinhatampa.com/novosmembros" target="_blank" rel="noopener"><span id="tMembros"></span></a>
 
-  <a class="card-img" href="https://www.lagoinhatampa.com/Cadastro3ForJesus" target="_blank" rel="noopener">
+  <a class="card-img jf" data-base="https://www.lagoinhatampa.com/Cadastro3ForJesus" href="https://www.lagoinhatampa.com/Cadastro3ForJesus" target="_blank" rel="noopener">
     <img src="img/3forjesus.png" alt="3 For Jesus">
     <span id="t3FJ"></span>
   </a>
@@ -171,6 +171,29 @@ body{min-height:100%;background:#1c1c1c;color:#fff;font-family:'Barlow Condensed
       if (el) el.textContent = s[KEYS[i]];
     }
     document.documentElement.lang = (l==='PT'?'pt':l==='EN'?'en':'es');
+
+    // Carry the visitor's language choice into the JotForms. Those forms are
+    // already translated PT/EN/ES and read the language from the URL, so
+    // someone who picked English here opens the form in English instead of
+    // landing on the Portuguese default and hunting for a dropdown.
+    //
+    // The parameter is ?language=, NOT ?lang=. Verified 2026-09-14 on
+    // cookie-free tabs for all three values, including through the
+    // lagoinhatampa.com -> form.jotform.com redirect, which preserves the
+    // query string. ?lang= is silently ignored and the form falls back to
+    // Portuguese - and JotForm also stores a savedUserLanguage cookie that
+    // overrides the default once set, which makes ?lang= look like it works
+    // if you have visited the form in another language first. Test this in a
+    // cookie-free tab or you will measure your own cookie.
+    //
+    // Does NOT apply to the InPeace links (batismo, consagracao, groups,
+    // give) - those are hardcoded pt_BR with no language control at all.
+    var jfLang = (l==='PT'?'pt':l==='EN'?'en':'es');
+    var jfLinks = document.querySelectorAll('a.jf');
+    for (var j=0;j<jfLinks.length;j++){
+      var base = jfLinks[j].getAttribute('data-base');
+      jfLinks[j].setAttribute('href', base + (base.indexOf('?')===-1?'?':'&') + 'language=' + jfLang);
+    }
     document.getElementById('btnPT').classList.toggle('active', l==='PT');
     document.getElementById('btnEN').classList.toggle('active', l==='EN');
     document.getElementById('btnES').classList.toggle('active', l==='ES');
