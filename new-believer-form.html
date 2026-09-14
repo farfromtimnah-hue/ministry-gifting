@@ -31,6 +31,9 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 select option{background:#0c1a24;color:#e6f1f0}
 .row-2{display:flex;gap:10px}
 .row-2 .field{flex:1}
+.row-phone{display:flex;gap:8px}
+.row-phone select{flex:0 0 92px}
+.row-phone input{flex:1;min-width:0}
 .row-2 .field-wide{flex:1.4}
 /* Radio buttons */
 .radio-group{display:flex;gap:10px}
@@ -116,9 +119,22 @@ select option{background:#0c1a24;color:#e6f1f0}
     <!-- Phone -->
     <div class="field">
       <label id="lblPhone">Telefone</label>
-      <input type="tel" id="fieldPhone" placeholder="(000) 000-0000">
+      <div class="row-phone">
+        <select id="fieldCountryCode" autocomplete="tel-country-code">
+          <option value="1" selected>+1</option>
+          <option value="55">+55</option>
+          <option value="351">+351</option>
+          <option value="52">+52</option>
+          <option value="34">+34</option>
+          <option value="54">+54</option>
+          <option value="57">+57</option>
+          <option value="58">+58</option>
+          <option value="506">+506</option>
+          <option value="509">+509</option>
+        </select>
+        <input type="tel" id="fieldPhone" placeholder="(000) 000-0000" autocomplete="tel-national">
+      </div>
       <div class="inline-err" id="phoneErr"></div>
-      <div class="info-note" id="intlNote">Parece um numero internacional.</div>
     </div>
 
     <!-- Phone Type -->
@@ -551,20 +567,29 @@ select option{background:#0c1a24;color:#e6f1f0}
     return true;
   }
 
+  // fullPhone: country code + local digits, as one digit string.
+  // The user picks the country explicitly, so nothing is guessed from length.
+  // A leading copy of the country code typed by hand is stripped - otherwise
+  // picking +1 and typing "1 727..." would store 11727..., which matches no
+  // existing row and which WAHA rejects.
+  function fullPhone() {
+    var cc = document.getElementById('fieldCountryCode').value;
+    var local = document.getElementById('fieldPhone').value.replace(/\D/g, '');
+    if (!local) return '';
+    while (local.length > cc.length && local.indexOf(cc) === 0) {
+      local = local.slice(cc.length);
+    }
+    return cc + local;
+  }
+
   function validatePhoneField() {
     var ph = document.getElementById('fieldPhone');
-    var note = document.getElementById('intlNote');
     var digits = ph.value.replace(/\D/g, '');
     clearInlineErr(ph, 'phoneErr');
-    note.classList.remove('visible');
     if (digits.length === 0) return true;
     if (digits.length < 8) {
       showInlineErr(ph, 'phoneErr', S[lang].errPhone);
       return false;
-    }
-    var brMobile = digits.length === 11 && digits.charAt(2) === '9';
-    if (digits.length >= 11 && !brMobile) {
-      note.classList.add('visible');
     }
     return true;
   }
@@ -608,7 +633,6 @@ select option{background:#0c1a24;color:#e6f1f0}
     document.getElementById('lblLastName').textContent = s.lblLastName;
     document.getElementById('lblEmail').textContent = s.lblEmail;
     document.getElementById('lblPhone').textContent = s.lblPhone;
-    document.getElementById('intlNote').textContent = s.intlNote;
     document.getElementById('lblPhoneType').textContent = s.lblPhoneType;
     document.getElementById('optPhoneTypeDefault').textContent = s.phoneTypeDefault;
     document.getElementById('optMobile').textContent = s.optMobile;
@@ -856,16 +880,6 @@ select option{background:#0c1a24;color:#e6f1f0}
     }
   }
 
-  function checkIntlPhone() {
-    var digits = document.getElementById('fieldPhone').value.replace(/\D/g, '');
-    var note = document.getElementById('intlNote');
-    if (digits.length >= 11) {
-      note.classList.add('visible');
-    } else {
-      note.classList.remove('visible');
-    }
-  }
-
   function clearValidation() {
     var errEls = document.querySelectorAll('.err');
     for (var i = 0; i < errEls.length; i++) {
@@ -1013,7 +1027,6 @@ select option{background:#0c1a24;color:#e6f1f0}
 
   document.getElementById('fieldPhone').addEventListener('input', function() {
     clearInlineErr(document.getElementById('fieldPhone'), 'phoneErr');
-    document.getElementById('intlNote').classList.remove('visible');
   });
   document.getElementById('fieldPhone').addEventListener('blur', validatePhoneField);
 
@@ -1057,7 +1070,7 @@ select option{background:#0c1a24;color:#e6f1f0}
     var firstName = document.getElementById('fieldFirstName').value.trim();
     var lastName = document.getElementById('fieldLastName').value.trim();
     var email = document.getElementById('fieldEmail').value.trim();
-    var phone = document.getElementById('fieldPhone').value.trim();
+    var phone = fullPhone();
     var phoneTypeVal = document.getElementById('fieldPhoneType').value;
     var phoneType = phoneTypeVal ? phoneTypeVal : null;
     var dobMonthVal = document.getElementById('fieldDobMonth').value;

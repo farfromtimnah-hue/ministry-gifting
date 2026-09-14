@@ -65,6 +65,9 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
 .field input:focus{border-color:#2ABFBF}
 .field-error{margin-top:6px;font-size:.82rem;line-height:1.4;color:#ef4444;display:none}
 .field-note{margin-top:6px;font-size:.82rem;line-height:1.4;color:#2ABFBF;display:none}
+.row-phone{display:flex;gap:8px}
+.row-phone select{flex:0 0 92px}
+.row-phone input{flex:1;min-width:0}
 .sub-btn{width:100%;margin-top:20px;background-color:#2ABFBF;border:none;color:#000000;padding:16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;min-height:52px;cursor:pointer;touch-action:manipulation;display:block}
 .sub-btn:disabled{opacity:.35}
 /* ─── RESULTS ─────────────────────────────────────────── */
@@ -370,9 +373,22 @@ input{-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;bo
         </div>
         <div class="field">
           <label id="whatsappLabel">Numero do WhatsApp</label>
-          <input type="tel" id="inputWhatsapp" placeholder="+1 (813) 000-0000">
+          <div class="row-phone">
+            <select id="inputCountryCode" autocomplete="tel-country-code">
+              <option value="1" selected>+1</option>
+              <option value="55">+55</option>
+              <option value="351">+351</option>
+              <option value="52">+52</option>
+              <option value="34">+34</option>
+              <option value="54">+54</option>
+              <option value="57">+57</option>
+              <option value="58">+58</option>
+              <option value="506">+506</option>
+              <option value="509">+509</option>
+            </select>
+            <input type="tel" id="inputWhatsapp" placeholder="(813) 000-0000" autocomplete="tel-national">
+          </div>
           <div class="field-error" id="whatsappError"></div>
-          <div class="field-note" id="whatsappNote"></div>
         </div>
         <button type="button" class="sub-btn" id="submitBtn" disabled>
           <span id="submitText">Ver Meus Resultados</span>
@@ -1662,15 +1678,13 @@ function checkForm(){
   var whatsapp=document.getElementById('inputWhatsapp').value.trim();
   var emailError=document.getElementById('emailError');
   var whatsappError=document.getElementById('whatsappError');
-  var whatsappNote=document.getElementById('whatsappNote');
   var submitBtn=document.getElementById('submitBtn');
   var emailValid=false,whatsappValid=true;
   emailError.textContent='';emailError.style.display='none';
   whatsappError.textContent='';whatsappError.style.display='none';
-  whatsappNote.textContent='';whatsappNote.style.display='none';
   if(email){var atIndex=email.indexOf('@');var dotIndex=email.lastIndexOf('.');emailValid=atIndex>0&&dotIndex>atIndex+1&&dotIndex<email.length-1;if(!emailValid){emailError.textContent=t.emailInvalid;emailError.style.display='block'}}else{emailValid=false}
   var digits=whatsapp.replace(/\D/g,'');
-  if(whatsapp){if(digits.length<8){whatsappValid=false;whatsappError.textContent=t.whatsappInvalid;whatsappError.style.display='block'}else if(digits.length>=11){whatsappNote.textContent=t.whatsappIntl;whatsappNote.style.display='block'}}
+  if(whatsapp){if(digits.length<8){whatsappValid=false;whatsappError.textContent=t.whatsappInvalid;whatsappError.style.display='block'}}
   submitBtn.disabled=!(name&&emailValid&&whatsappValid);
 }
 
@@ -1726,12 +1740,25 @@ function calcDisc(){
    Likert ratings let someone score high on all four dimensions at once. */
 
 
+/* fullWhatsapp: country code + local digits, as one digit string. The user
+   picks the country explicitly, so nothing is guessed from digit count. A
+   leading copy of the code typed by hand is stripped - otherwise picking +1
+   and typing "1 727..." stores 11727..., which matches no existing row and
+   which WAHA rejects. */
+function fullWhatsapp(){
+  var cc=document.getElementById('inputCountryCode').value;
+  var local=document.getElementById('inputWhatsapp').value.replace(/\D/g,'');
+  if(!local)return '';
+  while(local.length>cc.length&&local.indexOf(cc)===0){local=local.slice(cc.length)}
+  return cc+local;
+}
+
 /* ─── SUBMIT ─────────────────────────────────────────────────────── */
 function handleSubmit(){
   var n=document.getElementById('inputName').value.trim();
   var fn=document.getElementById('inputFullName').value.trim();
   var e=document.getElementById('inputEmail').value.trim();
-  var w=document.getElementById('inputWhatsapp').value.trim();
+  var w=fullWhatsapp();
   if(!n||!e)return;
   lastScores=calcScores();
   lastSubmittedName=n;
@@ -2321,6 +2348,7 @@ function handleRetake(){
   document.getElementById('inputFullName').value='';
   document.getElementById('inputEmail').value='';
   document.getElementById('inputWhatsapp').value='';
+  document.getElementById('inputCountryCode').value='1';
   document.getElementById('submitBtn').disabled=true;
   document.getElementById('prefnameContinueBtn').disabled=true;
   resetShareMore();

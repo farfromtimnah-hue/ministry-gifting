@@ -20,6 +20,9 @@ body{min-height:100%;background:#0a0a0f;color:#e6f1f0;font-family:'Inter',sans-s
 h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#e6f1f0;text-align:center;letter-spacing:-0.01em}
 form{width:100%;display:flex;flex-direction:column;gap:18px}
 .field{display:flex;flex-direction:column;gap:6px}
+.row-phone{display:flex;gap:8px}
+.row-phone select{flex:0 0 92px}
+.row-phone input{flex:1;min-width:0}
 label{font-size:13px;font-weight:600;color:#aebac0}
 input,select,textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#e6f1f0;font-size:15px;font-family:inherit;padding:12px 14px;outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
 input:focus,select:focus,textarea:focus{border-color:#2ABFBF}
@@ -83,7 +86,21 @@ select option{background:#0c1a24;color:#e6f1f0}
     <!-- WhatsApp -->
     <div class="field">
       <label id="lblWhatsapp">Seu WhatsApp</label>
-      <input type="tel" id="fieldWhatsapp" placeholder="+1 (813) 000-0000" required>
+      <div class="row-phone">
+        <select id="fieldCountryCode" autocomplete="tel-country-code">
+          <option value="1" selected>+1</option>
+          <option value="55">+55</option>
+          <option value="351">+351</option>
+          <option value="52">+52</option>
+          <option value="34">+34</option>
+          <option value="54">+54</option>
+          <option value="57">+57</option>
+          <option value="58">+58</option>
+          <option value="506">+506</option>
+          <option value="509">+509</option>
+        </select>
+        <input type="tel" id="fieldWhatsapp" placeholder="(813) 000-0000" autocomplete="tel-national" required>
+      </div>
     </div>
 
     <!-- Per-position section (shown after ministry selected) -->
@@ -371,7 +388,13 @@ select option{background:#0c1a24;color:#e6f1f0}
     var ministry = document.getElementById('fieldMinistry').value;
     var preferred = document.getElementById('fieldPreferred').value.trim();
     var full = document.getElementById('fieldFull').value.trim();
-    var whatsapp = document.getElementById('fieldWhatsapp').value.trim();
+    // Country code + local digits, with a hand-typed duplicate code stripped.
+    var mlfCc = document.getElementById('fieldCountryCode').value;
+    var mlfLocal = document.getElementById('fieldWhatsapp').value.replace(/\D/g, '');
+    while (mlfLocal.length > mlfCc.length && mlfLocal.indexOf(mlfCc) === 0) {
+      mlfLocal = mlfLocal.slice(mlfCc.length);
+    }
+    var whatsapp = mlfLocal ? (mlfCc + mlfLocal) : '';
     var customNotes = document.getElementById('fieldCustomPositions').value.trim();
 
     var positionInputs = document.querySelectorAll('#positionRows input[data-position]');
